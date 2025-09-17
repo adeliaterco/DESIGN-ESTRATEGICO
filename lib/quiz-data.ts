@@ -179,7 +179,7 @@ export const quizSteps = [
     note: "Estou aqui para te guiar pessoalmente nesta jornada empreendedora. Nos últimos 7 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas usando este método exclusivo.",
     elements: {
       expertPhoto: true,
-      expertImage: "https://comprarplanseguro.shop/wp-content/uploads/2025/09/Generated-Image-September-07_-2025-12_00AM-_1_-e1757389439336.webp",
+      expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
       profileComplete: "95%",
       helpedCounter: "Mulheres ajudadas hoje: 17",
       compatibilityCalc: "92,8%",
