@@ -82,22 +82,12 @@ export default function HomePage() {
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
           }
 
-          .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            width: 100%;
-          }
-
-          .logo-wrapper {
-            position: relative;
-            width: 120px;
-            height: 80px;
-            border-radius: 12px;
-            border: 3px solid #dc2626;
-            overflow: hidden;
-            background: #111;
+          .logo {
+            display: block !important;
+            margin: 0 auto 30px !important;
+            border-radius: 12px !important;
+            border: 3px solid #dc2626 !important;
+            object-fit: cover !important;
           }
 
           .headline {
@@ -198,15 +188,6 @@ export default function HomePage() {
               margin: 10px;
             }
             
-            .logo-container {
-              margin-bottom: 25px;
-            }
-            
-            .logo-wrapper {
-              width: 100px;
-              height: 65px;
-            }
-            
             .headline {
               font-size: 24px;
               margin-bottom: 15px;
@@ -233,11 +214,6 @@ export default function HomePage() {
               margin: 5px;
             }
             
-            .logo-wrapper {
-              width: 90px;
-              height: 60px;
-            }
-            
             .headline {
               font-size: 20px;
             }
@@ -259,22 +235,27 @@ export default function HomePage() {
 
         <div className={`container-quiz ${isLoading ? 'loading' : ''}`}>
           
-          {/* LOGO CENTRALIZADA - VERSÃO CORRIGIDA */}
-          <div className="logo-container">
-            <div className="logo-wrapper">
-              <Image
-                src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-4_42PM.jpeg"
-                alt="Sobrancelhas Expert"
-                fill
-                priority
-                quality={70}
-                sizes="(max-width: 768px) 100px, 120px"
-                style={{
-                  objectFit: "cover"
-                }}
-              />
-            </div>
-          </div>
+          {/* LOGO COMPACTA - TAMANHO ORIGINAL */}
+          <Image
+            src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-4_42PM.jpeg"
+            alt="Sobrancelhas Expert"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="logo"
+            priority
+            quality={70}
+            style={{
+              width: 'auto',
+              height: 'auto',
+              maxWidth: '100%',
+              display: 'block',
+              margin: '0 auto 30px',
+              borderRadius: '12px',
+              border: '3px solid #dc2626',
+              objectFit: 'cover'
+            }}
+          />
 
           {/* HEADLINE DIRETA */}
           <h1 className="headline">
