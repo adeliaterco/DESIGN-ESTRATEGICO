@@ -22,16 +22,24 @@ import {
   Star,
   CheckCircle,
   Trophy,
+  Scissors,
+  Sparkles,
+  Crown,
+  DollarSign,
+  Home,
+  Briefcase,
+  Coffee,
+  Award
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { quizSteps, socialProofMessages, getPersonalizedContent } from "@/lib/quiz-data"
+import { quizSteps, socialProofMessages, getPersonalizedContent, calculateProfile } from "@/lib/quiz-data"
 import { BonusUnlock } from "@/components/bonus-unlock"
 import { ValueCounter } from "@/components/value-counter"
 import { LoadingAnalysis } from "@/components/loading-analysis"
 
-// Función para enviar eventos a Google Analytics
+// Função para enviar eventos a Google Analytics
 function enviarEvento(nombre_evento, propriedades = {}) {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', nombre_evento, propriedades);
@@ -51,36 +59,37 @@ export default function QuizStep() {
   const [showAnalysis, setShowAnalysis] = useState(false)
   const [newBonus, setNewBonus] = useState<any>(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [peopleCount, setPeopleCount] = useState(17)
-  const [userGender, setUserGender] = useState<string>("")
+  const [peopleCount, setPeopleCount] = useState(127)
+  const [userProfile, setUserProfile] = useState<string>("")
 
   const currentStep = quizSteps[step - 1]
   const progress = (step / 12) * 100
 
   useEffect(() => {
-    // Cargar datos guardados
+    // Cargar dados guardados
     const saved = localStorage.getItem("quizData")
     const savedBonuses = localStorage.getItem("unlockedBonuses")
     const savedValue = localStorage.getItem("totalValue")
-    const savedGender = localStorage.getItem("userGender")
+    const savedProfile = localStorage.getItem("userProfile")
 
     if (saved) setQuizData(JSON.parse(saved))
     if (savedBonuses) setUnlockedBonuses(JSON.parse(savedBonuses))
     if (savedValue) setTotalValue(Number.parseInt(savedValue))
-    if (savedGender) setUserGender(savedGender)
+    if (savedProfile) setUserProfile(savedProfile)
 
     // Retraso de animación optimizado
     setTimeout(() => {
       setIsLoaded(true)
     }, 200)
 
-    // Registra visualización de la etapa del cuestionario
+    // Registra visualização da etapa do quiz
     enviarEvento('visualizou_etapa_quiz', {
       numero_etapa: step,
-      pergunta: currentStep?.question || `Etapa ${step}`
+      pergunta: currentStep?.question || `Etapa ${step}`,
+      funil: 'sobrancelhas'
     });
 
-    // Avance automático para el paso de experto
+    // Avance automático para o passo de especialista
     if (currentStep?.autoAdvance) {
       const timer = setTimeout(() => {
         proceedToNextStep()
@@ -89,10 +98,10 @@ export default function QuizStep() {
       return () => clearTimeout(timer)
     }
 
-    // Simular contador de personas (optimizado)
+    // Simular contador de pessoas (otimizado para sobrancelhas)
     const interval = setInterval(() => {
-      setPeopleCount((prev) => prev + Math.floor(Math.random() * 2) + 1)
-    }, 60000)
+      setPeopleCount((prev) => prev + Math.floor(Math.random() * 3) + 1)
+    }, 45000)
 
     return () => clearInterval(interval)
   }, [step])
@@ -100,20 +109,15 @@ export default function QuizStep() {
   const handleAnswerSelect = (answer: string) => {
     setSelectedAnswer(answer)
 
-    // Registra evento de respuesta seleccionada
+    // Registra evento de resposta selecionada
     enviarEvento('selecionou_resposta', {
       numero_etapa: step,
       pergunta: currentStep?.question || `Etapa ${step}`,
-      resposta: answer
+      resposta: answer,
+      funil: 'sobrancelhas'
     });
 
-    // Guardar selección de género en el primer paso
-    if (step === 1) {
-      setUserGender(answer)
-      localStorage.setItem("userGender", answer)
-    }
-
-    // Retroalimentación visual optimizada
+    // Retroalimentação visual otimizada
     const button = document.querySelector(`button[data-option="${answer}"]`)
     if (button) {
       button.classList.add("scale-102")
@@ -122,19 +126,33 @@ export default function QuizStep() {
   }
 
   const handleNext = () => {
-    // Registra evento de avance a la siguiente etapa
+    // Registra evento de avanço para próxima etapa
     enviarEvento('avancou_etapa', {
       numero_etapa: step,
       pergunta: currentStep?.question || `Etapa ${step}`,
-      resposta_selecionada: selectedAnswer
+      resposta_selecionada: selectedAnswer,
+      funil: 'sobrancelhas'
     });
 
-    // Guardar respuesta
+    // Guardar resposta
     const newQuizData = { ...quizData, [step]: selectedAnswer }
     setQuizData(newQuizData)
     localStorage.setItem("quizData", JSON.stringify(newQuizData))
 
-    // Mostrar análisis para ciertos pasos (optimizado)
+    // Calcular perfil se estamos no último passo
+    if (step === 12) {
+      const answers = Object.values(newQuizData)
+      const profile = calculateProfile(answers)
+      setUserProfile(profile)
+      localStorage.setItem("userProfile", profile)
+      
+      enviarEvento('perfil_calculado', {
+        perfil: profile,
+        funil: 'sobrancelhas'
+      });
+    }
+
+    // Mostrar análise para certos passos (otimizado)
     if (currentStep?.elements?.analysisText || currentStep?.elements?.profileAnalysis) {
       setShowAnalysis(true)
       setTimeout(() => {
@@ -163,12 +181,13 @@ export default function QuizStep() {
       utmString = '?' + utmParams.toString();
     }
 
-    // Verificar desbloqueo de bonificación
+    // Verificar desbloqueio de bonificação
     if (currentStep?.bonusUnlock && !unlockedBonuses.includes(currentStep.bonusUnlock.id)) {
       enviarEvento('desbloqueou_bonus', {
         numero_etapa: step,
         bonus_id: currentStep.bonusUnlock.id,
-        bonus_titulo: currentStep.bonusUnlock.title
+        bonus_titulo: currentStep.bonusUnlock.title,
+        funil: 'sobrancelhas'
       });
 
       const newUnlockedBonuses = [...unlockedBonuses, currentStep.bonusUnlock.id]
@@ -179,8 +198,8 @@ export default function QuizStep() {
 
       const personalizedBonus = {
         ...currentStep.bonusUnlock,
-        title: getPersonalizedContent(currentStep.bonusUnlock.title, userGender),
-        description: getPersonalizedContent(currentStep.bonusUnlock.description, userGender),
+        title: currentStep.bonusUnlock.title,
+        description: currentStep.bonusUnlock.description,
       }
       setNewBonus(personalizedBonus)
 
@@ -196,7 +215,9 @@ export default function QuizStep() {
     } else {
       enviarEvento('concluiu_quiz', {
         total_etapas_completadas: 12,
-        total_bonus_desbloqueados: unlockedBonuses.length
+        total_bonus_desbloqueados: unlockedBonuses.length,
+        perfil_final: userProfile,
+        funil: 'sobrancelhas'
       });
       
       router.push(`/resultado${utmString}`)
@@ -230,7 +251,8 @@ export default function QuizStep() {
   const handleBack = () => {
     enviarEvento('retornou_etapa', {
       de_etapa: step,
-      para_etapa: step > 1 ? step - 1 : 'inicio'
+      para_etapa: step > 1 ? step - 1 : 'inicio',
+      funil: 'sobrancelhas'
     });
     
     const currentUrl = new URL(window.location.href);
@@ -243,7 +265,7 @@ export default function QuizStep() {
       }
     }
     
-    if (utmParams.toString() !== '') {
+    if (utmString.toString() !== '') {
       utmString = '?' + utmParams.toString();
     }
     
@@ -254,47 +276,46 @@ export default function QuizStep() {
     }
   }
 
+  // ✅ ÍCONES ADAPTADOS PARA SOBRANCELHAS
   const getStepIcon = (stepNumber: number, index: number) => {
     const iconMaps = {
-      1: [User, Users],
-      2: [Calendar, TrendingUp, Target, Zap],
-      3: [Clock, Calendar, MessageCircle, Heart],
-      4: [Heart, MessageCircle, Users],
-      5: [Calendar, Heart, TrendingUp, Clock],
-      6: [Smile, Heart, MessageCircle, TrendingUp, Target, Zap],
-      7: [MessageCircle, Heart, Users, TrendingUp, Smile, Users, Heart],
-      8: [MessageCircle, Heart, Users, TrendingUp, Smile],
-      9: [Heart, TrendingUp, Target, Zap],
+      1: [Briefcase, Users, Scissors, Home], // Situação profissional
+      2: [Calendar, TrendingUp, Target, Zap], // Idade
+      3: [Clock, Calendar, Coffee, Heart], // Tempo disponível
+      4: [Sparkles, Scissors, Users, Award], // Experiência com sobrancelhas
+      5: [DollarSign, TrendingUp, Target, Crown], // Meta financeira
+      6: [AlertTriangle, Heart, DollarSign, Users, Sparkles, Check], // Medos
+      7: [Home, Users, Briefcase, Coffee, Crown, Target, Heart], // Local de atendimento
+      8: [DollarSign, Gift, Target, Crown, AlertTriangle], // Investimento
+      9: [Crown, Briefcase, Heart, Users, Home, DollarSign, Star, Check], // Motivação
     }
 
-    const icons = iconMaps[stepNumber] || [Heart]
-    const Icon = icons[index] || Heart
+    const icons = iconMaps[stepNumber] || [Sparkles]
+    const Icon = icons[index] || Sparkles
     return <Icon className="w-5 h-5" />
   }
 
-  // Obtener contenido personalizado basado en el género
+  // Obter conteúdo personalizado
   const getPersonalizedQuestion = () => {
-    return getPersonalizedContent(currentStep.question, userGender)
+    return currentStep.question
   }
 
   const getPersonalizedOptions = () => {
-    const options = getPersonalizedContent(currentStep.options, userGender)
-    return Array.isArray(options) ? options : currentStep.options
+    return Array.isArray(currentStep.options) ? currentStep.options : []
   }
 
   if (!currentStep) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Cargando...</div>
+        <div className="text-white text-xl">Carregando...</div>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-black p-4">
-      {/* ✅ OTIMIZADO: Container reduzido de max-w-4xl para max-w-2xl */}
       <div className="max-w-2xl mx-auto">
-        {/* Encabezado con progreso - SIMPLIFICADO */}
+        {/* Cabeçalho com progresso - ADAPTADO PARA SOBRANCELHAS */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-3">
             <Button
@@ -304,7 +325,7 @@ export default function QuizStep() {
               disabled={currentStep?.autoAdvance}
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Volver
+              Voltar
             </Button>
 
             <div className="flex items-center gap-3">
@@ -320,14 +341,14 @@ export default function QuizStep() {
 
           <div className="bg-gray-700 rounded-full h-2 mb-2">
             <motion.div 
-              className="bg-orange-500 h-full rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-pink-500 to-rose-600 h-full rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           <div className="flex justify-between items-center">
             <p className="text-white text-sm">
-              Pregunta {step} de 12 • {Math.round(progress)}% completado
+              Pergunta {step} de 12 • {Math.round(progress)}% completado
             </p>
             {currentStep?.elements?.profileComplete && (
               <p className="text-green-400 text-sm font-semibold">
@@ -337,7 +358,7 @@ export default function QuizStep() {
           </div>
         </div>
 
-        {/* ✅ TESTEMUNHOS SIMPLIFICADOS - SEM "VERIFICADO" */}
+        {/* ✅ DEPOIMENTOS ADAPTADOS PARA SOBRANCELHAS */}
         {currentStep?.elements?.testimonialDisplay && currentStep?.elements?.testimonialText && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -355,13 +376,13 @@ export default function QuizStep() {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center">
-                    <User className="w-6 h-6 text-gray-300" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-6 h-6 text-white" />
                   </div>
                 )}
 
                 <div className="flex-1">
-                  {/* Estrelas simplificadas */}
+                  {/* Estrelas */}
                   <div className="flex gap-1 mb-1">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
@@ -383,33 +404,7 @@ export default function QuizStep() {
           </motion.div>
         )}
 
-        {/* ✅ MANTIDO: Imagen de Testimonio para compatibilidade */}
-        {step === 7 && currentStep?.elements?.testimonialImage && !currentStep?.elements?.testimonialDisplay && (
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-            <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
-              <h3 className="text-lg font-bold text-blue-400 mb-3 text-center">Testimonio Real</h3>
-              <div className="w-full max-w-sm mx-auto rounded-lg overflow-hidden mb-3">
-                {currentStep.elements.testimonialImage ? (
-                  <img
-                    src={currentStep.elements.testimonialImage}
-                    alt="Testimonio de Cliente"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="w-full h-32 bg-gray-700 rounded-lg flex items-center justify-center">
-                    <Star className="w-8 h-8 text-gray-400" />
-                  </div>
-                )}
-              </div>
-              <p className="text-blue-300 text-sm text-center">
-                Resultados reales de nuestros clientes
-              </p>
-            </div>
-          </motion.div>
-        )}
-
-        {/* ✅ TARJETA DE PREGUNTA SIMPLIFICADA */}
+        {/* ✅ CARD DE PERGUNTA ADAPTADO */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 15 }}
@@ -417,7 +412,7 @@ export default function QuizStep() {
         >
           <Card className="bg-gray-900 border-gray-700 shadow-lg">
             <CardContent className="p-6">
-              {/* Paso de avance automático de experto - SIMPLIFICADO */}
+              {/* Passo de avanço automático de especialista - ADAPTADO */}
               {currentStep?.autoAdvance && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -427,24 +422,24 @@ export default function QuizStep() {
                   {currentStep?.elements?.expertImage ? (
                     <img
                       src={currentStep.elements.expertImage}
-                      alt="Experto en Reconquista"
-                      className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 mx-auto mb-4"
+                      alt="Especialista em Sobrancelhas"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-pink-500 mx-auto mb-4"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <User className="w-10 h-10 text-white" />
+                    <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Sparkles className="w-10 h-10 text-white" />
                     </div>
                   )}
 
-                  <p className="text-blue-400 font-semibold mb-4">{currentStep.elements?.autoMessage}</p>
+                  <p className="text-pink-400 font-semibold mb-4">{currentStep.elements?.autoMessage}</p>
 
                   <div className="flex justify-center">
                     <div className="flex space-x-1">
                       {[...Array(3)].map((_, i) => (
                         <motion.div
                           key={i}
-                          className="w-2 h-2 bg-blue-500 rounded-full"
+                          className="w-2 h-2 bg-pink-500 rounded-full"
                           animate={{ opacity: [0.3, 1, 0.3] }}
                           transition={{
                             duration: 1.2,
@@ -458,7 +453,7 @@ export default function QuizStep() {
                 </motion.div>
               )}
 
-              {/* ✅ NOVA LÓGICA: Renderização especial para finalReveal */}
+              {/* ✅ RENDERIZAÇÃO ESPECIAL PARA FINAL REVEAL */}
               {currentStep?.elements?.finalReveal && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -466,7 +461,7 @@ export default function QuizStep() {
                   transition={{ duration: 0.6 }}
                   className="text-center mb-6"
                 >
-                  <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="w-10 h-10 text-white" />
                   </div>
 
@@ -477,42 +472,42 @@ export default function QuizStep() {
                         {currentStep.elements.profileComplete}
                       </span>
                     </div>
-                    <p className="text-green-300">Análisis Completo</p>
+                    <p className="text-green-300">Análise Completa</p>
                   </div>
 
-                  <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-3">
+                  <div className="bg-pink-900/30 border border-pink-500 rounded-lg p-3">
                     <div className="flex items-center justify-center gap-2">
-                      <Target className="w-5 h-5 text-blue-400" />
-                      <span className="text-blue-300 font-semibold">Plan Personalizado Listo</span>
+                      <Sparkles className="w-5 h-5 text-pink-400" />
+                      <span className="text-pink-300 font-semibold">Perfil de Sobrancelhista Pronto</span>
                     </div>
                   </div>
                 </motion.div>
               )}
 
-              {/* Foto de experto para el paso 11 - SIMPLIFICADA */}
+              {/* Foto de especialista para o passo 11 - ADAPTADA */}
               {currentStep?.elements?.expertPhoto && !currentStep?.autoAdvance && (
                 <div className="flex justify-center mb-4">
                   {currentStep?.elements?.expertImage ? (
                     <img
                       src={currentStep.elements.expertImage}
-                      alt="Experto en Reconquista"
-                      className="w-16 h-16 rounded-full object-cover border-2 border-blue-500"
+                      alt="Especialista em Sobrancelhas"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-pink-500"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
-                      <User className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-full flex items-center justify-center">
+                      <Sparkles className="w-8 h-8 text-white" />
                     </div>
                   )}
                 </div>
               )}
 
-              {/* Cálculo de compatibilidad - SIMPLIFICADO */}
+              {/* Cálculo de compatibilidade - ADAPTADO */}
               {currentStep?.elements?.compatibilityCalc && (
                 <div className="mb-4">
                   <div className="bg-green-900/30 border border-green-500 rounded-lg p-3 text-center">
                     <div className="text-2xl font-bold text-green-400">
-                      {currentStep.elements.compatibilityCalc} de compatibilidad
+                      {currentStep.elements.compatibilityCalc} de potencial de sucesso
                     </div>
                   </div>
                 </div>
@@ -525,23 +520,23 @@ export default function QuizStep() {
                   </h2>
 
                   {currentStep.subtext && (
-                    <p className="text-orange-200 text-center mb-4 font-medium">{currentStep.subtext}</p>
+                    <p className="text-pink-200 text-center mb-4 font-medium">{currentStep.subtext}</p>
                   )}
 
                   {currentStep.description && (
                     <p className="text-gray-300 text-center mb-6">{currentStep.description}</p>
                   )}
 
-                  {/* ✅ TERMÓMETRO SIMPLIFICADO */}
+                  {/* ✅ TERMÔMETRO ADAPTADO */}
                   {currentStep?.elements?.thermometer && (
                     <div className="mb-6">
                       <div className="flex justify-between text-gray-300 text-sm mb-2">
-                        <span>No estoy seguro</span>
-                        <span>Lo quiero mucho</span>
+                        <span>Ainda pesquisando</span>
+                        <span>Muito motivada</span>
                       </div>
                       <div className="bg-gray-700 rounded-full h-3">
                         <motion.div
-                          className="bg-gradient-to-r from-orange-500 to-red-600 h-full rounded-full"
+                          className="bg-gradient-to-r from-pink-500 to-rose-600 h-full rounded-full"
                           initial={{ width: "0%" }}
                           animate={{ width: selectedAnswer ? "100%" : "0%" }}
                           transition={{ duration: 0.3 }}
@@ -550,7 +545,7 @@ export default function QuizStep() {
                     </div>
                   )}
 
-                  {/* ✅ OPÇÕES SIMPLIFICADAS - SEM GIF DA MARILYN */}
+                  {/* ✅ OPÇÕES ADAPTADAS PARA SOBRANCELHAS */}
                   {getPersonalizedOptions().length > 0 && (
                     <div className="space-y-3">
                       {getPersonalizedOptions().map((option, index) => (
@@ -565,12 +560,12 @@ export default function QuizStep() {
                             data-option={option}
                             className={`w-full p-4 text-left rounded-lg border transition-all duration-200 ${
                               selectedAnswer === option
-                                ? "bg-orange-600 text-white border-orange-500"
-                                : "bg-gray-800 text-white border-gray-600 hover:bg-gray-700"
+                                ? "bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-500"
+                                : "bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-pink-400"
                             }`}
                           >
                             <div className="flex items-center">
-                              <div className={`mr-3 ${selectedAnswer === option ? "text-white" : "text-orange-400"}`}>
+                              <div className={`mr-3 ${selectedAnswer === option ? "text-white" : "text-pink-400"}`}>
                                 {getStepIcon(step, index)}
                               </div>
 
@@ -579,7 +574,7 @@ export default function QuizStep() {
                                   selectedAnswer === option ? "border-white bg-white" : "border-gray-400"
                                 }`}
                               >
-                                {selectedAnswer === option && <Check className="w-2 h-2 text-orange-600" />}
+                                {selectedAnswer === option && <Check className="w-2 h-2 text-pink-600" />}
                               </div>
                               <span className="font-medium">{option}</span>
                             </div>
@@ -595,13 +590,6 @@ export default function QuizStep() {
                     </div>
                   )}
 
-                  {currentStep.warning && (
-                    <div className="mt-4 text-center text-red-300 bg-red-900/20 p-3 rounded-lg border border-red-600 flex items-center justify-center gap-2">
-                      <AlertTriangle className="w-4 h-4" />
-                      <p className="text-sm">{currentStep.warning}</p>
-                    </div>
-                  )}
-
                   {selectedAnswer && getPersonalizedOptions().length > 0 && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -610,9 +598,9 @@ export default function QuizStep() {
                     >
                       <Button
                         onClick={handleNext}
-                        className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg"
+                        className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg"
                       >
-                        {step === 12 ? "Ver Resultado" : "Siguiente Pregunta"}
+                        {step === 12 ? "Ver Meu Perfil" : "Próxima Pergunta"}
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </motion.div>
@@ -623,7 +611,7 @@ export default function QuizStep() {
           </Card>
         </motion.div>
 
-        {/* ✅ PROVA SOCIAL SIMPLIFICADA - APENAS UM ELEMENTO */}
+        {/* ✅ PROVA SOCIAL ADAPTADA PARA SOBRANCELHAS */}
         {step > 3 && !currentStep?.autoAdvance && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -631,28 +619,44 @@ export default function QuizStep() {
             transition={{ delay: 0.5 }}
             className="text-center mt-4"
           >
-            {/* Apenas UM elemento de prova social por vez */}
+                        {/* Apenas UM elemento de prova social por vez */}
             {step > 5 ? (
               <p className="text-gray-400 text-sm">
-                {peopleCount} personas completaron hoy
+                �� {peopleCount} mulheres completaram hoje
               </p>
             ) : currentStep?.elements?.counter ? (
               <p className="text-gray-400 text-sm">
-                👥 {peopleCount} {currentStep.elements.counter}
+                👩‍💼 {peopleCount} {currentStep.elements.counter}
               </p>
             ) : null}
           </motion.div>
         )}
+
+        {/* ✅ CONTADOR DE PESSOAS AJUDADAS - ADAPTADO */}
+        {currentStep?.elements?.helpedCounter && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="text-center mt-4"
+          >
+            <div className="bg-pink-900/30 border border-pink-500 rounded-lg p-3 inline-block">
+              <p className="text-pink-300 text-sm font-semibold">
+                ✨ {currentStep.elements.helpedCounter}
+              </p>
+            </div>
+          </motion.div>
+        )}
       </div>
 
-      {/* ✅ MODAIS MANTIDOS */}
+      {/* ✅ MODAIS MANTIDOS E ADAPTADOS */}
       <AnimatePresence>
         {showAnalysis && (
           <LoadingAnalysis
             message={
               currentStep?.elements?.analysisText ||
               currentStep?.elements?.profileAnalysis ||
-              "Analizando tus respuestas..."
+              "Analisando suas respostas..."
             }
             successMessage={currentStep?.elements?.successRate}
           />
@@ -662,6 +666,72 @@ export default function QuizStep() {
       <AnimatePresence>
         {showBonusUnlock && newBonus && <BonusUnlock bonus={newBonus} onComplete={handleBonusUnlockComplete} />}
       </AnimatePresence>
+
+      {/* ✅ ESTILOS ADICIONAIS PARA SOBRANCELHAS */}
+      <style jsx global>{`
+        .scale-102 {
+          transform: scale(1.02) !important;
+          transition: transform 0.15s ease !important;
+        }
+        
+        /* Gradientes específicos para sobrancelhas */
+        .bg-sobrancelha-gradient {
+          background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%) !important;
+        }
+        
+        /* Animações específicas */
+        @keyframes sparkle {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        .sparkle-animation {
+          animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        /* Hover effects para botões de sobrancelhas */
+        .sobrancelha-button:hover {
+          background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+          box-shadow: 0 8px 25px rgba(244, 63, 94, 0.3) !important;
+          transform: translateY(-2px) !important;
+        }
+        
+        /* Efeitos de borda para cards */
+        .sobrancelha-card {
+          border: 1px solid rgba(244, 63, 94, 0.3) !important;
+          box-shadow: 0 4px 15px rgba(244, 63, 94, 0.1) !important;
+        }
+        
+        .sobrancelha-card:hover {
+          border-color: rgba(244, 63, 94, 0.6) !important;
+          box-shadow: 0 8px 25px rgba(244, 63, 94, 0.2) !important;
+        }
+        
+        /* Responsividade específica */
+        @media (max-width: 768px) {
+          .sobrancelha-text {
+            font-size: 0.875rem !important;
+            line-height: 1.25rem !important;
+          }
+          
+          .sobrancelha-title {
+            font-size: 1.25rem !important;
+            line-height: 1.75rem !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .sobrancelha-text {
+            font-size: 0.75rem !important;
+            line-height: 1rem !important;
+          }
+          
+          .sobrancelha-title {
+            font-size: 1.125rem !important;
+            line-height: 1.5rem !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }
