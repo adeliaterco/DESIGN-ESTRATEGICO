@@ -123,8 +123,8 @@ export default function HomePage() {
   return (
     <>
       <head>
-        <link rel="preconnect" href="https://comprarplanseguro.shop" />
-        <link rel="dns-prefetch" href="https://comprarplanseguro.shop" />
+        <link rel="preconnect" href="https://amandateixeiraoficial.com.br" />
+        <link rel="dns-prefetch" href="https://amandateixeiraoficial.com.br" />
         <title>Descubra Seu Potencial de Faturamento com Sobrancelhas</title>
         <meta name="description" content="Quiz gratuito de 2 minutos para descobrir quanto você pode faturar por mês trabalhando com sobrancelhas. Mais de 127.000 mulheres já descobriram!" />
       </head>
@@ -294,7 +294,7 @@ export default function HomePage() {
             {/* LOGO */}
             <div className="logo-container">
               <Image
-                src="https://comprarplanseguro.shop/wp-content/uploads/2025/08/543af5ae-e239-4f03-a3a8-59c53717f3b9.webp"
+                src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-4_42PM.jpeg"
                 alt="Logo Sobrancelhas Expert"
                 width={200}
                 height={120}
