@@ -109,7 +109,7 @@ export const quizSteps = [
       testimonialDisplay: true,
       testimonialName: "Maria C.",
       testimonialText: "Em 3 meses já estava faturando R\$ 4.000/mês trabalhando de casa",
-      testimonialImage: "https://comprarplanseguro.shop/wp-content/uploads/2025/08/Captura-de-Tela-2025-08-08-as-19.01.05.png",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-5_31PM.jpeg",
     },
   },
   {
@@ -134,7 +134,7 @@ export const quizSteps = [
       testimonialDisplay: true,
       testimonialName: "Ana S.",
       testimonialText: "Estava perdida sem rumo. O método me deu direção e confiança. Hoje faturo mais que no meu emprego anterior",
-      testimonialImage: "https://nutricaoalimentos.shop/wp-content/uploads/2025/09/lg-9xvta-canva-couple-in-love-mafv-z4mya0.jpg",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-5_34PM.jpeg",
     },
   },
   {
