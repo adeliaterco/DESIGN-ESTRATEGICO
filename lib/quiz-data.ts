@@ -18,8 +18,8 @@ export const quizSteps = [
   },
   {
     id: 2,
-    question: "QUAL SUA EXPERIÊNCIA COM SOBRANCELHAS?",
-    description: "(Esta informação é crucial para personalizar seu plano de capacitação)",
+    question: "QUAL SUA FAIXA ETÁRIA?",
+    description: "Sua idade nos ajuda a personalizar sua estratégia ideal",
     options: [
       "18-25 anos - Iniciando na vida profissional",
       "26-35 anos - Buscando estabilidade financeira", 
@@ -50,13 +50,13 @@ export const quizSteps = [
   },
   {
     id: 4,
-    question: "QUAL SUA EXPERIÊNCIA ATUAL COM SOBRANCELHAS?",
-    description: "(Seu nível atual define sua estratégia de crescimento)",
+    question: "QUAL SUA EXPERIÊNCIA COM SOBRANCELHAS?",
+    description: "Seu nível atual define sua estratégia de aprendizado",
     options: [
-      "Zero - nunca fiz nem nas minhas",
+      "Nunca fiz nem nas minhas",
       "Só faço as minhas mesmo", 
-      "Já fiz em algumas amigas",
-      "Tenho experiência básica com clientes"
+      "Já fiz em amigas/família",
+      "Tenho experiência com clientes"
     ],
     elements: {
       analysisText: "Calculando seu potencial de faturamento...",
@@ -77,14 +77,12 @@ export const quizSteps = [
   {
     id: 6,
     question: "QUAL SEU MAIOR MEDO EM RELAÇÃO A TRABALHAR COM SOBRANCELHAS?",
-    description: "(Identificar suas objeções é essencial para seu plano de sucesso)",
+    description: "Identificar suas objeções é essencial para seu plano de sucesso",
     options: [
       "😰 Não conseguir clientes",
       "😱 Fazer algo errado e estragar",
       "💰 Não saber como precificar", 
-      "😤 Concorrência muito forte",
-      "🤔 Não ter conhecimento técnico suficiente",
-      "✓ Outro"
+      "🤔 Não ter conhecimento técnico suficiente"
     ],
     elements: {
       profileAnalysis: "Personalizando sua estratégia ideal...",
@@ -98,7 +96,7 @@ export const quizSteps = [
     options: [
       "🏠 Na minha casa",
       "🚗 Na casa das clientes", 
-      "�� Alugar um espaço próprio",
+      "🏢 Alugar um espaço próprio",
       "🏪 Trabalhar em salão parceiro",
       "🚀 Montar meu próprio salão",
       "🤔 Ainda não sei",
@@ -115,12 +113,11 @@ export const quizSteps = [
   {
     id: 8,
     question: "QUANTO VOCÊ PODE INVESTIR HOJE NA SUA NOVA PROFISSÃO?",
-    description: "(Sua capacidade de investimento determina qual método é ideal para você)",
+    description: "Sua capacidade de investimento determina qual método é ideal para você",
     options: [
-      "💰 Até R\$ 100 (investimento mínimo)",
-      "💰 R\$ 100 - R\$ 300 (investimento moderado)",
-      "💰 R\$ 300 - R\$ 500 (investimento sério)", 
-      "💎 R\$ 500+ (investimento premium)",
+      "💰 Até R\$ 50 (investimento inicial)",
+      "💰 R\$ 50 - R\$ 100 (investimento moderado)",
+      "💰 R\$ 100+ (investimento sério)", 
       "🤔 Preciso saber mais antes de investir"
     ],
     bonusUnlock: {
@@ -140,19 +137,15 @@ export const quizSteps = [
   {
     id: 9,
     question: "O QUE MAIS TE MOTIVA A COMEÇAR?",
-    description: "(Sua motivação principal define seu perfil empreendedor)",
+    description: "Sua motivação principal define seu perfil empreendedor",
     subtext: "Sua motivação nos ajuda a personalizar melhor sua estratégia",
     options: [
       "💪 Independência financeira total", 
       "🚀 Sair do emprego atual", 
-      "💄 Ajudar mulheres a se sentirem bonitas", 
       "👑 Ter meu próprio negócio",
-      "🏠 Trabalhar de casa com flexibilidade",
-      "💰 Ganhar mais dinheiro",
-      "🌟 Ser reconhecida como especialista",
-      "✓ Outro motivo"
+      "🏠 Trabalhar de casa com flexibilidade"
     ],
-    note: "Trabalho com mulheres decididas a transformar sua situação financeira. O método foi desenvolvido para quem está preparada para agir.",
+    note: "⏰ Últimas 15 vagas disponíveis hoje para o método completo",
     elements: {
       thermometer: true,
       profileComplete: "85%",
@@ -166,17 +159,17 @@ export const quizSteps = [
     autoAdvance: true,
     elements: {
       expertPhoto: true,
-      expertImage: "https://comprarplanseguro.shop/wp-content/uploads/2025/09/Generated-Image-September-07_-2025-12_00AM-_1_-e1757389439336.webp",
-      autoMessage: "Baseando-me em 7 anos de experiência ajudando mulheres como você...",
+      expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
+      autoMessage: "Baseando-me em 8 anos de experiência ajudando mulheres como você...",
       profileComplete: "90%",
     },
   },
   {
     id: 11,
-    question: "Perfeito. Analisei suas respostas e você tem TUDO para ser uma sobrancelhista de sucesso.",
+    question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma sobrancelhista de sucesso.",
     description: "Baseando-me no seu perfil específico, você pode faturar entre R\$ 3.000 - R\$ 8.000/mês nos próximos 90 dias.",
-    options: ["QUERO VER MEU PERFIL"],
-    note: "Estou aqui para te guiar pessoalmente nesta jornada empreendedora. Nos últimos 7 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas usando este método exclusivo.",
+    options: ["QUERO VER MEU PERFIL AGORA"],
+    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R\$ 19,00 (valor normal R\$ 397). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 7 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
     elements: {
       expertPhoto: true,
       expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
@@ -249,21 +242,21 @@ export const testimonials = [
 ]
 
 export const socialProofMessages = [
-  "Você está entre as 17% mais decididas a empreender",
-  "Seu perfil mostra potencial de faturamento alto", 
-  "Bonificação incluída na sua avaliação",
-  "Você desbloqueou os 2 bônus - valor total de R\$ 344",
-  "87% das mulheres na sua situação conseguiram resultados em menos de 30 dias",
-  "Você está mais comprometida que 73% das pessoas que fizeram este teste",
-  "Seu caso tem características muito promissoras para sobrancelhas",
-  "Avaliação personalizada sendo finalizada",
-  "Estratégia adaptada à sua situação específica", 
-  "Plano de ação personalizado sendo gerado",
-  "Seu potencial de faturamento está sendo calculado",
-  "Perfil de sobrancelhista sendo definido",
-  "Método ideal para seu perfil sendo selecionado",
-  "Oferta personalizada sendo preparada",
-  "Estratégia de crescimento sendo customizada"
+  "⏰ Apenas 12 vagas restantes hoje",
+  "🔥 847 mulheres fizeram este teste nas últimas 24h", 
+  "✅ Você está entre as 17% mais decididas a empreender",
+  "💎 Seu perfil mostra potencial de faturamento alto", 
+  "�� Bonificação incluída na sua avaliação",
+  "🚀 Você desbloqueou os 2 bônus - valor total de R\$ 344",
+  "📊 87% das mulheres na sua situação conseguiram resultados em menos de 30 dias",
+  "💪 Você está mais comprometida que 73% das pessoas que fizeram este teste",
+  "⭐ Seu caso tem características muito promissoras para sobrancelhas",
+  "🎯 Avaliação personalizada sendo finalizada",
+  "📈 Estratégia adaptada à sua situação específica", 
+  "📋 Plano de ação personalizado sendo gerado",
+  "💰 Seu potencial de faturamento está sendo calculado",
+  "👑 Perfil de sobrancelhista sendo definido",
+  "🔥 Método ideal para seu perfil sendo selecionado"
 ]
 
 // Função utilitária para personalizar textos baseados no perfil
@@ -282,7 +275,7 @@ export function getPersonalizedContent(content, userProfile) {
   return content
 }
 
-// Sistema de pontuação para definir perfis
+// Sistema de pontuação para definir perfis - ATUALIZADO
 export function calculateProfile(answers) {
   let score = 0
   let experience = 0
@@ -300,6 +293,13 @@ export function calculateProfile(answers) {
         if (answer.includes("casa")) score += 1
         break
       
+      case 1: // Faixa etária (CORRIGIDO - era index 2)
+        if (answer.includes("18-25")) score += 2
+        if (answer.includes("26-35")) score += 3
+        if (answer.includes("36-45")) score += 2
+        if (answer.includes("45+")) score += 1
+        break
+      
       case 2: // Tempo disponível
         if (answer.includes("1-2")) timeAvailable = 1
         if (answer.includes("3-4")) timeAvailable = 2
@@ -307,11 +307,11 @@ export function calculateProfile(answers) {
         if (answer.includes("integral")) timeAvailable = 4
         break
       
-      case 3: // Experiência
-        if (answer.includes("Zero")) experience = 1
+      case 3: // Experiência (CORRIGIDO)
+        if (answer.includes("Nunca")) experience = 1
         if (answer.includes("minhas")) experience = 2
         if (answer.includes("amigas")) experience = 3
-        if (answer.includes("básica")) experience = 4
+        if (answer.includes("clientes")) experience = 4
         break
       
       case 4: // Meta financeira
@@ -321,18 +321,18 @@ export function calculateProfile(answers) {
         if (answer.includes("10.000")) score += 4
         break
       
-      case 7: // Investimento
-        if (answer.includes("100")) investment = 1
-        if (answer.includes("300")) investment = 2
-        if (answer.includes("500")) investment = 3
-        if (answer.includes("500+")) investment = 4
+      case 7: // Investimento (CORRIGIDO - era index 7)
+        if (answer.includes("50") && !answer.includes("100")) investment = 1
+        if (answer.includes("50 - R\$ 100")) investment = 2
+        if (answer.includes("100+")) investment = 3
+        if (answer.includes("saber mais")) investment = 0
         break
       
-      case 8: // Motivação
+      case 8: // Motivação (CORRIGIDO - era index 8)
         if (answer.includes("Independência")) motivation = 4
         if (answer.includes("Sair")) motivation = 3
-        if (answer.includes("bonitas")) motivation = 2
         if (answer.includes("negócio")) motivation = 4
+        if (answer.includes("flexibilidade")) motivation = 2
         break
     }
   })
@@ -340,7 +340,7 @@ export function calculateProfile(answers) {
   // Definir perfil baseado na pontuação
   const totalScore = score + timeAvailable + experience + investment + motivation
 
-  if (totalScore >= 16 && timeAvailable >= 3 && investment >= 3) {
+  if (totalScore >= 16 && timeAvailable >= 3 && investment >= 2) {
     return "EMPREENDEDORA_NATA"
   } else if (totalScore >= 12 && experience <= 2 && motivation >= 3) {
     return "INICIANTE_DETERMINADA"  
@@ -351,7 +351,7 @@ export function calculateProfile(answers) {
   }
 }
 
-// Perfis de resultado
+// Perfis de resultado - PREÇOS UNIFICADOS R\$ 19
 export const profiles = {
   INICIANTE_DETERMINADA: {
     title: "INICIANTE DETERMINADA",
@@ -365,9 +365,9 @@ export const profiles = {
     challenge: "Falta de conhecimento técnico",
     solution: "MÉTODO SOBRANCELHA ZERO AO SUCESSO",
     offer: {
-      price: 97,
+      price: 19,
       originalPrice: 397,
-      bonus: "Kit Iniciante Completo"
+      bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
   
@@ -383,9 +383,9 @@ export const profiles = {
     challenge: "Escalar o negócio rapidamente",
     solution: "MÉTODO IMPÉRIO SOBRANCELHAS",
     offer: {
-      price: 197,
+      price: 19,
       originalPrice: 697,
-      bonus: "Mentoria Grupo VIP"
+      bonus: "Mentoria Grupo VIP + Todos os Bônus"
     }
   },
   
@@ -401,9 +401,9 @@ export const profiles = {
     challenge: "Otimizar o tempo disponível",
     solution: "MÉTODO RENDA EXTRA TURBINADA",
     offer: {
-      price: 67,
+      price: 19,
       originalPrice: 297,
-      bonus: "Agenda Otimizada"
+      bonus: "Agenda Otimizada + Kit Completo"
     }
   },
   
@@ -419,9 +419,9 @@ export const profiles = {
     challenge: "Excesso de análise, pouca ação",
     solution: "MÉTODO PASSO A PASSO SEGURO",
     offer: {
-      price: 1,
+      price: 19,
       originalPrice: 197,
-      bonus: "Teste por 7 dias + Garantia estendida"
+      bonus: "Garantia Estendida + Suporte VIP"
     }
   }
 }
