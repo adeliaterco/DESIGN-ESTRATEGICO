@@ -76,7 +76,7 @@ export default function ResultPageOptimized() {
     }
   ]
 
-  // ✅ PERFIS CORRIGIDOS COM PREÇO ÚNICO R$ 19
+  // ✅ PERFIS CORRIGIDOS COM PREÇO ÚNICO R$ 37
   const profiles = {
     INICIANTE_DETERMINADA: {
       title: "INICIANTE DETERMINADA",
@@ -92,9 +92,9 @@ export default function ResultPageOptimized() {
       challenge: "Falta de conhecimento técnico",
       solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
-        price: 19,
+        price: 37,
         originalPrice: 97,
-        discount: 78,
+        discount: 60,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
@@ -122,9 +122,9 @@ export default function ResultPageOptimized() {
       challenge: "Escalar o negócio rapidamente",
       solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
-        price: 19,
+        price: 37,
         originalPrice: 97,
-        discount: 78,
+        discount: 60,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
@@ -152,9 +152,9 @@ export default function ResultPageOptimized() {
       challenge: "Otimizar o tempo disponível",
       solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
-        price: 19,
+        price: 37,
         originalPrice: 97,
-        discount: 78,
+        discount: 60,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
@@ -182,9 +182,9 @@ export default function ResultPageOptimized() {
       challenge: "Excesso de análise, pouca ação",
       solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
-        price: 19,
-        originalPrice: 47,
-        discount: 78,
+        price: 37,
+        originalPrice: 97,
+        discount: 60,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
@@ -485,7 +485,7 @@ export default function ResultPageOptimized() {
           >
             <Play className="w-4 h-4 mr-2 flex-shrink-0" />
             <span className={isMobile ? "truncate" : ""}>
-              {isMobile ? "QUERO ESSE RESULTADO - R$ 19" : "QUERO ESSE RESULTADO AGORA - R$ 19"}
+              {isMobile ? "QUERO ESSE RESULTADO - R$ 37" : "QUERO ESSE RESULTADO AGORA - R$ 37"}
             </span>
             <ArrowRight className="w-4 h-4 ml-2 flex-shrink-0" />
           </ResponsiveCTA>
@@ -750,7 +750,7 @@ export default function ResultPageOptimized() {
 
           <div className="bg-gray-800 border-l-2 sm:border-l-4 border-orange-500 p-3 sm:p-4 rounded-r-lg">
             <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2 flex items-center">
-              💰 "R$ 19 é muito barato, deve ser enganação..."
+              💰 "R$ 37 é muito barato, deve ser enganação..."
             </ResponsiveText>
             <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> É uma oferta especial 
@@ -1077,11 +1077,11 @@ export default function ResultPageOptimized() {
                   {profileData.solution}
                 </ResponsiveText>
 
-                {/* ✅ PREÇO UNIFICADO R$ 19 OTIMIZADO */}
+                {/* ✅ PREÇO UNIFICADO R$ 37 OTIMIZADO */}
                 <div className="bg-black/20 rounded-lg p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 w-full">
                   <div className="text-center mb-3 sm:mb-4">
                     <div className="text-3xl sm:text-4xl md:text-6xl font-black text-yellow-300 mb-2">
-                      R$ 19
+                      R$ 37
                     </div>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
                       <span className="line-through text-gray-400 text-base sm:text-lg md:text-xl">R$ {profileData.offer.originalPrice}</span>
@@ -1122,7 +1122,7 @@ export default function ResultPageOptimized() {
                   >
                     <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 animate-pulse" />
                     <span className="text-center leading-tight">
-                      {isMobile ? "QUERO AGORA - R$ 19" : "QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R$ 19"}
+                      {isMobile ? "QUERO AGORA - R$ 37" : "QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R$ 37"}
                     </span>
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
                   </ResponsiveCTA>
@@ -1200,7 +1200,7 @@ export default function ResultPageOptimized() {
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
                   <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
-                    Por que apenas R$ 19? Não é muito barato?
+                    Por que apenas R$ 37? Não é muito barato?
                   </ResponsiveText>
                   <ResponsiveText variant="small" className="text-gray-300">
                     É uma oferta especial de lançamento para seu perfil específico. O valor normal é R$ {profileData.offer.originalPrice}. 
@@ -1253,7 +1253,7 @@ export default function ResultPageOptimized() {
           <div className="max-w-4xl mx-auto text-center w-full">
             <div className="bg-black/20 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 border border-yellow-400 sm:border-2 md:border-4 w-full">
               <ResponsiveText variant="h2" className="text-white mb-3 sm:mb-4">
-                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R$ 19
+                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R$ 37
               </ResponsiveText>
               <ResponsiveText variant="body" className="text-white mb-3 sm:mb-4 md:mb-6 font-semibold">
                 Depois volta para R$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida para seu perfil.
@@ -1302,7 +1302,7 @@ export default function ResultPageOptimized() {
                   className="border border-white sm:border-2 md:border-4"
                 >
                   <span className="text-center leading-tight">
-                    {isMobile ? "GARANTIR VAGA - R$ 19" : "GARANTIR ÚLTIMA VAGA - R$ 19"}
+                    {isMobile ? "GARANTIR VAGA - R$ 37" : "GARANTIR ÚLTIMA VAGA - R$ 37"}
                   </span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
                 </ResponsiveCTA>

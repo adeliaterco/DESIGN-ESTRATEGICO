@@ -169,7 +169,7 @@ export const quizSteps = [
     question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma Designer de sucesso.",
     description: "Baseando-me no seu perfil específico, você pode faturar entre R$ 3.000 - R$ 8.000/mês nos próximos 90 dias.",
     options: ["QUERO VER MEU PERFIL AGORA"],
-    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R$ 19,00 (valor normal R$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
+    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R$ 37 (valor normal R$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
     elements: {
       expertPhoto: true,
       expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
@@ -351,7 +351,7 @@ export function calculateProfile(answers) {
   }
 }
 
-// Perfis de resultado - PREÇOS UNIFICADOS R$ 19
+// Perfis de resultado - PREÇOS UNIFICADOS R$ 37
 export const profiles = {
   INICIANTE_DETERMINADA: {
     title: "INICIANTE DETERMINADA",
@@ -365,7 +365,7 @@ export const profiles = {
     challenge: "Falta de conhecimento técnico",
     solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
     offer: {
-      price: 19,
+      price: 37,
       originalPrice: 97,
       bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
@@ -383,8 +383,8 @@ export const profiles = {
     challenge: "Escalar o negócio rapidamente",
     solution: "MÉTODO IMPÉRIO SOBRANCELHAS",
     offer: {
-      price: 19,
-      originalPrice: 697,
+      price: 37,
+      originalPrice: 97,
       bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
@@ -401,8 +401,8 @@ export const profiles = {
     challenge: "Otimizar o tempo disponível",
     solution: "MÉTODO RENDA EXTRA TURBINADA",
     offer: {
-      price: 19,
-      originalPrice: 297,
+      price: 37,
+      originalPrice: 97,
       bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
@@ -419,7 +419,7 @@ export const profiles = {
     challenge: "Excesso de análise, pouca ação",
     solution: "MÉTODO PASSO A PASSO SEGURO",
     offer: {
-      price: 19,
+      price: 37,
       originalPrice: 47,
       bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
