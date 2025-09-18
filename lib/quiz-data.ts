@@ -68,10 +68,10 @@ export const quizSteps = [
     question: "QUAL SUA META DE FATURAMENTO MENSAL?",
     description: "(Seu objetivo financeiro define nossa estratégia)",
     options: [
-      "R\$ 1.000 - R\$ 3.000 (renda extra)", 
-      "R\$ 3.000 - R\$ 6.000 (complementar renda)",
-      "R\$ 6.000 - R\$ 10.000 (renda principal)", 
-      "R\$ 10.000+ (quero ser referência)"
+      "R$ 1.000 - R$ 3.000 (renda extra)", 
+      "R$ 3.000 - R$ 6.000 (complementar renda)",
+      "R$ 6.000 - R$ 10.000 (renda principal)", 
+      "R$ 10.000+ (quero ser referência)"
     ],
   },
   {
@@ -106,7 +106,7 @@ export const quizSteps = [
       profileComplete: "62%",
       testimonialDisplay: true,
       testimonialName: "Maria C.",
-      testimonialText: "Em 3 meses já estava faturando R\$ 4.000/mês trabalhando de casa",
+      testimonialText: "Em 3 meses já estava faturando R$ 4.000/mês trabalhando de casa",
       testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_4283.webp",
     },
   },
@@ -115,9 +115,9 @@ export const quizSteps = [
     question: "QUANTO VOCÊ PODE INVESTIR HOJE NA SUA NOVA PROFISSÃO?",
     description: "Sua capacidade de investimento determina qual método é ideal para você",
     options: [
-      "💰 Até R\$ 50 (investimento inicial)",
-      "💰 R\$ 50 - R\$ 100 (investimento moderado)",
-      "💰 R\$ 100+ (investimento sério)", 
+      "💰 Até R$ 50 (investimento inicial)",
+      "💰 R$ 50 - R$ 100 (investimento moderado)",
+      "💰 R$ 100+ (investimento sério)", 
       "🤔 Preciso saber mais antes de investir"
     ],
     bonusUnlock: {
@@ -167,9 +167,9 @@ export const quizSteps = [
   {
     id: 11,
     question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma sobrancelhista de sucesso.",
-    description: "Baseando-me no seu perfil específico, você pode faturar entre R\$ 3.000 - R\$ 8.000/mês nos próximos 90 dias.",
+    description: "Baseando-me no seu perfil específico, você pode faturar entre R$ 3.000 - R$ 8.000/mês nos próximos 90 dias.",
     options: ["QUERO VER MEU PERFIL AGORA"],
-    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R\$ 19,00 (valor normal R\$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
+    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R$ 19,00 (valor normal R$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
     elements: {
       expertPhoto: true,
       expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
@@ -211,7 +211,7 @@ export const bonuses = [
 export const testimonials = [
   {
     name: "Maria C., 29 anos",
-    text: "Em 3 meses já estava faturando R\$ 4.000/mês trabalhando de casa",
+    text: "Em 3 meses já estava faturando R$ 4.000/mês trabalhando de casa",
     rating: 5,
   },
   {
@@ -231,7 +231,7 @@ export const testimonials = [
   },
   {
     name: "Fernanda M., 26 anos",
-    text: "Saí do zero total para R\$ 6.000/mês em 4 meses. Hoje sou referência na minha cidade",
+    text: "Saí do zero total para R$ 6.000/mês em 4 meses. Hoje sou referência na minha cidade",
     rating: 5,
   },
   {
@@ -247,7 +247,7 @@ export const socialProofMessages = [
   "✅ Você está entre as 17% mais decididas a empreender",
   "💎 Seu perfil mostra potencial de faturamento alto", 
   "�� Bonificação incluída na sua avaliação",
-  "🚀 Você desbloqueou os 2 bônus - valor total de R\$ 344",
+  "🚀 Você desbloqueou os 2 bônus - valor total de R$ 344",
   "📊 87% das mulheres na sua situação conseguiram resultados em menos de 30 dias",
   "💪 Você está mais comprometida que 73% das pessoas que fizeram este teste",
   "⭐ Seu caso tem características muito promissoras para sobrancelhas",
@@ -323,7 +323,7 @@ export function calculateProfile(answers) {
       
       case 7: // Investimento (CORRIGIDO - era index 7)
         if (answer.includes("50") && !answer.includes("100")) investment = 1
-        if (answer.includes("50 - R\$ 100")) investment = 2
+        if (answer.includes("50 - R$ 100")) investment = 2
         if (answer.includes("100+")) investment = 3
         if (answer.includes("saber mais")) investment = 0
         break
@@ -351,19 +351,19 @@ export function calculateProfile(answers) {
   }
 }
 
-// Perfis de resultado - PREÇOS UNIFICADOS R\$ 19
+// Perfis de resultado - PREÇOS UNIFICADOS R$ 19
 export const profiles = {
   INICIANTE_DETERMINADA: {
     title: "INICIANTE DETERMINADA",
-    subtitle: "Potencial de Faturamento: R\$ 3.000 - R\$ 6.000/mês",
+    subtitle: "Potencial de Faturamento: R$ 3.000 - R$ 6.000/mês",
     description: "Você tem TUDO para ser uma sobrancelhista de sucesso!",
     characteristics: [
       "✅ Seu perfil mostra determinação e foco",
-      "✅ Com o método certo, pode faturar R\$ 6.000/mês em 90 dias",
+      "✅ Com o método certo, pode faturar R$ 6.000/mês em 90 dias",
       "✅ Tem perfil ideal para crescimento rápido"
     ],
     challenge: "Falta de conhecimento técnico",
-    solution: "MÉTODO SOBRANCELHA ZERO AO SUCESSO",
+    solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
     offer: {
       price: 19,
       originalPrice: 97,
@@ -373,7 +373,7 @@ export const profiles = {
   
   EMPREENDEDORA_NATA: {
     title: "EMPREENDEDORA NATA", 
-    subtitle: "Potencial de Faturamento: R\$ 8.000 - R\$ 15.000/mês",
+    subtitle: "Potencial de Faturamento: R$ 8.000 - R$ 15.000/mês",
     description: "VOCÊ É UMA MÁQUINA DE FAZER DINHEIRO!",
     characteristics: [
       "🔥 Seu perfil indica potencial para ser TOP 1%",
@@ -385,13 +385,13 @@ export const profiles = {
     offer: {
       price: 19,
       originalPrice: 697,
-      bonus: "Mentoria Grupo VIP + Todos os Bônus"
+      bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
   
   RENDA_EXTRA_INTELIGENTE: {
     title: "RENDA EXTRA INTELIGENTE",
-    subtitle: "Potencial de Faturamento: R\$ 2.000 - R\$ 4.000/mês", 
+    subtitle: "Potencial de Faturamento: R$ 2.000 - R$ 4.000/mês", 
     description: "VOCÊ ESCOLHEU O CAMINHO CERTO!",
     characteristics: [
       "💡 Sobrancelhas é perfeito para renda extra",
@@ -403,13 +403,13 @@ export const profiles = {
     offer: {
       price: 19,
       originalPrice: 297,
-      bonus: "Agenda Otimizada + Kit Completo"
+      bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
   
   PESQUISADORA_CAUTELOSA: {
     title: "PESQUISADORA CAUTELOSA",
-    subtitle: "Potencial de Faturamento: R\$ 1.000 - R\$ 3.000/mês",
+    subtitle: "Potencial de Faturamento: R$ 1.000 - R$ 3.000/mês",
     description: "SUA CAUTELA É SUA FORÇA!",
     characteristics: [
       "🎯 Você não toma decisões impulsivas", 
@@ -421,7 +421,7 @@ export const profiles = {
     offer: {
       price: 19,
       originalPrice: 47,
-      bonus: "Garantia Estendida + Suporte VIP"
+      bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   }
 }
