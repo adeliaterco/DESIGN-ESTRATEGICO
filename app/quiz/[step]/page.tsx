@@ -59,7 +59,7 @@ export default function QuizStep() {
   const [showAnalysis, setShowAnalysis] = useState(false)
   const [newBonus, setNewBonus] = useState<any>(null)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [peopleCount, setPeopleCount] = useState(3)
+  const [peopleCount, setPeopleCount] = useState(113)
   const [userProfile, setUserProfile] = useState<string>("")
 
   const currentStep = quizSteps[step - 1]
