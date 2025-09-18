@@ -94,7 +94,7 @@ export default function ResultPageOptimized() {
       offer: {
         price: 19,
         originalPrice: 97,
-        discount: 378,
+        discount: 78,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
@@ -123,16 +123,16 @@ export default function ResultPageOptimized() {
       solution: "MÉTODO IMPÉRIO SOBRANCELHAS",
       offer: {
         price: 19,
-        originalPrice: 697,
-        discount: 678,
+        originalPrice: 97,
+        discount: 78,
         bonus: "Mentoria Grupo VIP + Todos os Bônus",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
           "✓ Agenda Otimizada Premium (R$ 31)",
-          "✓ Mentoria Grupo VIP (R$ 297)",
           "✓ Suporte VIP por 60 dias",
+          "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
         ]
       }
@@ -153,8 +153,8 @@ export default function ResultPageOptimized() {
       solution: "MÉTODO RENDA EXTRA TURBINADA",
       offer: {
         price: 19,
-        originalPrice: 297,
-        discount: 278,
+        originalPrice: 97,
+        discount: 78,
         bonus: "Agenda Otimizada + Kit Completo",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
@@ -184,7 +184,7 @@ export default function ResultPageOptimized() {
       offer: {
         price: 19,
         originalPrice: 47,
-        discount: 178,
+        discount: 78,
         bonus: "Garantia Estendida + Suporte VIP",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
