@@ -70,7 +70,7 @@ export default function ResultPageOptimized() {
     {
       id: 3,
       modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/tree.webp",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova3.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova3-1.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 3",
       testimonialAlt: "Depoimento de aluna satisfeita",
     }
@@ -359,13 +359,6 @@ export default function ResultPageOptimized() {
                         className="w-full h-full object-cover rounded-lg"
                         loading="lazy"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 sm:p-3">
-                        <ResponsiveText variant="small" className="text-green-400 font-bold mb-1">
-                          ✅ ALUNA APROVADA
-                        </ResponsiveText>
-                        <ResponsiveText variant="small" className="text-white font-bold">
-                          Resultado em 30 dias
-                        </ResponsiveText>
                       </div>
                     </motion.div>
                   </AnimatePresence>
