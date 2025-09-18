@@ -90,7 +90,7 @@ export default function ResultPageOptimized() {
         "✅ Tem perfil ideal para crescimento rápido"
       ],
       challenge: "Falta de conhecimento técnico",
-      solution: "MÉTODO SOBRANCELHA ZERO AO SUCESSO",
+      solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
         price: 19,
         originalPrice: 97,
