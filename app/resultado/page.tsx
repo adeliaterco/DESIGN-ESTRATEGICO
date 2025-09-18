@@ -93,14 +93,14 @@ export default function ResultPageOptimized() {
       solution: "MÉTODO SOBRANCELHA ZERO AO SUCESSO",
       offer: {
         price: 19,
-        originalPrice: 397,
+        originalPrice: 97,
         discount: 378,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
           "✓ Método completo personalizado para seu perfil",
-          "✓ Kit Iniciante Completo (R$ 197)",
-          "✓ Agenda Otimizada Premium (R$ 147)",
+          "✓ Kit Iniciante Completo (R$ 47)",
+          "✓ Agenda Otimizada Premium (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -129,8 +129,8 @@ export default function ResultPageOptimized() {
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
           "✓ Método completo personalizado para seu perfil",
-          "✓ Kit Iniciante Completo (R$ 197)",
-          "✓ Agenda Otimizada Premium (R$ 147)",
+          "✓ Kit Iniciante Completo (R$ 47)",
+          "✓ Agenda Otimizada Premium (R$ 31)",
           "✓ Mentoria Grupo VIP (R$ 297)",
           "✓ Suporte VIP por 60 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -159,8 +159,8 @@ export default function ResultPageOptimized() {
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
           "✓ Método completo personalizado para seu perfil",
-          "✓ Kit Iniciante Completo (R$ 197)",
-          "✓ Agenda Otimizada Premium (R$ 147)",
+          "✓ Kit Iniciante Completo (R$ 47)",
+          "✓ Agenda Otimizada Premium (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -183,14 +183,14 @@ export default function ResultPageOptimized() {
       solution: "MÉTODO PASSO A PASSO SEGURO",
       offer: {
         price: 19,
-        originalPrice: 197,
+        originalPrice: 47,
         discount: 178,
         bonus: "Garantia Estendida + Suporte VIP",
         paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
         includes: [
           "✓ Método completo personalizado para seu perfil",
-          "✓ Kit Iniciante Completo (R$ 197)",
-          "✓ Agenda Otimizada Premium (R$ 147)",
+          "✓ Kit Iniciante Completo (R$ 47)",
+          "✓ Agenda Otimizada Premium (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia estendida de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -537,7 +537,7 @@ export default function ResultPageOptimized() {
           <CountdownTimer minutes={15} seconds={0} />
         </div>
         <ResponsiveText variant="small" className="text-red-300 font-bold">
-          ⚠️ Após este horário, volta para R$ {profileData?.offer?.originalPrice || '397'}
+          ⚠️ Após este horário, volta para R$ {profileData?.offer?.originalPrice || '97'}
         </ResponsiveText>
       </div>
 
@@ -754,7 +754,7 @@ export default function ResultPageOptimized() {
             </ResponsiveText>
             <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> É uma oferta especial 
-              exclusiva para seu perfil. O valor normal é R$ {profileData?.offer?.originalPrice || '397'}. 
+              exclusiva para seu perfil. O valor normal é R$ {profileData?.offer?.originalPrice || '97'}. 
               Estou testando esta estratégia por apenas 48 horas para validar o método.
             </ResponsiveText>
           </div>
