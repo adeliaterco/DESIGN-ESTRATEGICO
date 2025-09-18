@@ -260,7 +260,7 @@ export default function HomePage() {
           {/* HEADLINE DIRETA */}
           <h1 className="headline">
             <span className="destaque">89%</span> das mulheres faturam<br />
-            <span style={{color: "#FFD700"}}>R\$ 3-8k/mês</span> com sobrancelhas
+            <span style={{color: "#FFD700"}}>R$ 3-8k/mês</span> com sobrancelhas
           </h1>
 
           {/* SUBTÍTULO FOCADO */}
