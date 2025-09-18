@@ -100,7 +100,7 @@ export default function ResultPageOptimized() {
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
-          "✓ Agenda Otimizada Premium (R$ 31)",
+          "✓ Como Atrair Suas Primeiras 10 Clientes (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -130,7 +130,7 @@ export default function ResultPageOptimized() {
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
-          "✓ Agenda Otimizada Premium (R$ 31)",
+          "✓ Como Atrair Suas Primeiras 10 Clientes (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -160,7 +160,7 @@ export default function ResultPageOptimized() {
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
-          "✓ Agenda Otimizada Premium (R$ 31)",
+          "✓ Como Atrair Suas Primeiras 10 Clientes (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia total de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
@@ -190,7 +190,7 @@ export default function ResultPageOptimized() {
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
-          "✓ Agenda Otimizada Premium (R$ 31)",
+          "✓ Como Atrair Suas Primeiras 10 Clientes (R$ 31)",
           "✓ Suporte VIP por 60 dias",
           "✓ Garantia estendida de 30 dias",
           "✓ Acesso vitalício ao conteúdo"
