@@ -478,7 +478,7 @@ export default function QuizStep() {
                   <div className="bg-pink-900/30 border border-pink-500 rounded-lg p-3">
                     <div className="flex items-center justify-center gap-2">
                       <Sparkles className="w-5 h-5 text-pink-400" />
-                      <span className="text-pink-300 font-semibold">Perfil de Sobrancelhista Pronto</span>
+                      <span className="text-pink-300 font-semibold">Perfil de Designer Pronto</span>
                     </div>
                   </div>
                 </motion.div>
