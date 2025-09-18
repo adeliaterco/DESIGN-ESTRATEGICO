@@ -42,9 +42,6 @@ export default function ResultPageOptimized() {
       testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova1.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 1",
       testimonialAlt: "Depoimento de aluna satisfeita",
-      clientName: "Ana Carolina",
-      clientProfile: "INICIANTE DETERMINADA",
-      result: "R$ 4.500 no primeiro mês"
     },
     {
       id: 2,
@@ -52,9 +49,6 @@ export default function ResultPageOptimized() {
       testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova2.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 2",
       testimonialAlt: "Depoimento de aluna satisfeita",
-      clientName: "Maria Santos",
-      clientProfile: "RENDA EXTRA INTELIGENTE",
-      result: "R$ 3.200 trabalhando fins de semana"
     },
     {
       id: 3,
@@ -62,9 +56,6 @@ export default function ResultPageOptimized() {
       testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova3.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 3",
       testimonialAlt: "Depoimento de aluna satisfeita",
-      clientName: "Carmen Lima",
-      clientProfile: "EMPREENDEDORA NATA",
-      result: "R$ 8.900 em 60 dias"
     }
   ]
 
