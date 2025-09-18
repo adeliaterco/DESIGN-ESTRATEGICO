@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Shield,
   ArrowRight,
@@ -15,7 +15,9 @@ import {
   Target,
   Zap,
   Award,
-  TrendingUp
+  TrendingUp,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -28,7 +30,43 @@ export default function ResultPageOptimized() {
   const [spotsLeft, setSpotsLeft] = useState(7)
   const [userProfile, setUserProfile] = useState("")
   const [profileData, setProfileData] = useState(null)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const contentRef = useRef(null)
+
+  // ✅ DADOS DO CARROSSEL INTEGRADO
+  const carouselData = [
+    {
+      id: 1,
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_4639-scaled.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5696.webp",
+      modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 1",
+      testimonialAlt: "Depoimento de aluna satisfeita",
+      clientName: "Ana Carolina",
+      clientProfile: "INICIANTE DETERMINADA",
+      result: "R$ 4.500 no primeiro mês"
+    },
+    {
+      id: 2,
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5559-scaled.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5697.webp",
+      modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 2",
+      testimonialAlt: "Depoimento de aluna satisfeita",
+      clientName: "Maria Santos",
+      clientProfile: "RENDA EXTRA INTELIGENTE",
+      result: "R$ 3.200 trabalhando fins de semana"
+    },
+    {
+      id: 3,
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5125-scaled.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Post-Instagram-Depoimento-de-Clientes-Feedback-Moderno-Marrom.png.webp",
+      modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 3",
+      testimonialAlt: "Depoimento de aluna satisfeita",
+      clientName: "Carmen Lima",
+      clientProfile: "EMPREENDEDORA NATA",
+      result: "R$ 8.900 em 60 dias"
+    }
+  ]
 
   // ✅ PERFIS CORRIGIDOS COM PREÇO ÚNICO R$ 19
   const profiles = {
@@ -153,6 +191,207 @@ export default function ResultPageOptimized() {
     }
   }
 
+  // ✅ COMPONENTE: CARROSSEL INTEGRADO OTIMIZADO
+  const IntegratedCarousel = () => {
+    const nextSlide = () => {
+      setCurrentSlide((prev) => (prev + 1) % carouselData.length)
+    }
+
+    const prevSlide = () => {
+      setCurrentSlide((prev) => (prev - 1 + carouselData.length) % carouselData.length)
+    }
+
+    const goToSlide = (index) => {
+      setCurrentSlide(index)
+    }
+
+    const currentData = carouselData[currentSlide]
+
+    return (
+      <div className="w-full max-w-4xl mx-auto">
+        <div 
+          className="relative bg-black rounded-xl sm:rounded-2xl p-2 sm:p-4 border-2 border-orange-500 shadow-2xl overflow-hidden"
+          onMouseEnter={() => setIsCarouselPaused(true)}
+          onMouseLeave={() => setIsCarouselPaused(false)}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 animate-pulse"></div>
+          
+          <div className="relative z-10">
+            {/* Desktop Layout */}
+            <div className="hidden md:block">
+              <div className="grid grid-cols-2 gap-4 h-80">
+                {/* Lado Esquerdo - Modelo */}
+                <div className="relative overflow-hidden rounded-lg">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`model-${currentSlide}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.modelImage}
+                        alt={currentData.modelAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <p className="text-white font-bold text-sm">
+                          ✨ RESULTADO PROFISSIONAL
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Lado Direito - Depoimento */}
+                <div className="relative overflow-hidden rounded-lg">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`testimonial-${currentSlide}`}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.testimonialImage}
+                        alt={currentData.testimonialAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <p className="text-green-400 font-bold text-sm mb-1">
+                          ✅ {currentData.clientProfile}
+                        </p>
+                        <p className="text-white font-bold text-xs">
+                          {currentData.clientName} - {currentData.result}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Layout */}
+            <div className="md:hidden">
+              <div className="space-y-4">
+                {/* Modelo em cima */}
+                <div className="relative overflow-hidden rounded-lg h-48">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`model-mobile-${currentSlide}`}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.modelImage}
+                        alt={currentData.modelAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                        <p className="text-white font-bold text-sm">
+                          ✨ RESULTADO PROFISSIONAL
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Depoimento embaixo */}
+                <div className="relative overflow-hidden rounded-lg h-48">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`testimonial-mobile-${currentSlide}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.testimonialImage}
+                        alt={currentData.testimonialAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                        <p className="text-green-400 font-bold text-sm mb-1">
+                          ✅ {currentData.clientProfile}
+                        </p>
+                        <p className="text-white font-bold text-xs">
+                          {currentData.clientName} - {currentData.result}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            {/* Controles do Carrossel */}
+            <div className="absolute top-1/2 left-2 transform -translate-y-1/2">
+              <button
+                onClick={prevSlide}
+                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+                aria-label="Slide anterior"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
+              <button
+                onClick={nextSlide}
+                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
+                aria-label="Próximo slide"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Indicadores */}
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {carouselData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentSlide 
+                      ? 'bg-orange-500 scale-125' 
+                      : 'bg-white/50 hover:bg-white/70'
+                  }`}
+                  aria-label={`Ir para slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA abaixo do carrossel */}
+        <div className="text-center mt-6">
+          <Button
+            onClick={handlePurchase}
+            className={`w-full max-w-md mx-auto bg-gradient-to-r ${profileData?.color || 'from-orange-500 to-red-600'} hover:opacity-90 text-white font-bold py-3 px-6 rounded-full text-base shadow-lg transition-all duration-300 min-h-[48px] flex items-center justify-center`}
+            onTouchStart={handleTouchFeedback}
+          >
+            <Play className="w-4 h-4 mr-2 flex-shrink-0" />
+            <span className="truncate">QUERO ESSE RESULTADO - R$ 19</span>
+            <ArrowRight className="w-4 h-4 ml-2 flex-shrink-0" />
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   // ✅ COMPONENTE: PROVA SOCIAL EM TEMPO REAL
   const LiveSocialProof = () => {
     const [recentPurchases] = useState([
@@ -194,7 +433,7 @@ export default function ResultPageOptimized() {
           <CountdownTimer minutes={15} seconds={0} />
         </div>
         <p className="text-red-300 text-sm font-bold">
-          ⚠️ Após este horário, volta para R$ {profileData.offer.originalPrice}
+          ⚠️ Após este horário, volta para R$ {profileData?.offer?.originalPrice || '397'}
         </p>
       </div>
 
@@ -233,7 +472,7 @@ export default function ResultPageOptimized() {
           
           <div className="bg-red-900/50 border-2 border-red-500 rounded-lg p-4 mb-6">
             <h3 className="text-lg font-bold text-red-300 mb-3">
-              {profileData.challenge}
+              {profileData?.challenge || "Falta de conhecimento técnico"}
             </h3>
             <p className="text-white text-sm sm:text-base">
               Este é exatamente o motivo pelo qual 87% das pessoas com seu perfil 
@@ -246,7 +485,7 @@ export default function ResultPageOptimized() {
               🎯 SUA SOLUÇÃO PERSONALIZADA:
             </h3>
             <p className="text-white text-sm sm:text-base">
-              <span className="text-green-300 font-bold">{profileData.solution}</span> - 
+              <span className="text-green-300 font-bold">{profileData?.solution || "MÉTODO PERSONALIZADO"}</span> - 
               O método que transforma seu maior desafio em sua maior vantagem.
             </p>
           </div>
@@ -360,7 +599,7 @@ export default function ResultPageOptimized() {
               <div className="text-4xl mb-4">👑</div>
               <h3 className="text-xl font-bold text-white mb-2">90 DIAS</h3>
               <p className="text-gray-300 text-sm">
-                Referência na cidade e R$ {getEarningsValue(profileData.subtitle)}+ mensais
+                Referência na cidade e R$ {getEarningsValue(profileData?.subtitle || "R$ 6.000")}+ mensais
               </p>
               <div className="mt-4 bg-green-600 rounded-full p-2">
                 <Crown className="w-5 h-5 text-white mx-auto" />
@@ -409,7 +648,7 @@ export default function ResultPageOptimized() {
             </h3>
             <p className="text-white text-sm">
               <span className="text-green-400 font-bold">RESPOSTA:</span> É uma oferta especial 
-              exclusiva para seu perfil. O valor normal é R$ {profileData.offer.originalPrice}. 
+              exclusiva para seu perfil. O valor normal é R$ {profileData?.offer?.originalPrice || '397'}. 
               Estou testando esta estratégia por apenas 48 horas para validar o método.
             </p>
           </div>
@@ -439,6 +678,16 @@ export default function ResultPageOptimized() {
       </div>
     </div>
   )
+
+  // ✅ Auto-play do carrossel
+  useEffect(() => {
+    if (!isCarouselPaused) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % carouselData.length)
+      }, 6000) // 6 segundos
+      return () => clearInterval(interval)
+    }
+  }, [isCarouselPaused, carouselData.length])
 
   useEffect(() => {
     const savedProfile = localStorage.getItem("userProfile") || "INICIANTE_DETERMINADA"
@@ -599,64 +848,26 @@ export default function ResultPageOptimized() {
         {/* ✅ SEÇÃO 3: AUTORIDADE/CREDIBILIDADE */}
         <AuthoritySection />
 
-        {/* ✅ SEÇÃO 4: PROVA SOCIAL FORTE */}
+        {/* ✅ SEÇÃO 4: PROVA SOCIAL FORTE COM CARROSSEL INTEGRADO */}
         <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-black to-gray-900 w-full">
           <div className="max-w-4xl mx-auto w-full">
             <div className="text-center mb-6">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 max-w-full break-words">
-                <span className="text-orange-400">DEPOIMENTO REAL</span> DE QUEM TINHA SEU PERFIL
+                <span className="text-orange-400">RESULTADOS REAIS</span> DE QUEM TINHA SEU PERFIL
               </h3>
               <p className="text-gray-300 text-sm sm:text-base break-words">
-                Veja a transformação de alguém com o mesmo perfil que você
+                Veja as transformações de alunas com o mesmo perfil que você
               </p>
             </div>
 
             {/* ✅ PROVA SOCIAL EM TEMPO REAL */}
             <LiveSocialProof />
 
-            <div className="flex justify-center mb-6 sm:mb-8 w-full">
-              <div className="w-full max-w-xs">
-                <div className="relative bg-black rounded-xl sm:rounded-2xl p-2 border-2 border-orange-500 shadow-xl overflow-hidden w-full">
-                  
-                  <div className="flex items-center p-2 pb-1">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-orange-400 overflow-hidden mr-2 flex-shrink-0">
-                      <div className="w-full h-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                        <span className="text-white font-bold text-xs">MC</span>
-                      </div>
-                    </div>
-                    <div className="flex-1 text-left min-w-0">
-                      <h4 className="text-white font-bold text-xs truncate">Maria C.</h4>
-                      <p className="text-green-400 text-xs font-semibold">✅ {profileData.title}</p>
-                    </div>
-                  </div>
-
-                  <div className="relative aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden w-full" style={{height: '260px'}}>
-                    <script src="https://fast.wistia.com/player.js" async></script>
-                    <script src="https://fast.wistia.com/embed/3rj8vdh574.js" async type="module"></script>
-                    <wistia-player 
-                      media-id="3rj8vdh574" 
-                      aspect="0.5625"
-                      className="w-full h-full"
-                      style={{width: '100%', height: '100%', maxWidth: '100%'}}
-                    ></wistia-player>
-                  </div>
-
-                  <div className="p-2 text-center w-full">
-                    <Button
-                      onClick={handlePurchase}
-                      className={`w-full bg-gradient-to-r ${profileData.color} hover:opacity-90 text-white font-bold py-2 px-2 rounded-full text-xs shadow-lg transition-all duration-300 min-h-[36px] flex items-center justify-center box-border`}
-                      onTouchStart={handleTouchFeedback}
-                    >
-                      <Play className="w-3 h-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">ACESSAR MÉTODO</span>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* ✅ CARROSSEL INTEGRADO */}
+            <IntegratedCarousel />
 
             {/* ✅ NÚMEROS ATUALIZADOS */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-4 max-w-2xl mx-auto w-full mb-6">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4 max-w-2xl mx-auto w-full mb-6 mt-8">
               <div className="bg-gray-800 p-3 sm:p-4 rounded-lg border border-orange-500 text-center">
                 <div className="text-xl sm:text-2xl font-bold text-orange-400 mb-1">{recentBuyers}</div>
                 <p className="text-white text-xs sm:text-sm break-words">Compraram hoje</p>
@@ -673,7 +884,7 @@ export default function ResultPageOptimized() {
         <div className="px-4 py-6 sm:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
             <div className="text-center mb-6">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 max-w-full break-words">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 max-w-full break-words">
                 <span className="text-orange-400">O MÉTODO</span> QUE TORNA SEU RESULTADO POSSÍVEL
               </h2>
               
@@ -744,22 +955,22 @@ export default function ResultPageOptimized() {
               <CardContent className="p-4 sm:p-6 md:p-8 text-center w-full">
                 
                 <div className="bg-yellow-400 text-black font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full inline-block mb-4 sm:mb-6 text-base sm:text-lg max-w-full">
-                  🎁 BÔNUS EXCLUSIVO: R$ {profileData.offer.discount} DE DESCONTO
+                  🎁 BÔNUS EXCLUSIVO: R\$ {profileData.offer.discount} DE DESCONTO
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-6 break-words">
                   {profileData.solution}
                 </h2>
 
-                {/* ✅ PREÇO UNIFICADO R$ 19 */}
+                {/* ✅ PREÇO UNIFICADO R\$ 19 */}
                 <div className="bg-black/20 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 w-full">
                   <div className="text-center mb-4">
                     <div className="text-4xl sm:text-6xl font-black text-yellow-300 mb-2">
-                      R$ 19
+                      R\$ 19
                     </div>
                     <div className="text-lg sm:text-xl">
-                      <span className="line-through text-gray-400 mr-3">R$ {profileData.offer.originalPrice}</span>
-                      <span className="text-green-400 font-bold">ECONOMIZA R$ {profileData.offer.discount}</span>
+                      <span className="line-through text-gray-400 mr-3">R\$ {profileData.offer.originalPrice}</span>
+                      <span className="text-green-400 font-bold">ECONOMIZA R\$ {profileData.offer.discount}</span>
                     </div>
                   </div>
 
@@ -793,7 +1004,7 @@ export default function ResultPageOptimized() {
                   >
                     <Zap className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0 animate-pulse" />
                     <span className="text-center leading-tight break-words">
-                      QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R$ 19
+                      QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R\$ 19
                     </span>
                     <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
                   </Button>
@@ -816,7 +1027,7 @@ export default function ResultPageOptimized() {
 
         {/* ✅ SEÇÃO 9: GARANTIA */}
         <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
-                    <div className="max-w-4xl mx-auto w-full">
+          <div className="max-w-4xl mx-auto w-full">
             <Card className="bg-green-50 border-2 sm:border-4 border-green-400 shadow-2xl w-full">
               <CardContent className="p-4 sm:p-6 text-center w-full">
                 <Shield className="w-12 h-12 sm:w-16 sm:h-16 text-green-600 mx-auto mb-4" />
@@ -1046,26 +1257,6 @@ export default function ResultPageOptimized() {
             contain: layout style paint;
           }
 
-          wistia-player[media-id='3rj8vdh574']:not(:defined) { 
-            background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/3rj8vdh574/swatch'); 
-            display: block; 
-            filter: blur(5px); 
-            padding-top: 177.78%; 
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box;
-          }
-          
-          wistia-player {
-            border-radius: 8px !important;
-            overflow: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            height: 100% !important;
-            display: block;
-            box-sizing: border-box;
-          }
-
           button {
             min-height: 48px !important;
             min-width: 48px !important;
@@ -1117,6 +1308,16 @@ export default function ResultPageOptimized() {
           .flex {
             flex-wrap: wrap !important;
             box-sizing: border-box !important;
+          }
+
+          /* Estilos específicos do carrossel */
+          .carousel-container {
+            touch-action: pan-y pinch-zoom;
+          }
+
+          .carousel-slide {
+            will-change: transform;
+            backface-visibility: hidden;
           }
 
           @media (max-width: 768px) {
@@ -1175,6 +1376,16 @@ export default function ResultPageOptimized() {
               overflow-wrap: break-word !important;
               word-break: break-word !important;
             }
+
+            /* Mobile carousel adjustments */
+            .carousel-container {
+              padding: 0.5rem !important;
+            }
+
+            .carousel-slide img {
+              object-fit: cover !important;
+              border-radius: 0.5rem !important;
+            }
           }
 
           @media (max-width: 375px) {
@@ -1194,6 +1405,10 @@ export default function ResultPageOptimized() {
             button {
               min-height: 44px !important;
               font-size: 0.875rem !important;
+            }
+
+            .carousel-container {
+              padding: 0.25rem !important;
             }
           }
 
@@ -1221,6 +1436,29 @@ export default function ResultPageOptimized() {
           @container (max-width: 768px) {
             .text-3xl { font-size: 1.5rem !important; }
             .text-4xl { font-size: 1.875rem !important; }
+          }
+
+          /* Animações suaves para o carrossel */
+          .carousel-slide {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+
+          /* Otimizações de performance */
+          .carousel-container img {
+            will-change: transform;
+            transform: translateZ(0);
+          }
+
+          /* Touch gestures para mobile */
+          @media (hover: none) and (pointer: coarse) {
+            .carousel-container {
+              -webkit-overflow-scrolling: touch;
+              scroll-snap-type: x mandatory;
+            }
+            
+            .carousel-slide {
+              scroll-snap-align: center;
+            }
           }
         `}</style>
       </div>
