@@ -2,7 +2,7 @@ export const quizSteps = [
   {
     id: 1,
     question: "Quer descobrir seu verdadeiro potencial de faturamento com sobrancelhas?",
-    description: "Avaliação personalizada de 2 minutos para conhecer seu perfil de sobrancelhista",
+    description: "Avaliação personalizada de 2 minutos para conhecer seu perfil de Designer",
     subtext: "Primeiro, qual sua situação profissional atual?",
     options: [
       "Trabalho CLT e quero uma renda extra", 
@@ -166,7 +166,7 @@ export const quizSteps = [
   },
   {
     id: 11,
-    question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma sobrancelhista de sucesso.",
+    question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma Designer de sucesso.",
     description: "Baseando-me no seu perfil específico, você pode faturar entre R$ 3.000 - R$ 8.000/mês nos próximos 90 dias.",
     options: ["QUERO VER MEU PERFIL AGORA"],
     note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R$ 19,00 (valor normal R$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
@@ -180,7 +180,7 @@ export const quizSteps = [
   },
   {
     id: 12,
-    question: "SEU PERFIL DE SOBRANCELHISTA ESTÁ PRONTO",
+    question: "SEU PERFIL DE DESIGNER ESTÁ PRONTO",
     description: "Baseado nas suas respostas, identifiquei seu perfil exato e a estratégia ideal para seu sucesso.",
     options: ["QUERO VER MEU PERFIL AGORA"],
     note: "Prepare-se para descobrir seu potencial real de faturamento.",
@@ -255,7 +255,7 @@ export const socialProofMessages = [
   "📈 Estratégia adaptada à sua situação específica", 
   "📋 Plano de ação personalizado sendo gerado",
   "💰 Seu potencial de faturamento está sendo calculado",
-  "👑 Perfil de sobrancelhista sendo definido",
+  "👑 Perfil de designer sendo definido",
   "🔥 Método ideal para seu perfil sendo selecionado"
 ]
 
@@ -356,7 +356,7 @@ export const profiles = {
   INICIANTE_DETERMINADA: {
     title: "INICIANTE DETERMINADA",
     subtitle: "Potencial de Faturamento: R$ 3.000 - R$ 6.000/mês",
-    description: "Você tem TUDO para ser uma sobrancelhista de sucesso!",
+    description: "Você tem TUDO para ser uma designer de sucesso!",
     characteristics: [
       "✅ Seu perfil mostra determinação e foco",
       "✅ Com o método certo, pode faturar R$ 6.000/mês em 90 dias",
