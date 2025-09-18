@@ -107,7 +107,7 @@ export const quizSteps = [
       testimonialDisplay: true,
       testimonialName: "Maria C.",
       testimonialText: "Em 3 meses já estava faturando R\$ 4.000/mês trabalhando de casa",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-5_31PM.jpeg",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_4283.webp",
     },
   },
   {
@@ -131,7 +131,7 @@ export const quizSteps = [
       testimonialDisplay: true,
       testimonialName: "Ana S.",
       testimonialText: "Estava perdida sem rumo. O método me deu direção e confiança. Hoje faturo mais que no meu emprego anterior",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-5_34PM.jpeg",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_4284.webp",
     },
   },
   {

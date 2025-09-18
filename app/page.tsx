@@ -237,7 +237,7 @@ export default function HomePage() {
           
           {/* LOGO COMPACTA - TAMANHO ORIGINAL */}
           <Image
-            src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17-2025-4_42PM.jpeg"
+            src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Generated-Image-September-17_-2025-4_42PM.webp"
             alt="Sobrancelhas Expert"
             width={0}
             height={0}
