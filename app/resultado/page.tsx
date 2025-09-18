@@ -38,8 +38,8 @@ export default function ResultPageOptimized() {
   const carouselData = [
     {
       id: 1,
-      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_4639-scaled.webp",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5696.webp",
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/one.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova1.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 1",
       testimonialAlt: "Depoimento de aluna satisfeita",
       clientName: "Ana Carolina",
@@ -48,8 +48,8 @@ export default function ResultPageOptimized() {
     },
     {
       id: 2,
-      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5559-scaled.webp",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5697.webp",
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/two.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova2.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 2",
       testimonialAlt: "Depoimento de aluna satisfeita",
       clientName: "Maria Santos",
@@ -58,8 +58,8 @@ export default function ResultPageOptimized() {
     },
     {
       id: 3,
-      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/IMG_5125-scaled.webp",
-      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/Post-Instagram-Depoimento-de-Clientes-Feedback-Moderno-Marrom.png.webp",
+      modelImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/tree.webp",
+      testimonialImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/09/prova3.webp",
       modelAlt: "Modelo com sobrancelhas perfeitas - Resultado 3",
       testimonialAlt: "Depoimento de aluna satisfeita",
       clientName: "Carmen Lima",
