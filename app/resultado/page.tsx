@@ -120,12 +120,12 @@ export default function ResultPageOptimized() {
         "🔥 Tem mentalidade de empresária de sucesso"
       ],
       challenge: "Escalar o negócio rapidamente",
-      solution: "MÉTODO IMPÉRIO SOBRANCELHAS",
+      solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
         price: 19,
         originalPrice: 97,
         discount: 78,
-        bonus: "Mentoria Grupo VIP + Todos os Bônus",
+        bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
@@ -150,12 +150,12 @@ export default function ResultPageOptimized() {
         "💡 Perfil ideal para conciliar com outras atividades"
       ],
       challenge: "Otimizar o tempo disponível",
-      solution: "MÉTODO RENDA EXTRA TURBINADA",
+      solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
         price: 19,
         originalPrice: 97,
         discount: 78,
-        bonus: "Agenda Otimizada + Kit Completo",
+        bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
@@ -180,12 +180,12 @@ export default function ResultPageOptimized() {
         "�� Perfil analítico é vantagem no mercado"
       ],
       challenge: "Excesso de análise, pouca ação",
-      solution: "MÉTODO PASSO A PASSO SEGURO",
+      solution: "FORMAÇÃO DESIGN ESTRATÉGICO",
       offer: {
         price: 19,
         originalPrice: 47,
         discount: 78,
-        bonus: "Garantia Estendida + Suporte VIP",
+        bonus: "Kit Iniciante Completo + Bônus Exclusivos",
         paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
