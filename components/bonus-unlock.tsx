@@ -62,7 +62,7 @@ export function BonusUnlock({ bonus, onComplete }: BonusUnlockProps) {
               >
                 <Gift className="w-10 h-10 text-white" />
               </motion.div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">🎉 BÔNOS DESBLOQUEADO!</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">🎉 BÔNUS DESBLOQUEADO!</h2>
             </motion.div>
 
             <motion.div
@@ -73,7 +73,7 @@ export function BonusUnlock({ bonus, onComplete }: BonusUnlockProps) {
             >
               <h3 className="text-xl font-semibold text-orange-700 mb-2">{bonus.title}</h3>
               <p className="text-gray-700 mb-4">{bonus.description}</p>
-              <div className="text-3xl font-bold text-green-600">Valor: R$ {bonus.value}</div>
+              <div className="text-3xl font-bold text-green-600">Valor: R\$ {bonus.value}</div>
             </motion.div>
 
             <motion.div
@@ -83,7 +83,7 @@ export function BonusUnlock({ bonus, onComplete }: BonusUnlockProps) {
               className="space-y-4"
             >
               <p className="text-gray-600 text-sm bg-gray-100 p-3 rounded-lg">
-                Recibirás esta bonificación junto con el Plan A al final del cuestionario.
+                Você receberá este bônus junto com o Método Design Estratégico ao finalizar sua compra.
               </p>
 
               <div className="flex justify-center">

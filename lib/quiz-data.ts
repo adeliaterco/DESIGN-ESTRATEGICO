@@ -44,7 +44,7 @@ export const quizSteps = [
     bonusUnlock: {
       id: 1,
       title: "Kit Iniciante Completo",
-      value: 197,
+      value: 47,
       description: "Incluído na sua avaliação personalizada",
     },
   },
@@ -123,7 +123,7 @@ export const quizSteps = [
     bonusUnlock: {
       id: 2,
       title: "Agenda Otimizada Premium",
-      value: 147,
+      value: 31,
       description: "Incluído na sua estratégia personalizada",
     },
     elements: {
@@ -195,14 +195,14 @@ export const bonuses = [
   {
     id: 1,
     title: "Kit Iniciante Completo",
-    value: 197,
+    value: 47,
     description: "Tudo que você precisa para começar: ferramentas, produtos e técnicas.",
     details: ["✓ Lista de Materiais Essenciais", "✓ Fornecedores Confiáveis", "✓ Técnicas Básicas Fundamentais"],
   },
   {
     id: 2,
     title: "Agenda Otimizada Premium",
-    value: 147,
+    value: 31,
     description: "Como organizar seu tempo para maximizar ganhos trabalhando poucas horas.",
     details: ["✓ Planejamento Semanal Estratégico", "✓ Gestão Inteligente de Clientes", "✓ Otimização de Horários"],
   },
@@ -420,7 +420,7 @@ export const profiles = {
     solution: "MÉTODO PASSO A PASSO SEGURO",
     offer: {
       price: 19,
-      originalPrice: 197,
+      originalPrice: 47,
       bonus: "Garantia Estendida + Suporte VIP"
     }
   }
