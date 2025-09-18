@@ -169,7 +169,7 @@ export const quizSteps = [
     question: "Perfeito! Analisei suas respostas e você tem TUDO para ser uma sobrancelhista de sucesso.",
     description: "Baseando-me no seu perfil específico, você pode faturar entre R\$ 3.000 - R\$ 8.000/mês nos próximos 90 dias.",
     options: ["QUERO VER MEU PERFIL AGORA"],
-    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R\$ 19,00 (valor normal R\$ 397). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 7 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
+    note: "⏰ ATENÇÃO: Apenas 12 vagas restantes hoje por R\$ 19,00 (valor normal R\$ 97). Estou aqui para te guiar pessoalmente nesta jornada. Nos últimos 8 anos, ajudei mais de 3.847 mulheres a construir seus negócios de sobrancelhas.",
     elements: {
       expertPhoto: true,
       expertImage: "https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png",
@@ -366,7 +366,7 @@ export const profiles = {
     solution: "MÉTODO SOBRANCELHA ZERO AO SUCESSO",
     offer: {
       price: 19,
-      originalPrice: 397,
+      originalPrice: 97,
       bonus: "Kit Iniciante Completo + Bônus Exclusivos"
     }
   },
