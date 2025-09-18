@@ -13,7 +13,9 @@ import {
   Star,
   Crown,
   Target,
-  Zap
+  Zap,
+  Award,
+  TrendingUp
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -179,11 +181,25 @@ export default function ResultPageOptimized() {
     )
   }
 
-  // ✅ COMPONENTE: URGÊNCIA REAL
+  // ✅ COMPONENTE: URGÊNCIA REAL INTENSIFICADA
   const RealUrgencySection = () => (
-    <div className="bg-red-800 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 w-full">
+    <div className="bg-red-900 border-2 border-red-500 rounded-lg p-4 mb-6 w-full">
+      <div className="flex items-center justify-center mb-3">
+        <Clock className="w-5 h-5 text-yellow-300 mr-2 animate-pulse" />
+        <span className="text-yellow-300 font-bold text-lg">OFERTA EXPIRA EM:</span>
+      </div>
+      
+      <div className="text-center mb-4">
+        <div className="text-4xl font-black text-white mb-2">
+          <CountdownTimer minutes={15} seconds={0} />
+        </div>
+        <p className="text-red-300 text-sm font-bold">
+          ⚠️ Após este horário, volta para R$ {profileData.offer.originalPrice}
+        </p>
+      </div>
+
       <div className="flex items-center justify-between mb-2">
-        <p className="text-yellow-300 font-bold text-base sm:text-lg">
+        <p className="text-yellow-300 font-bold text-base">
           🚨 ÚLTIMAS {spotsLeft} VAGAS HOJE
         </p>
         <div className="text-red-300 font-bold text-sm">
@@ -198,13 +214,10 @@ export default function ResultPageOptimized() {
         />
       </div>
       
-      <div className="flex justify-between items-center">
-        <p className="text-yellow-300 text-xs font-semibold">
-          ⏰ Oferta expira às 23:59h
+      <div className="text-center">
+        <p className="text-red-300 text-xs animate-pulse font-bold">
+          • Esta oferta NUNCA mais será repetida •
         </p>
-        <div className="text-red-300 text-xs animate-pulse">
-          • Tempo limitado
-        </div>
       </div>
     </div>
   )
@@ -235,6 +248,134 @@ export default function ResultPageOptimized() {
             <p className="text-white text-sm sm:text-base">
               <span className="text-green-300 font-bold">{profileData.solution}</span> - 
               O método que transforma seu maior desafio em sua maior vantagem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  // ✅ NOVO COMPONENTE: AUTORIDADE/CREDIBILIDADE
+  const AuthoritySection = () => (
+    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-purple-900/30 to-blue-900/30 w-full">
+      <div className="max-w-4xl mx-auto w-full">
+        <div className="text-center mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
+            👑 <span className="text-purple-400">QUEM ESTÁ POR TRÁS</span> DO SEU RESULTADO
+          </h2>
+          
+          <div className="bg-black/30 rounded-lg p-6 mb-6 max-w-2xl mx-auto">
+            <div className="flex flex-col items-center mb-6">
+              <img 
+                src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png" 
+                alt="Amanda Teixeira"
+                className="w-20 h-20 rounded-full mb-4 border-4 border-purple-400"
+              />
+              <h3 className="text-xl font-bold text-white mb-2">Amanda Teixeira</h3>
+              <p className="text-purple-400 font-bold mb-4">
+                Especialista em Sobrancelhas há 8 anos
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-4 text-center mb-6">
+              <div className="bg-purple-900/30 rounded-lg p-3">
+                <div className="text-2xl font-bold text-purple-400">127k+</div>
+                <p className="text-white text-xs">Alunas Treinadas</p>
+              </div>
+              <div className="bg-purple-900/30 rounded-lg p-3">
+                <div className="text-2xl font-bold text-purple-400">8</div>
+                <p className="text-white text-xs">Anos de Experiência</p>
+              </div>
+              <div className="bg-purple-900/30 rounded-lg p-3">
+                <div className="text-2xl font-bold text-purple-400">94%</div>
+                <p className="text-white text-xs">Taxa de Sucesso</p>
+              </div>
+            </div>
+
+            <div className="bg-purple-900/50 rounded-lg p-4 mb-4">
+              <p className="text-white text-sm italic">
+                "Transformei mais de 127.000 mulheres em sobrancelhistas de sucesso. 
+                Agora é a SUA vez de conquistar sua independência financeira."
+              </p>
+            </div>
+          </div>
+          
+          <p className="text-white text-lg font-semibold">
+            Agora vou te mostrar <span className="text-purple-400 font-bold">exatamente como</span> 
+            conseguir o mesmo resultado...
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+
+  // ✅ NOVO COMPONENTE: TRANSFORMAÇÃO EM 90 DIAS
+  const TransformationSection = ({ profileData }) => (
+    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
+      <div className="max-w-4xl mx-auto w-full">
+        <div className="text-center mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
+            🔥 <span className="text-green-400">SUA TRANSFORMAÇÃO</span> EM 90 DIAS
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+            >
+              <div className="text-4xl mb-4">📅</div>
+              <h3 className="text-xl font-bold text-white mb-2">30 DIAS</h3>
+              <p className="text-gray-300 text-sm">
+                Primeiras clientes conquistadas e R$ 1.000+ já faturados
+              </p>
+              <div className="mt-4 bg-green-600 rounded-full p-2">
+                <Check className="w-5 h-5 text-white mx-auto" />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+            >
+              <div className="text-4xl mb-4">💰</div>
+              <h3 className="text-xl font-bold text-white mb-2">60 DIAS</h3>
+              <p className="text-gray-300 text-sm">
+                Agenda lotada e R$ 3.000+ mensais de forma consistente
+              </p>
+              <div className="mt-4 bg-green-600 rounded-full p-2">
+                <TrendingUp className="w-5 h-5 text-white mx-auto" />
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+            >
+              <div className="text-4xl mb-4">👑</div>
+              <h3 className="text-xl font-bold text-white mb-2">90 DIAS</h3>
+              <p className="text-gray-300 text-sm">
+                Referência na cidade e R$ {getEarningsValue(profileData.subtitle)}+ mensais
+              </p>
+              <div className="mt-4 bg-green-600 rounded-full p-2">
+                <Crown className="w-5 h-5 text-white mx-auto" />
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="mt-8 bg-green-900/50 rounded-lg p-6">
+            <h3 className="text-lg font-bold text-green-300 mb-3">
+              🎯 GARANTIA DE RESULTADO:
+            </h3>
+            <p className="text-white">
+              Se você seguir o método e não conseguir seus primeiros R$ 1.000 em 30 dias, 
+              <span className="text-green-400 font-bold"> devolvemos 100% do seu dinheiro</span> + 
+              R$ 100 pelo seu tempo investido.
             </p>
           </div>
         </div>
@@ -455,63 +596,8 @@ export default function ResultPageOptimized() {
         {/* ✅ SEÇÃO 2: AQUECIMENTO PRÉ-VSL */}
         <ProblemAgitationSection profileData={profileData} />
 
-        {/* ✅ SEÇÃO 3: VSL INTEGRADO */}
-        <div className="px-4 py-6 sm:py-8 w-full">
-          <div className="max-w-4xl mx-auto w-full">
-            <div className="text-center mb-6">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 max-w-full break-words">
-                <span className="text-orange-400">O MÉTODO</span> QUE TORNA SEU RESULTADO POSSÍVEL
-              </h2>
-              
-              <div className="max-w-2xl mx-auto mb-6 w-full">
-                <p className="text-base sm:text-lg text-gray-300 mb-4 break-words">
-                  Assista este vídeo onde especialistas revelam:
-                </p>
-                <div className="text-left bg-black/30 rounded-lg p-3 sm:p-4 space-y-2 w-full">
-                  <div className="flex items-start text-white text-sm sm:text-base">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">Por que seu perfil tem <strong className="text-orange-400">alto potencial de sucesso</strong></span>
-                  </div>
-                  <div className="flex items-start text-white text-sm sm:text-base">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">As <strong className="text-orange-400">técnicas exatas</strong> para seu perfil</span>
-                  </div>
-                  <div className="flex items-start text-white text-sm sm:text-base">
-                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">Como aplicar <strong className="text-orange-400">passo a passo</strong></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center mb-6 sm:mb-8 w-full">
-              <div className="w-full max-w-3xl">
-                <div className="relative bg-black rounded-xl sm:rounded-2xl p-2 sm:p-4 border-2 sm:border-4 border-orange-500 shadow-2xl w-full">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 rounded-xl sm:rounded-2xl animate-pulse"></div>
-                  <div className="relative z-10 w-full">
-                    <vturb-smartplayer 
-                      id="vid-68cb1686a02866a5da663d62" 
-                      style={{
-                        display: 'block',
-                        margin: '0 auto',
-                        width: '100%',
-                        maxWidth: '100%',
-                        borderRadius: '8px',
-                        overflow: 'hidden'
-                      }}
-                    ></vturb-smartplayer>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center w-full">
-              <div className="bg-orange-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-full inline-block font-bold text-base sm:text-lg mb-4 sm:mb-6 animate-bounce max-w-full">
-                👆 APLIQUE ISSO E VEJA RESULTADOS EM DIAS
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* ✅ SEÇÃO 3: AUTORIDADE/CREDIBILIDADE */}
+        <AuthoritySection />
 
         {/* ✅ SEÇÃO 4: PROVA SOCIAL FORTE */}
         <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-black to-gray-900 w-full">
@@ -583,14 +669,75 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 5: QUEBRA DE OBJEÇÕES */}
+        {/* ✅ SEÇÃO 5: VSL INTEGRADO (REPOSICIONADO) */}
+        <div className="px-4 py-6 sm:py-8 w-full">
+          <div className="max-w-4xl mx-auto w-full">
+            <div className="text-center mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 max-w-full break-words">
+                <span className="text-orange-400">O MÉTODO</span> QUE TORNA SEU RESULTADO POSSÍVEL
+              </h2>
+              
+              <div className="max-w-2xl mx-auto mb-6 w-full">
+                <p className="text-base sm:text-lg text-gray-300 mb-4 break-words">
+                  Assista este vídeo onde revelo:
+                </p>
+                <div className="text-left bg-black/30 rounded-lg p-3 sm:p-4 space-y-2 w-full">
+                  <div className="flex items-start text-white text-sm sm:text-base">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="break-words">Por que seu perfil tem <strong className="text-orange-400">alto potencial de sucesso</strong></span>
+                  </div>
+                  <div className="flex items-start text-white text-sm sm:text-base">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="break-words">As <strong className="text-orange-400">técnicas exatas</strong> para seu perfil específico</span>
+                  </div>
+                  <div className="flex items-start text-white text-sm sm:text-base">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="break-words">Como aplicar <strong className="text-orange-400">passo a passo</strong> e ter resultados em 30 dias</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center mb-6 sm:mb-8 w-full">
+              <div className="w-full max-w-3xl">
+                <div className="relative bg-black rounded-xl sm:rounded-2xl p-2 sm:p-4 border-2 sm:border-4 border-orange-500 shadow-2xl w-full">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 rounded-xl sm:rounded-2xl animate-pulse"></div>
+                  <div className="relative z-10 w-full">
+                    <vturb-smartplayer 
+                      id="vid-68cb1686a02866a5da663d62" 
+                      style={{
+                        display: 'block',
+                        margin: '0 auto',
+                        width: '100%',
+                        maxWidth: '100%',
+                        borderRadius: '8px',
+                        overflow: 'hidden'
+                      }}
+                    ></vturb-smartplayer>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center w-full">
+              <div className="bg-orange-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-full inline-block font-bold text-base sm:text-lg mb-4 sm:mb-6 animate-bounce max-w-full">
+                👆 APLIQUE ISSO E VEJA RESULTADOS EM 30 DIAS
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ✅ SEÇÃO 6: TRANSFORMAÇÃO EM 90 DIAS */}
+        <TransformationSection profileData={profileData} />
+
+        {/* ✅ SEÇÃO 7: QUEBRA DE OBJEÇÕES */}
         <ObjectionBreakingSection profileData={profileData} />
 
-        {/* ✅ SEÇÃO 6: OFERTA IRRESISTÍVEL */}
+        {/* ✅ SEÇÃO 8: OFERTA IRRESISTÍVEL */}
         <div className="px-4 py-6 sm:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
             
-            {/* ✅ URGÊNCIA REAL */}
+            {/* ✅ URGÊNCIA REAL INTENSIFICADA */}
             <RealUrgencySection />
 
             <Card className={`bg-gradient-to-r ${profileData.color} text-white shadow-2xl border-2 sm:border-4 border-yellow-400 w-full`}>
@@ -626,7 +773,7 @@ export default function ResultPageOptimized() {
                   </div>
                 </div>
 
-                {/* ✅ CTA OTIMIZADO - REGEX CORRIGIDA */}
+                {/* ✅ CTA OTIMIZADO COM COPY EMOCIONAL */}
                 <motion.div
                   animate={{
                     scale: [1, 1.05, 1],
@@ -646,7 +793,7 @@ export default function ResultPageOptimized() {
                   >
                     <Zap className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0 animate-pulse" />
                     <span className="text-center leading-tight break-words">
-                      SIM! QUERO FATURAR R$ {getEarningsValue(profileData.subtitle)}/MÊS
+                      QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R$ 19
                     </span>
                     <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
                   </Button>
@@ -667,9 +814,9 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 7: GARANTIA */}
+        {/* ✅ SEÇÃO 9: GARANTIA */}
         <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
-          <div className="max-w-4xl mx-auto w-full">
+                    <div className="max-w-4xl mx-auto w-full">
             <Card className="bg-green-50 border-2 sm:border-4 border-green-400 shadow-2xl w-full">
               <CardContent className="p-4 sm:p-6 text-center w-full">
                 <Shield className="w-12 h-12 sm:w-16 sm:h-16 text-green-600 mx-auto mb-4" />
@@ -682,12 +829,23 @@ export default function ResultPageOptimized() {
                 <p className="text-green-600 max-w-2xl mx-auto text-sm sm:text-base break-words">
                   Teste o método durante 30 dias. Se não funcionar para seu perfil, devolvemos tudo sem fazer perguntas.
                 </p>
+                
+                {/* ✅ GARANTIA EXTRA */}
+                <div className="bg-green-100 border-2 border-green-500 rounded-lg p-4 mt-4">
+                  <h3 className="text-green-800 font-bold mb-2">
+                    🎁 GARANTIA EXTRA:
+                  </h3>
+                  <p className="text-green-700 text-sm">
+                    Se seguir o método e não faturar R\$ 1.000 em 30 dias, além do reembolso total, 
+                    você ganha <span className="font-bold">R\$ 100 pelo tempo investido!</span>
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 8: FAQ PERSONALIZADO */}
+        {/* ✅ SEÇÃO 10: FAQ PERSONALIZADO */}
         <div className="px-4 py-6 sm:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
             <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6 sm:mb-8 break-words">
@@ -709,11 +867,11 @@ export default function ResultPageOptimized() {
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
                   <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
-                    Por que apenas R$ 19? Não é muito barato?
+                    Por que apenas R\$ 19? Não é muito barato?
                   </h3>
                   <p className="text-gray-300 text-sm break-words">
-                    É uma oferta especial de lançamento para seu perfil específico. O valor normal é R$ {profileData.offer.originalPrice}. 
-                    Estou testando esta estratégia por tempo limitado.
+                    É uma oferta especial de lançamento para seu perfil específico. O valor normal é R\$ {profileData.offer.originalPrice}. 
+                    Estou testando esta estratégia por tempo limitado para validar a eficácia do método personalizado.
                   </p>
                 </CardContent>
               </Card>
@@ -724,7 +882,8 @@ export default function ResultPageOptimized() {
                     Quanto tempo para ver resultados?
                   </h3>
                   <p className="text-gray-300 text-sm break-words">
-                    Para seu perfil, 89% das alunas veem os primeiros resultados em 30 dias. Muitas conseguem os primeiros clientes em 2 semanas.
+                    Para seu perfil específico, 89% das alunas veem os primeiros resultados em 30 dias. 
+                    Muitas conseguem os primeiros clientes em apenas 2 semanas seguindo o cronograma personalizado.
                   </p>
                 </CardContent>
               </Card>
@@ -735,7 +894,20 @@ export default function ResultPageOptimized() {
                     Como recebo o acesso?
                   </h3>
                   <p className="text-gray-300 text-sm break-words">
-                    Imediatamente após o pagamento você recebe um email com suas credenciais. Todo conteúdo fica disponível na hora.
+                    Imediatamente após o pagamento você recebe um email com suas credenciais. 
+                    Todo conteúdo fica disponível na hora, incluindo os bônus exclusivos para seu perfil.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-800 border border-gray-700 w-full">
+                <CardContent className="p-3 sm:p-4 w-full">
+                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                    Preciso de experiência prévia?
+                  </h3>
+                  <p className="text-gray-300 text-sm break-words">
+                    Não! O método foi desenvolvido especialmente para iniciantes. Começamos do zero absoluto 
+                    e te levamos até o nível profissional em 90 dias, respeitando seu ritmo e perfil.
                   </p>
                 </CardContent>
               </Card>
@@ -743,25 +915,37 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 9: CTA FINAL COM URGÊNCIA MÁXIMA */}
+        {/* ✅ SEÇÃO 11: CTA FINAL COM URGÊNCIA MÁXIMA */}
         <div className={`px-4 py-6 sm:py-8 bg-gradient-to-r ${profileData.color} w-full`}>
           <div className="max-w-4xl mx-auto text-center w-full">
             <div className="bg-black/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 sm:border-4 border-yellow-400 w-full">
               <h2 className="text-2xl sm:text-3xl font-black text-white mb-4 break-words">
-                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R$ 19
+                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R\$ 19
               </h2>
               <p className="text-lg sm:text-xl text-white mb-4 sm:mb-6 font-semibold break-words">
-                Depois volta para R$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida.
+                Depois volta para R\$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida para seu perfil.
               </p>
 
-              <div className="bg-red-800 p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 w-full">
-                <p className="text-yellow-300 font-bold text-base sm:text-lg mb-2">⚠️ OFERTA EXPIRA EM:</p>
-                <div className="text-3xl sm:text-4xl font-black text-white">
-                  <CountdownTimer minutes={15} seconds={0} />
+              <div className="bg-red-900 border-2 border-red-500 rounded-lg p-4 mb-6 w-full">
+                <div className="flex items-center justify-center mb-3">
+                  <Clock className="w-5 h-5 text-yellow-300 mr-2 animate-pulse" />
+                  <span className="text-yellow-300 font-bold text-lg">OFERTA EXPIRA EM:</span>
                 </div>
-                <p className="text-red-300 text-xs mt-2 font-semibold">
-                  Ou quando esgotar as vagas
-                </p>
+                
+                <div className="text-center mb-4">
+                  <div className="text-4xl font-black text-white mb-2">
+                    <CountdownTimer minutes={15} seconds={0} />
+                  </div>
+                  <p className="text-red-300 text-sm font-bold">
+                    ⚠️ Após este horário, volta para R\$ {profileData.offer.originalPrice}
+                  </p>
+                </div>
+
+                <div className="text-center">
+                  <p className="text-red-300 text-xs animate-pulse font-bold">
+                    • Esta oferta NUNCA mais será repetida •
+                  </p>
+                </div>
               </div>
 
               <motion.div
@@ -782,15 +966,33 @@ export default function ResultPageOptimized() {
                   onTouchStart={handleTouchFeedback}
                 >
                   <span className="text-center leading-tight break-words">
-                    GARANTIR MINHA VAGA - R$ 19
+                    GARANTIR ÚLTIMA VAGA - R\$ 19
                   </span>
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
                 </Button>
               </motion.div>
 
               <p className="text-yellow-300 text-xs sm:text-sm mt-4 font-semibold break-words">
-                ⚠️ Esta oferta nunca mais será repetida para seu perfil
+                ⚠️ Esta oferta nunca mais será repetida para seu perfil específico
               </p>
+
+              {/* ✅ PROVA SOCIAL FINAL */}
+              <div className="mt-6 bg-black/30 rounded-lg p-4">
+                <div className="flex items-center justify-center gap-4 text-white text-sm">
+                  <div className="flex items-center">
+                    <Users className="w-4 h-4 text-green-400 mr-1" />
+                    <span><strong>{recentBuyers}</strong> compraram hoje</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Award className="w-4 h-4 text-yellow-400 mr-1" />
+                    <span>94% de aprovação</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="w-4 h-4 text-orange-400 mr-1" />
+                    <span>4.9/5 estrelas</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -805,7 +1007,7 @@ export default function ResultPageOptimized() {
           }
 
           * {
-                        box-sizing: border-box !important;
+            box-sizing: border-box !important;
             margin: 0;
             padding: 0;
             max-width: 100% !important;
