@@ -1069,7 +1069,7 @@ export default function ResultPageOptimized() {
                 
                 <div className="bg-yellow-400 text-black font-bold py-2 sm:py-3 px-3 sm:px-4 md:px-6 rounded-full inline-block mb-3 sm:mb-4 md:mb-6 max-w-full">
                   <ResponsiveText variant="body">
-                    🎁 BÔNUS EXCLUSIVO: R\$ {profileData.offer.discount} DE DESCONTO
+                    🎁 BÔNUS EXCLUSIVO: R$ {profileData.offer.discount} DE DESCONTO
                   </ResponsiveText>
                 </div>
 
@@ -1077,15 +1077,15 @@ export default function ResultPageOptimized() {
                   {profileData.solution}
                 </ResponsiveText>
 
-                {/* ✅ PREÇO UNIFICADO R\$ 19 OTIMIZADO */}
+                {/* ✅ PREÇO UNIFICADO R$ 19 OTIMIZADO */}
                 <div className="bg-black/20 rounded-lg p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 w-full">
                   <div className="text-center mb-3 sm:mb-4">
                     <div className="text-3xl sm:text-4xl md:text-6xl font-black text-yellow-300 mb-2">
-                      R\$ 19
+                      R$ 19
                     </div>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
-                      <span className="line-through text-gray-400 text-base sm:text-lg md:text-xl">R\$ {profileData.offer.originalPrice}</span>
-                      <span className="text-green-400 font-bold text-sm sm:text-base md:text-lg">ECONOMIZA R\$ {profileData.offer.discount}</span>
+                      <span className="line-through text-gray-400 text-base sm:text-lg md:text-xl">R$ {profileData.offer.originalPrice}</span>
+                      <span className="text-green-400 font-bold text-sm sm:text-base md:text-lg">ECONOMIZA R$ {profileData.offer.discount}</span>
                     </div>
                   </div>
 
@@ -1122,7 +1122,7 @@ export default function ResultPageOptimized() {
                   >
                     <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 animate-pulse" />
                     <span className="text-center leading-tight">
-                      {isMobile ? "QUERO AGORA - R\$ 19" : "QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R\$ 19"}
+                      {isMobile ? "QUERO AGORA - R$ 19" : "QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R$ 19"}
                     </span>
                     <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
                   </ResponsiveCTA>
@@ -1169,8 +1169,8 @@ export default function ResultPageOptimized() {
                     🎁 GARANTIA EXTRA:
                   </ResponsiveText>
                   <ResponsiveText variant="small" className="text-green-700">
-                    Se seguir o método e não faturar R\$ 1.000 em 30 dias, além do reembolso total, 
-                    você ganha <span className="font-bold">R\$ 100 pelo tempo investido!</span>
+                    Se seguir o método e não faturar R$ 1.000 em 30 dias, além do reembolso total, 
+                    você ganha <span className="font-bold">R$ 100 pelo tempo investido!</span>
                   </ResponsiveText>
                 </div>
               </CardContent>
@@ -1200,10 +1200,10 @@ export default function ResultPageOptimized() {
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
                   <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
-                    Por que apenas R\$ 19? Não é muito barato?
+                    Por que apenas R$ 19? Não é muito barato?
                   </ResponsiveText>
                   <ResponsiveText variant="small" className="text-gray-300">
-                    É uma oferta especial de lançamento para seu perfil específico. O valor normal é R\$ {profileData.offer.originalPrice}. 
+                    É uma oferta especial de lançamento para seu perfil específico. O valor normal é R$ {profileData.offer.originalPrice}. 
                     Estou testando esta estratégia por tempo limitado para validar a eficácia do método personalizado.
                   </ResponsiveText>
                 </CardContent>
@@ -1253,10 +1253,10 @@ export default function ResultPageOptimized() {
           <div className="max-w-4xl mx-auto text-center w-full">
             <div className="bg-black/20 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 border border-yellow-400 sm:border-2 md:border-4 w-full">
               <ResponsiveText variant="h2" className="text-white mb-3 sm:mb-4">
-                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R\$ 19
+                ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R$ 19
               </ResponsiveText>
               <ResponsiveText variant="body" className="text-white mb-3 sm:mb-4 md:mb-6 font-semibold">
-                Depois volta para R\$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida para seu perfil.
+                Depois volta para R$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida para seu perfil.
               </ResponsiveText>
 
               <div className="bg-red-900 border border-red-500 sm:border-2 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 w-full">
@@ -1272,7 +1272,7 @@ export default function ResultPageOptimized() {
                     <CountdownTimer minutes={15} seconds={0} />
                   </div>
                   <ResponsiveText variant="small" className="text-red-300 font-bold">
-                    ⚠️ Após este horário, volta para R\$ {profileData.offer.originalPrice}
+                    ⚠️ Após este horário, volta para R$ {profileData.offer.originalPrice}
                   </ResponsiveText>
                 </div>
 
@@ -1302,7 +1302,7 @@ export default function ResultPageOptimized() {
                   className="border border-white sm:border-2 md:border-4"
                 >
                   <span className="text-center leading-tight">
-                    {isMobile ? "GARANTIR VAGA - R\$ 19" : "GARANTIR ÚLTIMA VAGA - R\$ 19"}
+                    {isMobile ? "GARANTIR VAGA - R$ 19" : "GARANTIR ÚLTIMA VAGA - R$ 19"}
                   </span>
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
                 </ResponsiveCTA>
