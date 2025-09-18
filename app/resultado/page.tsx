@@ -359,6 +359,13 @@ export default function ResultPageOptimized() {
                         className="w-full h-full object-cover rounded-lg"
                         loading="lazy"
                       />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 sm:p-3">
+                        <ResponsiveText variant="small" className="text-green-400 font-bold mb-1">
+                          ✅ ALUNA APROVADA
+                        </ResponsiveText>
+                        <ResponsiveText variant="small" className="text-white font-bold">
+                          Resultado em 30 dias
+                        </ResponsiveText>
                       </div>
                     </motion.div>
                   </AnimatePresence>
