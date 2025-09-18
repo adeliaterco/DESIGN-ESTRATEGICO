@@ -66,7 +66,7 @@ export default function ResultPageOptimized() {
       subtitle: "Potencial de Faturamento: R$ 3.000 - R$ 6.000/mês",
       icon: "🌟",
       color: "from-pink-500 to-rose-600",
-      description: "Você tem TUDO para ser uma sobrancelhista de sucesso!",
+      description: "Você tem TUDO para ser uma Designer de sucesso!",
       characteristics: [
         "✅ Seu perfil mostra determinação e foco",
         "✅ Com o método certo, pode faturar R$ 6.000/mês em 90 dias",
@@ -509,7 +509,7 @@ export default function ResultPageOptimized() {
             
             <div className="grid grid-cols-3 gap-4 text-center mb-6">
               <div className="bg-purple-900/30 rounded-lg p-3">
-                <div className="text-2xl font-bold text-purple-400">127k+</div>
+                <div className="text-2xl font-bold text-purple-400">3k+</div>
                 <p className="text-white text-xs">Alunas Treinadas</p>
               </div>
               <div className="bg-purple-900/30 rounded-lg p-3">
@@ -524,7 +524,7 @@ export default function ResultPageOptimized() {
 
             <div className="bg-purple-900/50 rounded-lg p-4 mb-4">
               <p className="text-white text-sm italic">
-                "Transformei mais de 127.000 mulheres em sobrancelhistas de sucesso. 
+                "Transformei mais de 3.000 mulheres em Designer de sucesso. 
                 Agora é a SUA vez de conquistar sua independência financeira."
               </p>
             </div>
