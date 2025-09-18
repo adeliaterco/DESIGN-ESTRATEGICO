@@ -96,7 +96,7 @@ export default function ResultPageOptimized() {
         originalPrice: 97,
         discount: 78,
         bonus: "Kit Iniciante Completo + Bônus Exclusivos",
-        paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
+        paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
@@ -126,7 +126,7 @@ export default function ResultPageOptimized() {
         originalPrice: 97,
         discount: 78,
         bonus: "Mentoria Grupo VIP + Todos os Bônus",
-        paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
+        paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
@@ -156,7 +156,7 @@ export default function ResultPageOptimized() {
         originalPrice: 97,
         discount: 78,
         bonus: "Agenda Otimizada + Kit Completo",
-        paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
+        paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
@@ -186,7 +186,7 @@ export default function ResultPageOptimized() {
         originalPrice: 47,
         discount: 78,
         bonus: "Garantia Estendida + Suporte VIP",
-        paymentLink: "https://pay.hotmart.com/F100142422S?off=oferta19",
+        paymentLink: "https://pay.cakto.com.br/qpmz3oi_299505",
         includes: [
           "✓ Método completo personalizado para seu perfil",
           "✓ Kit Iniciante Completo (R$ 47)",
