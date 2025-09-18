@@ -10,7 +10,7 @@ export const quizSteps = [
       "Já trabalho com estética mas quero me especializar",
       "Dona de casa querendo independência financeira"
     ],
-    note: "Mais de 127.000 mulheres já descobriram seu potencial",
+    note: "Mais de 3.000 mulheres já descobriram seu potencial",
     elements: {
       heartbeat: true,
       timer: "Avaliação de 2 minutos",
