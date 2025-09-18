@@ -24,9 +24,9 @@ export default function ResultPageOptimized() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [recentBuyers, setRecentBuyers] = useState(43)
   const [spotsLeft, setSpotsLeft] = useState(7)
-  const [userProfile, setUserProfile] = useState<string>("")
+  const [userProfile, setUserProfile] = useState("")
   const [profileData, setProfileData] = useState(null)
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef(null)
 
   // ✅ PERFIS CORRIGIDOS COM PREÇO ÚNICO R$ 19
   const profiles = {
@@ -129,7 +129,7 @@ export default function ResultPageOptimized() {
       characteristics: [
         "🎯 Você não toma decisões impulsivas",
         "🎯 Quando decide, vai até o fim", 
-        "�� Perfil analítico é vantagem no mercado"
+        "🎯 Perfil analítico é vantagem no mercado"
       ],
       challenge: "Excesso de análise, pouca ação",
       solution: "MÉTODO PASSO A PASSO SEGURO",
@@ -363,6 +363,12 @@ export default function ResultPageOptimized() {
     if (navigator.vibrate) {
       navigator.vibrate(50)
     }
+  }
+
+  // ✅ FUNÇÃO PARA EXTRAIR VALOR DE FATURAMENTO
+  const getEarningsValue = (subtitle) => {
+    const match = subtitle.match(/R\$\s*([\d.]+)/)
+    return match ? match[1] : "6.000"
   }
 
   if (!profileData) {
@@ -620,7 +626,7 @@ export default function ResultPageOptimized() {
                   </div>
                 </div>
 
-                {/* ✅ CTA OTIMIZADO */}
+                {/* ✅ CTA OTIMIZADO - REGEX CORRIGIDA */}
                 <motion.div
                   animate={{
                     scale: [1, 1.05, 1],
@@ -640,7 +646,7 @@ export default function ResultPageOptimized() {
                   >
                     <Zap className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0 animate-pulse" />
                     <span className="text-center leading-tight break-words">
-                      SIM! QUERO FATURAR R$ {profileData.subtitle.match(/R$ ([\d.]+)/)?.[1] || "6.000"}/MÊS
+                      SIM! QUERO FATURAR R$ {getEarningsValue(profileData.subtitle)}/MÊS
                     </span>
                     <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
                   </Button>
@@ -789,7 +795,7 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* Estilos CSS Otimizados - MANTIDOS */}
+        {/* Estilos CSS Otimizados */}
         <style jsx global>{`
           @viewport {
             width: device-width;
@@ -799,7 +805,7 @@ export default function ResultPageOptimized() {
           }
 
           * {
-            box-sizing: border-box !important;
+                        box-sizing: border-box !important;
             margin: 0;
             padding: 0;
             max-width: 100% !important;
@@ -808,217 +814,7 @@ export default function ResultPageOptimized() {
           html {
             overflow-x: hidden !important;
             max-width: 100vw !important;
-                        -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-          }
-
-          body {
-            overflow-x: hidden !important;
-            max-width: 100vw !important;
-            position: relative;
-            width: 100%;
-          }
-
-          .min-h-screen {
-            max-width: 100vw !important;
-            overflow-x: hidden !important;
-            width: 100% !important;
-            position: relative;
-          }
-
-          vturb-smartplayer {
-            border-radius: 8px !important;
-            overflow: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            height: auto !important;
-            display: block !important;
-            aspect-ratio: 16/9 !important;
-            contain: layout style paint;
-          }
-
-          wistia-player[media-id='3rj8vdh574']:not(:defined) { 
-            background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/3rj8vdh574/swatch'); 
-            display: block; 
-            filter: blur(5px); 
-            padding-top: 177.78%; 
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box;
-          }
-          
-          wistia-player {
-            border-radius: 8px !important;
-            overflow: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            height: 100% !important;
-            display: block;
-            box-sizing: border-box;
-          }
-
-          button {
-            min-height: 48px !important;
-            min-width: 48px !important;
-            touch-action: manipulation !important;
-            -webkit-tap-highlight-color: transparent !important;
-            user-select: none !important;
-            box-sizing: border-box !important;
-            max-width: 100% !important;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-          }
-
-          p, span, div, h1, h2, h3, h4, h5, h6 {
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            hyphens: auto !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-          }
-
-          img, video {
-            max-width: 100% !important;
-            height: auto !important;
-            display: block;
-            box-sizing: border-box;
-          }
-
-          input, select, textarea {
-            font-size: 16px !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-          }
-
-          a, button, [role="button"] {
-            min-height: 44px !important;
-            min-width: 44px !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-sizing: border-box !important;
-          }
-
-          .grid {
-            gap: 0.5rem !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-          }
-
-          .flex {
-            flex-wrap: wrap !important;
-            box-sizing: border-box !important;
-          }
-
-          @media (max-width: 768px) {
-            .text-xs { font-size: 0.75rem !important; line-height: 1rem !important; }
-            .text-sm { font-size: 0.875rem !important; line-height: 1.25rem !important; }
-            .text-base { font-size: 1rem !important; line-height: 1.5rem !important; }
-            .text-lg { font-size: 1.125rem !important; line-height: 1.75rem !important; }
-            .text-xl { font-size: 1.25rem !important; line-height: 1.75rem !important; }
-            .text-2xl { font-size: 1.5rem !important; line-height: 2rem !important; }
-            .text-3xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }
-            .text-4xl { font-size: 2.25rem !important; line-height: 2.5rem !important; }
-            .text-5xl { font-size: 3rem !important; line-height: 1 !important; }
-            .text-6xl { font-size: 3.75rem !important; line-height: 1 !important; }
-
-            .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
-            .py-6 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
-            .py-8 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
-            .mb-4 { margin-bottom: 1rem !important; }
-            .mb-6 { margin-bottom: 1.5rem !important; }
-            .mb-8 { margin-bottom: 2rem !important; }
-
-            .grid-cols-3 {
-              grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-              gap: 0.5rem !important;
-            }
-
-            .grid-cols-2 {
-              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-              gap: 0.5rem !important;
-            }
-
-            vturb-smartplayer {
-              height: auto !important;
-              aspect-ratio: 16/9 !important;
-              min-height: 200px !important;
-            }
-
-            .rounded-2xl { border-radius: 1rem !important; }
-            .rounded-xl { border-radius: 0.75rem !important; }
-            .border-4 { border-width: 2px !important; }
-            .border-2 { border-width: 1px !important; }
-
-            .min-h-\[72px\] { min-height: 60px !important; }
-            .min-h-\[64px\] { min-height: 56px !important; }
-            .min-h-\[60px\] { min-height: 56px !important; }
-            .min-h-\[56px\] { min-height: 52px !important; }
-
-            .truncate {
-              overflow: hidden !important;
-              text-overflow: ellipsis !important;
-              white-space: nowrap !important;
-            }
-
-            .break-words {
-              word-wrap: break-word !important;
-              overflow-wrap: break-word !important;
-              word-break: break-word !important;
-            }
-          }
-
-          @media (max-width: 375px) {
-            .px-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
-            .text-2xl { font-size: 1.25rem !important; line-height: 1.75rem !important; }
-            .text-3xl { font-size: 1.5rem !important; line-height: 2rem !important; }
-            .text-4xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }
-            
-            vturb-smartplayer {
-              min-height: 180px !important;
-            }
-
-            .grid-cols-3, .grid-cols-2 {
-              gap: 0.25rem !important;
-            }
-
-            button {
-              min-height: 44px !important;
-              font-size: 0.875rem !important;
-            }
-          }
-
-          .bg-gradient-to-r, .bg-gradient-to-br {
-            will-change: transform;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-          }
-
-          html {
-            scroll-behavior: smooth;
-          }
-
-          @supports (-webkit-touch-callout: none) {
-            input, select, textarea {
-              font-size: 16px !important;
-            }
-          }
-
-          * {
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-          }
-
-          @container (max-width: 768px) {
-            .text-3xl { font-size: 1.5rem !important; }
-            .text-4xl { font-size: 1.875rem !important; }
-          }
-        `}</style>
-      </div>
-    </>
-  )
-}            -webkit-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
           }
