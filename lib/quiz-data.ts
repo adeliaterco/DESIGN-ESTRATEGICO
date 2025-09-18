@@ -122,7 +122,7 @@ export const quizSteps = [
     ],
     bonusUnlock: {
       id: 2,
-      title: "Agenda Otimizada Premium",
+      title: "✓ Como Atrair Suas Primeiras 10 Clientes",
       value: 31,
       description: "Incluído na sua estratégia personalizada",
     },
@@ -201,7 +201,7 @@ export const bonuses = [
   },
   {
     id: 2,
-    title: "Agenda Otimizada Premium",
+    title: "✓ Como Atrair Suas Primeiras 10 Clientes",
     value: 31,
     description: "Como organizar seu tempo para maximizar ganhos trabalhando poucas horas.",
     details: ["✓ Planejamento Semanal Estratégico", "✓ Gestão Inteligente de Clientes", "✓ Otimização de Horários"],
