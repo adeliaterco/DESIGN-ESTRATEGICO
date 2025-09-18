@@ -32,7 +32,24 @@ export default function ResultPageOptimized() {
   const [profileData, setProfileData] = useState(null)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const contentRef = useRef(null)
+
+  // ✅ HOOK: DETECÇÃO MOBILE OTIMIZADA
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera
+      const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+      const screenWidth = window.innerWidth <= 768
+      const touchDevice = 'ontouchstart' in window
+      
+      setIsMobile(mobileRegex.test(userAgent) || screenWidth || touchDevice)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   // ✅ DADOS DO CARROSSEL INTEGRADO
   const carouselData = [
@@ -160,7 +177,7 @@ export default function ResultPageOptimized() {
       characteristics: [
         "🎯 Você não toma decisões impulsivas",
         "🎯 Quando decide, vai até o fim", 
-        "🎯 Perfil analítico é vantagem no mercado"
+        "�� Perfil analítico é vantagem no mercado"
       ],
       challenge: "Excesso de análise, pouca ação",
       solution: "MÉTODO PASSO A PASSO SEGURO",
@@ -182,8 +199,93 @@ export default function ResultPageOptimized() {
     }
   }
 
-  // ✅ COMPONENTE: CARROSSEL INTEGRADO OTIMIZADO
-  const IntegratedCarousel = () => {
+  // ✅ COMPONENTE: CTA RESPONSIVO OTIMIZADO
+  const ResponsiveCTA = ({ 
+    onClick, 
+    className = "", 
+    children, 
+    variant = "primary",
+    size = "default",
+    fullWidth = false 
+  }) => {
+    const baseClasses = "inline-flex items-center justify-center font-bold rounded-full transition-all duration-300 transform active:scale-95 touch-manipulation select-none"
+    
+    const variants = {
+      primary: "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg",
+      secondary: "bg-gradient-to-r from-orange-500 to-red-600 hover:opacity-90 text-white shadow-lg",
+      accent: "bg-yellow-500 hover:bg-yellow-600 text-black shadow-lg border-2 border-white"
+    }
+    
+    const sizes = {
+      sm: "min-h-[44px] px-4 py-2 text-sm",
+      default: "min-h-[48px] px-6 py-3 text-base",
+      lg: "min-h-[56px] px-8 py-4 text-lg"
+    }
+    
+    const widthClass = fullWidth ? "w-full max-w-md mx-auto" : ""
+    
+    return (
+      <Button
+        onClick={onClick}
+        className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${widthClass} ${className}`}
+        onTouchStart={handleTouchFeedback}
+      >
+        {children}
+      </Button>
+    )
+  }
+
+  // ✅ COMPONENTE: TEXTO RESPONSIVO
+  const ResponsiveText = ({ 
+    children, 
+    variant = "body", 
+    className = "",
+    truncate = false 
+  }) => {
+    const variants = {
+      h1: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight",
+      h2: "text-xl sm:text-2xl md:text-3xl font-bold leading-tight",
+      h3: "text-lg sm:text-xl md:text-2xl font-bold leading-tight",
+      body: "text-sm sm:text-base leading-relaxed",
+      small: "text-xs sm:text-sm leading-relaxed"
+    }
+    
+    const truncateClass = truncate ? "truncate" : "break-words"
+    
+    return (
+      <div className={`${variants[variant]} ${truncateClass} ${className}`}>
+        {children}
+      </div>
+    )
+  }
+
+  // ✅ COMPONENTE: CARROSSEL MOBILE OTIMIZADO
+  const OptimizedCarousel = () => {
+    const [touchStart, setTouchStart] = useState(null)
+    const [touchEnd, setTouchEnd] = useState(null)
+
+    const minSwipeDistance = 50
+
+    const onTouchStart = (e) => {
+      setTouchEnd(null)
+      setTouchStart(e.targetTouches[0].clientX)
+    }
+
+    const onTouchMove = (e) => {
+      setTouchEnd(e.targetTouches[0].clientX)
+    }
+
+    const onTouchEnd = () => {
+      if (!touchStart || !touchEnd) return
+      
+      const distance = touchStart - touchEnd
+      const isLeftSwipe = distance > minSwipeDistance
+      const isRightSwipe = distance < -minSwipeDistance
+
+      if (isLeftSwipe) nextSlide()
+      if (isRightSwipe) prevSlide()
+    }
+
     const nextSlide = () => {
       setCurrentSlide((prev) => (prev + 1) % carouselData.length)
     }
@@ -201,14 +303,77 @@ export default function ResultPageOptimized() {
     return (
       <div className="w-full max-w-4xl mx-auto">
         <div 
-          className="relative bg-black rounded-xl sm:rounded-2xl p-2 sm:p-4 border-2 border-orange-500 shadow-2xl overflow-hidden"
+          className="relative bg-black rounded-lg sm:rounded-xl p-2 sm:p-4 border border-orange-500 sm:border-2 shadow-xl overflow-hidden"
           onMouseEnter={() => setIsCarouselPaused(true)}
           onMouseLeave={() => setIsCarouselPaused(false)}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 animate-pulse"></div>
           
           <div className="relative z-10">
-            {/* Desktop Layout */}
+            {/* Layout Mobile Otimizado */}
+            <div className="block md:hidden">
+              <div className="space-y-3">
+                {/* Modelo em cima */}
+                <div className="relative overflow-hidden rounded-lg h-40 sm:h-48">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`model-mobile-${currentSlide}`}
+                      initial={{ opacity: 0, x: isMobile ? 0 : -20, y: isMobile ? -10 : 0 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      exit={{ opacity: 0, x: isMobile ? 0 : 20, y: isMobile ? 10 : 0 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.modelImage}
+                        alt={currentData.modelAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 sm:p-3">
+                        <ResponsiveText variant="small" className="text-white font-bold">
+                          ✨ RESULTADO PROFISSIONAL
+                        </ResponsiveText>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Depoimento embaixo */}
+                <div className="relative overflow-hidden rounded-lg h-40 sm:h-48">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`testimonial-mobile-${currentSlide}`}
+                      initial={{ opacity: 0, x: isMobile ? 0 : 20, y: isMobile ? 10 : 0 }}
+                      animate={{ opacity: 1, x: 0, y: 0 }}
+                      exit={{ opacity: 0, x: isMobile ? 0 : -20, y: isMobile ? -10 : 0 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="w-full h-full"
+                    >
+                      <img
+                        src={currentData.testimonialImage}
+                        alt={currentData.testimonialAlt}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2 sm:p-3">
+                        <ResponsiveText variant="small" className="text-green-400 font-bold mb-1">
+                          ✅ ALUNA APROVADA
+                        </ResponsiveText>
+                        <ResponsiveText variant="small" className="text-white font-bold">
+                          Resultado em 30 dias
+                        </ResponsiveText>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+
+            {/* Layout Desktop */}
             <div className="hidden md:block">
               <div className="grid grid-cols-2 gap-4 h-80">
                 {/* Lado Esquerdo - Modelo */}
@@ -256,10 +421,10 @@ export default function ResultPageOptimized() {
                       />
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                         <p className="text-green-400 font-bold text-sm mb-1">
-                          ✅ {currentData.clientProfile}
+                          ✅ ALUNA APROVADA
                         </p>
                         <p className="text-white font-bold text-xs">
-                          {currentData.clientName} - {currentData.result}
+                          Resultado em 30 dias
                         </p>
                       </div>
                     </motion.div>
@@ -268,85 +433,27 @@ export default function ResultPageOptimized() {
               </div>
             </div>
 
-            {/* Mobile Layout */}
-            <div className="md:hidden">
-              <div className="space-y-4">
-                {/* Modelo em cima */}
-                <div className="relative overflow-hidden rounded-lg h-48">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`model-mobile-${currentSlide}`}
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-full h-full"
-                    >
-                      <img
-                        src={currentData.modelImage}
-                        alt={currentData.modelAlt}
-                        className="w-full h-full object-cover rounded-lg"
-                        loading="lazy"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                        <p className="text-white font-bold text-sm">
-                          ✨ RESULTADO PROFISSIONAL
-                        </p>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Depoimento embaixo */}
-                <div className="relative overflow-hidden rounded-lg h-48">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`testimonial-mobile-${currentSlide}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.5 }}
-                      className="w-full h-full"
-                    >
-                      <img
-                        src={currentData.testimonialImage}
-                        alt={currentData.testimonialAlt}
-                        className="w-full h-full object-cover rounded-lg"
-                        loading="lazy"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                        <p className="text-green-400 font-bold text-sm mb-1">
-                          ✅ {currentData.clientProfile}
-                        </p>
-                        <p className="text-white font-bold text-xs">
-                          {currentData.clientName} - {currentData.result}
-                        </p>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+            {/* Controles do Carrossel - Apenas Desktop */}
+            <div className="hidden sm:block">
+              <div className="absolute top-1/2 left-2 transform -translate-y-1/2">
+                <button
+                  onClick={prevSlide}
+                  className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label="Slide anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
               </div>
-            </div>
 
-            {/* Controles do Carrossel */}
-            <div className="absolute top-1/2 left-2 transform -translate-y-1/2">
-              <button
-                onClick={prevSlide}
-                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
-                aria-label="Slide anterior"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
-              <button
-                onClick={nextSlide}
-                className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300"
-                aria-label="Próximo slide"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
+                <button
+                  onClick={nextSlide}
+                  className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                  aria-label="Próximo slide"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Indicadores */}
@@ -355,29 +462,35 @@ export default function ResultPageOptimized() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 min-h-[24px] min-w-[24px] flex items-center justify-center ${
                     index === currentSlide 
                       ? 'bg-orange-500 scale-125' 
                       : 'bg-white/50 hover:bg-white/70'
                   }`}
                   aria-label={`Ir para slide ${index + 1}`}
-                />
+                >
+                  <span className="sr-only">Slide {index + 1}</span>
+                </button>
               ))}
             </div>
           </div>
         </div>
 
         {/* CTA abaixo do carrossel */}
-        <div className="text-center mt-6">
-          <Button
+        <div className="text-center mt-4 sm:mt-6">
+          <ResponsiveCTA
             onClick={handlePurchase}
-            className={`w-full max-w-md mx-auto bg-gradient-to-r ${profileData?.color || 'from-orange-500 to-red-600'} hover:opacity-90 text-white font-bold py-3 px-6 rounded-full text-base shadow-lg transition-all duration-300 min-h-[48px] flex items-center justify-center`}
-            onTouchStart={handleTouchFeedback}
+            variant="secondary"
+            size={isMobile ? "default" : "lg"}
+            fullWidth
+            className="border border-yellow-400 sm:border-2"
           >
             <Play className="w-4 h-4 mr-2 flex-shrink-0" />
-            <span className="truncate">QUERO ESSE RESULTADO - R$ 19</span>
+            <span className={isMobile ? "truncate" : ""}>
+              {isMobile ? "QUERO ESSE RESULTADO - R$ 19" : "QUERO ESSE RESULTADO AGORA - R$ 19"}
+            </span>
             <ArrowRight className="w-4 h-4 ml-2 flex-shrink-0" />
-          </Button>
+          </ResponsiveCTA>
         </div>
       </div>
     )
@@ -386,182 +499,186 @@ export default function ResultPageOptimized() {
   // ✅ COMPONENTE: PROVA SOCIAL EM TEMPO REAL
   const LiveSocialProof = () => {
     const [recentPurchases] = useState([
-      { name: "Ana C.", profile: "INICIANTE_DETERMINADA", time: "agora mesmo" },
-      { name: "Maria S.", profile: "RENDA_EXTRA_INTELIGENTE", time: "2 min atrás" },
-      { name: "Carmen L.", profile: "EMPREENDEDORA_NATA", time: "5 min atrás" }
+      { name: "Ana C.", profile: "INICIANTE", time: "agora mesmo" },
+      { name: "Maria S.", profile: "RENDA EXTRA", time: "2 min atrás" },
+      { name: "Carmen L.", profile: "EMPREENDEDORA", time: "5 min atrás" }
     ]);
 
     return (
-      <div className="space-y-3 mb-6">
+      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
         {recentPurchases.map((purchase, index) => (
-          <div key={index} className="bg-black/30 rounded-lg p-3 border-l-2 border-green-400">
+          <div key={index} className="bg-black/30 rounded-lg p-2 sm:p-3 border-l-2 border-green-400">
             <div className="flex items-center mb-1">
-              <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse" />
-              <span className="text-green-400 text-xs font-bold">
+              <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse flex-shrink-0" />
+              <ResponsiveText variant="small" className="text-green-400 font-bold">
                 {purchase.time.toUpperCase()}:
-              </span>
+              </ResponsiveText>
             </div>
-            <p className="text-white text-sm">
-              <span className="font-bold">{purchase.name}</span> acabou de garantir sua vaga - 
-              Perfil: {purchase.profile.replace('_', ' ')}
-            </p>
+            <ResponsiveText variant="small" className="text-white">
+              <span className="font-bold">{purchase.name}</span> garantiu sua vaga - 
+              Perfil: {purchase.profile}
+            </ResponsiveText>
           </div>
         ))}
       </div>
     )
   }
 
-  // ✅ COMPONENTE: URGÊNCIA REAL INTENSIFICADA
-  const RealUrgencySection = () => (
-    <div className="bg-red-900 border-2 border-red-500 rounded-lg p-4 mb-6 w-full">
-      <div className="flex items-center justify-center mb-3">
-        <Clock className="w-5 h-5 text-yellow-300 mr-2 animate-pulse" />
-        <span className="text-yellow-300 font-bold text-lg">OFERTA EXPIRA EM:</span>
+  // ✅ COMPONENTE: URGÊNCIA REAL OTIMIZADA
+  const OptimizedUrgencySection = () => (
+    <div className="bg-red-900 border border-red-500 sm:border-2 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 w-full">
+      <div className="flex items-center justify-center mb-2 sm:mb-3">
+        <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300 mr-2 animate-pulse flex-shrink-0" />
+        <ResponsiveText variant="body" className="text-yellow-300 font-bold">
+          OFERTA EXPIRA EM:
+        </ResponsiveText>
       </div>
       
-      <div className="text-center mb-4">
-        <div className="text-4xl font-black text-white mb-2">
+      <div className="text-center mb-3 sm:mb-4">
+        <div className="text-2xl sm:text-4xl font-black text-white mb-2">
           <CountdownTimer minutes={15} seconds={0} />
         </div>
-        <p className="text-red-300 text-sm font-bold">
+        <ResponsiveText variant="small" className="text-red-300 font-bold">
           ⚠️ Após este horário, volta para R$ {profileData?.offer?.originalPrice || '397'}
-        </p>
+        </ResponsiveText>
       </div>
 
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-yellow-300 font-bold text-base">
-          🚨 ÚLTIMAS {spotsLeft} VAGAS HOJE
-        </p>
-        <div className="text-red-300 font-bold text-sm">
-          {recentBuyers}/50 preenchidas
-        </div>
+      <div className="flex items-center justify-between mb-2 gap-2">
+        <ResponsiveText variant="small" className="text-yellow-300 font-bold">
+          🚨 ÚLTIMAS {spotsLeft} VAGAS
+        </ResponsiveText>
+        <ResponsiveText variant="small" className="text-red-300 font-bold">
+          {recentBuyers}/50
+        </ResponsiveText>
       </div>
       
-      <div className="w-full bg-gray-700 rounded-full h-3 mb-2">
+      <div className="w-full bg-gray-700 rounded-full h-2 sm:h-3 mb-2">
         <div 
-          className="bg-red-500 h-3 rounded-full transition-all duration-300" 
+          className="bg-red-500 h-2 sm:h-3 rounded-full transition-all duration-300" 
           style={{width: `${(recentBuyers/50) * 100}%`}}
         />
       </div>
       
       <div className="text-center">
-        <p className="text-red-300 text-xs animate-pulse font-bold">
+        <ResponsiveText variant="small" className="text-red-300 animate-pulse font-bold">
           • Esta oferta NUNCA mais será repetida •
-        </p>
+        </ResponsiveText>
       </div>
     </div>
   )
 
-  // ✅ COMPONENTE: AQUECIMENTO PRÉ-VSL
-  const ProblemAgitationSection = ({ profileData }) => (
-    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-red-900/30 to-orange-900/30 w-full">
+  // ✅ COMPONENTE: AQUECIMENTO PRÉ-VSL OTIMIZADO
+  const OptimizedProblemSection = ({ profileData }) => (
+    <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-red-900/30 to-orange-900/30 w-full">
       <div className="max-w-4xl mx-auto w-full">
-        <div className="text-center mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
+        <div className="text-center mb-4 sm:mb-6">
+          <ResponsiveText variant="h2" className="text-white mb-3 sm:mb-4">
             ⚠️ <span className="text-red-400">ATENÇÃO:</span> SEU MAIOR OBSTÁCULO
-          </h2>
+          </ResponsiveText>
           
-          <div className="bg-red-900/50 border-2 border-red-500 rounded-lg p-4 mb-6">
-            <h3 className="text-lg font-bold text-red-300 mb-3">
+          <div className="bg-red-900/50 border border-red-500 sm:border-2 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+            <ResponsiveText variant="body" className="text-red-300 font-bold mb-2 sm:mb-3">
               {profileData?.challenge || "Falta de conhecimento técnico"}
-            </h3>
-            <p className="text-white text-sm sm:text-base">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               Este é exatamente o motivo pelo qual 87% das pessoas com seu perfil 
               <span className="text-red-300 font-bold"> NUNCA conseguem resultados</span> com sobrancelhas.
-            </p>
+            </ResponsiveText>
           </div>
           
-          <div className="bg-green-900/50 border-2 border-green-500 rounded-lg p-4">
-            <h3 className="text-lg font-bold text-green-300 mb-3">
+          <div className="bg-green-900/50 border border-green-500 sm:border-2 rounded-lg p-3 sm:p-4">
+            <ResponsiveText variant="body" className="text-green-300 font-bold mb-2 sm:mb-3">
               🎯 SUA SOLUÇÃO PERSONALIZADA:
-            </h3>
-            <p className="text-white text-sm sm:text-base">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               <span className="text-green-300 font-bold">{profileData?.solution || "MÉTODO PERSONALIZADO"}</span> - 
               O método que transforma seu maior desafio em sua maior vantagem.
-            </p>
+            </ResponsiveText>
           </div>
         </div>
       </div>
     </div>
   )
 
-  // ✅ NOVO COMPONENTE: AUTORIDADE/CREDIBILIDADE
-  const AuthoritySection = () => (
-    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-purple-900/30 to-blue-900/30 w-full">
+  // ✅ COMPONENTE: AUTORIDADE OTIMIZADA
+  const OptimizedAuthoritySection = () => (
+    <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-purple-900/30 to-blue-900/30 w-full">
       <div className="max-w-4xl mx-auto w-full">
-        <div className="text-center mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
+        <div className="text-center mb-4 sm:mb-6">
+          <ResponsiveText variant="h2" className="text-white mb-4 sm:mb-6">
             👑 <span className="text-purple-400">QUEM ESTÁ POR TRÁS</span> DO SEU RESULTADO
-          </h2>
+          </ResponsiveText>
           
-          <div className="bg-black/30 rounded-lg p-6 mb-6 max-w-2xl mx-auto">
-            <div className="flex flex-col items-center mb-6">
+          <div className="bg-black/30 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 max-w-2xl mx-auto">
+            <div className="flex flex-col items-center mb-4 sm:mb-6">
               <img 
                 src="https://amandateixeiraoficial.com.br/wp-content/uploads/2025/06/amanda.png" 
                 alt="Amanda Teixeira"
-                className="w-20 h-20 rounded-full mb-4 border-4 border-purple-400"
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mb-3 sm:mb-4 border-2 sm:border-4 border-purple-400"
               />
-              <h3 className="text-xl font-bold text-white mb-2">Amanda Teixeira</h3>
-              <p className="text-purple-400 font-bold mb-4">
+              <ResponsiveText variant="h3" className="text-white mb-2">
+                Amanda Teixeira
+              </ResponsiveText>
+              <ResponsiveText variant="body" className="text-purple-400 font-bold mb-3 sm:mb-4">
                 Especialista em Sobrancelhas há 8 anos
-              </p>
+              </ResponsiveText>
             </div>
             
-            <div className="grid grid-cols-3 gap-4 text-center mb-6">
-              <div className="bg-purple-900/30 rounded-lg p-3">
-                <div className="text-2xl font-bold text-purple-400">3k+</div>
-                <p className="text-white text-xs">Alunas Treinadas</p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center mb-4 sm:mb-6">
+              <div className="bg-purple-900/30 rounded-lg p-2 sm:p-3">
+                <ResponsiveText variant="h3" className="text-purple-400">3k+</ResponsiveText>
+                <ResponsiveText variant="small" className="text-white">Alunas Treinadas</ResponsiveText>
               </div>
-              <div className="bg-purple-900/30 rounded-lg p-3">
-                <div className="text-2xl font-bold text-purple-400">8</div>
-                <p className="text-white text-xs">Anos de Experiência</p>
+              <div className="bg-purple-900/30 rounded-lg p-2 sm:p-3">
+                <ResponsiveText variant="h3" className="text-purple-400">8</ResponsiveText>
+                <ResponsiveText variant="small" className="text-white">Anos de Experiência</ResponsiveText>
               </div>
-              <div className="bg-purple-900/30 rounded-lg p-3">
-                <div className="text-2xl font-bold text-purple-400">94%</div>
-                <p className="text-white text-xs">Taxa de Sucesso</p>
+              <div className="bg-purple-900/30 rounded-lg p-2 sm:p-3">
+                <ResponsiveText variant="h3" className="text-purple-400">94%</ResponsiveText>
+                <ResponsiveText variant="small" className="text-white">Taxa de Sucesso</ResponsiveText>
               </div>
             </div>
 
-            <div className="bg-purple-900/50 rounded-lg p-4 mb-4">
-              <p className="text-white text-sm italic">
+            <div className="bg-purple-900/50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+              <ResponsiveText variant="body" className="text-white italic">
                 "Transformei mais de 3.000 mulheres em Designer de sucesso. 
                 Agora é a SUA vez de conquistar sua independência financeira."
-              </p>
+              </ResponsiveText>
             </div>
           </div>
           
-          <p className="text-white text-lg font-semibold">
+          <ResponsiveText variant="body" className="text-white font-semibold">
             Agora vou te mostrar <span className="text-purple-400 font-bold">exatamente como</span> 
             conseguir o mesmo resultado...
-          </p>
+          </ResponsiveText>
         </div>
       </div>
     </div>
   )
 
-  // ✅ NOVO COMPONENTE: TRANSFORMAÇÃO EM 90 DIAS
-  const TransformationSection = ({ profileData }) => (
-    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
+  // ✅ COMPONENTE: TRANSFORMAÇÃO OTIMIZADA
+  const OptimizedTransformationSection = ({ profileData }) => (
+    <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
       <div className="max-w-4xl mx-auto w-full">
-        <div className="text-center mb-8">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">
+        <div className="text-center mb-6 sm:mb-8">
+          <ResponsiveText variant="h2" className="text-white mb-4 sm:mb-6">
             🔥 <span className="text-green-400">SUA TRANSFORMAÇÃO</span> EM 90 DIAS
-          </h2>
+          </ResponsiveText>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+              className="bg-black/30 rounded-lg p-4 sm:p-6 border border-green-500 sm:border-2"
             >
-              <div className="text-4xl mb-4">📅</div>
-              <h3 className="text-xl font-bold text-white mb-2">30 DIAS</h3>
-              <p className="text-gray-300 text-sm">
+              <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">📅</div>
+              <ResponsiveText variant="h3" className="text-white mb-2">30 DIAS</ResponsiveText>
+              <ResponsiveText variant="body" className="text-gray-300">
                 Primeiras clientes conquistadas e R$ 1.000+ já faturados
-              </p>
-              <div className="mt-4 bg-green-600 rounded-full p-2">
-                <Check className="w-5 h-5 text-white mx-auto" />
+              </ResponsiveText>
+              <div className="mt-3 sm:mt-4 bg-green-600 rounded-full p-2">
+                <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white mx-auto" />
               </div>
             </motion.div>
             
@@ -569,15 +686,15 @@ export default function ResultPageOptimized() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+              className="bg-black/30 rounded-lg p-4 sm:p-6 border border-green-500 sm:border-2"
             >
-              <div className="text-4xl mb-4">💰</div>
-              <h3 className="text-xl font-bold text-white mb-2">60 DIAS</h3>
-              <p className="text-gray-300 text-sm">
+              <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">💰</div>
+              <ResponsiveText variant="h3" className="text-white mb-2">60 DIAS</ResponsiveText>
+              <ResponsiveText variant="body" className="text-gray-300">
                 Agenda lotada e R$ 3.000+ mensais de forma consistente
-              </p>
-              <div className="mt-4 bg-green-600 rounded-full p-2">
-                <TrendingUp className="w-5 h-5 text-white mx-auto" />
+              </ResponsiveText>
+              <div className="mt-3 sm:mt-4 bg-green-600 rounded-full p-2">
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-white mx-auto" />
               </div>
             </motion.div>
             
@@ -585,85 +702,85 @@ export default function ResultPageOptimized() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-black/30 rounded-lg p-6 border-2 border-green-500"
+              className="bg-black/30 rounded-lg p-4 sm:p-6 border border-green-500 sm:border-2"
             >
-              <div className="text-4xl mb-4">👑</div>
-              <h3 className="text-xl font-bold text-white mb-2">90 DIAS</h3>
-              <p className="text-gray-300 text-sm">
+              <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">👑</div>
+              <ResponsiveText variant="h3" className="text-white mb-2">90 DIAS</ResponsiveText>
+              <ResponsiveText variant="body" className="text-gray-300">
                 Referência na cidade e R$ {getEarningsValue(profileData?.subtitle || "R$ 6.000")}+ mensais
-              </p>
-              <div className="mt-4 bg-green-600 rounded-full p-2">
-                <Crown className="w-5 h-5 text-white mx-auto" />
+              </ResponsiveText>
+              <div className="mt-3 sm:mt-4 bg-green-600 rounded-full p-2">
+                <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-white mx-auto" />
               </div>
             </motion.div>
           </div>
 
-          <div className="mt-8 bg-green-900/50 rounded-lg p-6">
-            <h3 className="text-lg font-bold text-green-300 mb-3">
+          <div className="mt-6 sm:mt-8 bg-green-900/50 rounded-lg p-4 sm:p-6">
+            <ResponsiveText variant="body" className="text-green-300 font-bold mb-2 sm:mb-3">
               🎯 GARANTIA DE RESULTADO:
-            </h3>
-            <p className="text-white">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               Se você seguir o método e não conseguir seus primeiros R$ 1.000 em 30 dias, 
               <span className="text-green-400 font-bold"> devolvemos 100% do seu dinheiro</span> + 
               R$ 100 pelo seu tempo investido.
-            </p>
+            </ResponsiveText>
           </div>
         </div>
       </div>
     </div>
   )
 
-  // ✅ COMPONENTE: QUEBRA DE OBJEÇÕES
-  const ObjectionBreakingSection = ({ profileData }) => (
-    <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-gray-900 to-black w-full">
+  // ✅ COMPONENTE: QUEBRA DE OBJEÇÕES OTIMIZADA
+  const OptimizedObjectionSection = ({ profileData }) => (
+    <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-gray-900 to-black w-full">
       <div className="max-w-4xl mx-auto w-full">
-        <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6">
+        <ResponsiveText variant="h2" className="text-white text-center mb-4 sm:mb-6">
           💭 <span className="text-orange-400">SEI O QUE VOCÊ ESTÁ PENSANDO...</span>
-        </h2>
+        </ResponsiveText>
 
-        <div className="space-y-4 max-w-2xl mx-auto w-full">
-          <div className="bg-gray-800 border-l-4 border-red-500 p-4 rounded-r-lg">
-            <h3 className="text-red-400 font-bold mb-2 flex items-center">
+        <div className="space-y-3 sm:space-y-4 max-w-2xl mx-auto w-full">
+          <div className="bg-gray-800 border-l-2 sm:border-l-4 border-red-500 p-3 sm:p-4 rounded-r-lg">
+            <ResponsiveText variant="body" className="text-red-400 font-bold mb-2 flex items-center">
               😰 "E se eu não conseguir clientes?"
-            </h3>
-            <p className="text-white text-sm">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> 89% das alunas com seu perfil 
               conseguem os primeiros clientes em menos de 30 dias. Temos estratégias específicas 
               para captação que funcionam mesmo para iniciantes.
-            </p>
+            </ResponsiveText>
           </div>
 
-          <div className="bg-gray-800 border-l-4 border-orange-500 p-4 rounded-r-lg">
-            <h3 className="text-orange-400 font-bold mb-2 flex items-center">
+          <div className="bg-gray-800 border-l-2 sm:border-l-4 border-orange-500 p-3 sm:p-4 rounded-r-lg">
+            <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2 flex items-center">
               💰 "R$ 19 é muito barato, deve ser enganação..."
-            </h3>
-            <p className="text-white text-sm">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> É uma oferta especial 
               exclusiva para seu perfil. O valor normal é R$ {profileData?.offer?.originalPrice || '397'}. 
               Estou testando esta estratégia por apenas 48 horas para validar o método.
-            </p>
+            </ResponsiveText>
           </div>
 
-          <div className="bg-gray-800 border-l-4 border-blue-500 p-4 rounded-r-lg">
-            <h3 className="text-blue-400 font-bold mb-2 flex items-center">
+          <div className="bg-gray-800 border-l-2 sm:border-l-4 border-blue-500 p-3 sm:p-4 rounded-r-lg">
+            <ResponsiveText variant="body" className="text-blue-400 font-bold mb-2 flex items-center">
               🤔 "Não tenho tempo para estudar..."
-            </h3>
-            <p className="text-white text-sm">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> O método foi criado 
               especificamente para pessoas ocupadas. São apenas 20 minutos por dia durante 
               2 semanas para dominar todas as técnicas.
-            </p>
+            </ResponsiveText>
           </div>
 
-          <div className="bg-gray-800 border-l-4 border-purple-500 p-4 rounded-r-lg">
-            <h3 className="text-purple-400 font-bold mb-2 flex items-center">
+          <div className="bg-gray-800 border-l-2 sm:border-l-4 border-purple-500 p-3 sm:p-4 rounded-r-lg">
+            <ResponsiveText variant="body" className="text-purple-400 font-bold mb-2 flex items-center">
               😱 "E se eu fizer algo errado e estragar?"
-            </h3>
-            <p className="text-white text-sm">
+            </ResponsiveText>
+            <ResponsiveText variant="body" className="text-white">
               <span className="text-green-400 font-bold">RESPOSTA:</span> O método inclui 
               técnicas de segurança e correção de erros. Além disso, você tem 60 dias de 
               suporte VIP para tirar qualquer dúvida.
-            </p>
+            </ResponsiveText>
           </div>
         </div>
       </div>
@@ -672,13 +789,13 @@ export default function ResultPageOptimized() {
 
   // ✅ Auto-play do carrossel
   useEffect(() => {
-    if (!isCarouselPaused) {
+    if (!isCarouselPaused && !isMobile) {
       const interval = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % carouselData.length)
-      }, 6000) // 6 segundos
+      }, 6000)
       return () => clearInterval(interval)
     }
-  }, [isCarouselPaused, carouselData.length])
+  }, [isCarouselPaused, isMobile, carouselData.length])
 
   useEffect(() => {
     const savedProfile = localStorage.getItem("userProfile") || "INICIANTE_DETERMINADA"
@@ -694,7 +811,6 @@ export default function ResultPageOptimized() {
       setRecentBuyers((prev) => {
         const increase = Math.floor(Math.random() * 2) + 1
         const newValue = Math.min(prev + increase, 47)
-        // Quando chegar perto do limite, reduzir vagas
         if (newValue >= 45) {
           setSpotsLeft(Math.max(1, 50 - newValue))
         }
@@ -748,7 +864,7 @@ export default function ResultPageOptimized() {
 
   // ✅ FUNÇÃO PARA EXTRAIR VALOR DE FATURAMENTO
   const getEarningsValue = (subtitle) => {
-    const match = subtitle.match(/R\$\s*([\d.]+)/)
+    const match = subtitle.match(/R$\s*([\d.]+)/)
     return match ? match[1] : "6.000"
   }
 
@@ -769,141 +885,147 @@ export default function ResultPageOptimized() {
 
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black overflow-x-hidden w-full max-w-[100vw]" ref={contentRef}>
         
-        {/* ✅ SEÇÃO 1: RESULTADO PERSONALIZADO */}
+        {/* ✅ SEÇÃO 1: RESULTADO PERSONALIZADO OTIMIZADO */}
         <div className="relative overflow-hidden w-full">
           <div className={`absolute inset-0 bg-gradient-to-r ${profileData.color}/20 animate-pulse`}></div>
 
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : -20 }}
-            className="relative z-10 px-4 py-6 sm:py-8 text-center w-full"
+            className="relative z-10 px-3 sm:px-4 py-4 sm:py-6 md:py-8 text-center w-full"
           >
-            <div className="max-w-4xl mx-auto mb-8">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4 sm:mb-6 leading-tight max-w-full break-words">
+            <div className="max-w-4xl mx-auto mb-6 sm:mb-8">
+              <ResponsiveText variant="h1" className="text-white mb-3 sm:mb-4 md:mb-6">
                 🎉 Sua avaliação está completa!
                 <br />
                 <span className="text-green-400">SEU PERFIL FOI IDENTIFICADO</span>
-              </h1>
+              </ResponsiveText>
 
-              {/* Card do Perfil */}
-              <div className="max-w-lg mx-auto mb-8 w-full">
-                <div className={`bg-gradient-to-r ${profileData.color} border-4 border-yellow-400 rounded-2xl p-6 shadow-2xl max-w-full`}>
-                  <div className="text-6xl mb-4">{profileData.icon}</div>
+              {/* Card do Perfil Otimizado */}
+              <div className="max-w-lg mx-auto mb-6 sm:mb-8 w-full">
+                <div className={`bg-gradient-to-r ${profileData.color} border-2 sm:border-4 border-yellow-400 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-2xl max-w-full`}>
+                  <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">{profileData.icon}</div>
                   
-                  <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
+                  <ResponsiveText variant="h2" className="text-white mb-2">
                     {profileData.title}
-                  </h2>
+                  </ResponsiveText>
                   
-                  <p className="text-lg font-bold text-white mb-4">
+                  <ResponsiveText variant="body" className="text-white font-bold mb-3 sm:mb-4">
                     {profileData.subtitle}
-                  </p>
+                  </ResponsiveText>
                   
-                  <div className="bg-black/20 rounded-lg p-4 mb-4">
-                    <p className="text-white font-bold text-lg mb-3">
+                  <div className="bg-black/20 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                    <ResponsiveText variant="body" className="text-white font-bold mb-2 sm:mb-3">
                       {profileData.description}
-                    </p>
+                    </ResponsiveText>
                     
-                    <div className="text-left space-y-2">
+                    <div className="text-left space-y-1 sm:space-y-2">
                       {profileData.characteristics.map((char, index) => (
-                        <p key={index} className="text-white text-sm">
+                        <ResponsiveText key={index} variant="small" className="text-white">
                           {char}
-                        </p>
+                        </ResponsiveText>
                       ))}
                     </div>
                   </div>
                   
-                  <div className="bg-red-600/80 rounded-lg p-3 mb-4">
-                    <p className="text-white font-bold text-sm">
+                  <div className="bg-red-600/80 rounded-lg p-2 sm:p-3 mb-3 sm:mb-4">
+                    <ResponsiveText variant="small" className="text-white font-bold">
                       ⚠️ SEU MAIOR DESAFIO: {profileData.challenge}
-                    </p>
+                    </ResponsiveText>
                   </div>
                   
-                  <div className="bg-green-600/80 rounded-lg p-3">
-                    <p className="text-white font-bold text-sm">
+                  <div className="bg-green-600/80 rounded-lg p-2 sm:p-3">
+                    <ResponsiveText variant="small" className="text-white font-bold">
                       🎁 SUA SOLUÇÃO: {profileData.solution}
-                    </p>
+                    </ResponsiveText>
                   </div>
                 </div>
               </div>
 
-              <p className="text-lg sm:text-xl text-gray-300 mb-4 font-semibold max-w-full break-words px-2">
+              <ResponsiveText variant="body" className="text-gray-300 font-semibold px-2">
                 Descubra <span className="text-orange-400 font-bold">como alcançar este resultado</span>:
-              </p>
+              </ResponsiveText>
             </div>
           </motion.div>
         </div>
 
-        {/* ✅ SEÇÃO 2: AQUECIMENTO PRÉ-VSL */}
-        <ProblemAgitationSection profileData={profileData} />
+        {/* ✅ SEÇÃO 2: AQUECIMENTO PRÉ-VSL OTIMIZADO */}
+        <OptimizedProblemSection profileData={profileData} />
 
-        {/* ✅ SEÇÃO 3: AUTORIDADE/CREDIBILIDADE */}
-        <AuthoritySection />
+        {/* ✅ SEÇÃO 3: AUTORIDADE/CREDIBILIDADE OTIMIZADA */}
+        <OptimizedAuthoritySection />
 
-        {/* ✅ SEÇÃO 4: PROVA SOCIAL FORTE COM CARROSSEL INTEGRADO */}
-        <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-black to-gray-900 w-full">
+        {/* ✅ SEÇÃO 4: PROVA SOCIAL FORTE COM CARROSSEL OTIMIZADO */}
+        <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-black to-gray-900 w-full">
           <div className="max-w-4xl mx-auto w-full">
-            <div className="text-center mb-6">
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 max-w-full break-words">
+            <div className="text-center mb-4 sm:mb-6">
+              <ResponsiveText variant="h2" className="text-white mb-2">
                 <span className="text-orange-400">RESULTADOS REAIS</span> DE QUEM TINHA SEU PERFIL
-              </h3>
-              <p className="text-gray-300 text-sm sm:text-base break-words">
+              </ResponsiveText>
+              <ResponsiveText variant="body" className="text-gray-300">
                 Veja as transformações de alunas com o mesmo perfil que você
-              </p>
+              </ResponsiveText>
             </div>
 
             {/* ✅ PROVA SOCIAL EM TEMPO REAL */}
             <LiveSocialProof />
 
-            {/* ✅ CARROSSEL INTEGRADO */}
-            <IntegratedCarousel />
+            {/* ✅ CARROSSEL OTIMIZADO */}
+            <OptimizedCarousel />
 
-            {/* ✅ NÚMEROS ATUALIZADOS */}
-            <div className="grid grid-cols-2 gap-2 sm:gap-4 max-w-2xl mx-auto w-full mb-6 mt-8">
-              <div className="bg-gray-800 p-3 sm:p-4 rounded-lg border border-orange-500 text-center">
-                <div className="text-xl sm:text-2xl font-bold text-orange-400 mb-1">{recentBuyers}</div>
-                <p className="text-white text-xs sm:text-sm break-words">Compraram hoje</p>
+            {/* ✅ NÚMEROS ATUALIZADOS RESPONSIVOS */}
+            <div className="grid grid-cols-2 gap-2 sm:gap-4 max-w-2xl mx-auto w-full mb-4 sm:mb-6 mt-6 sm:mt-8">
+              <div className="bg-gray-800 p-2 sm:p-3 md:p-4 rounded-lg border border-orange-500 text-center">
+                <ResponsiveText variant="h3" className="text-orange-400 mb-1">{recentBuyers}</ResponsiveText>
+                <ResponsiveText variant="small" className="text-white">Compraram hoje</ResponsiveText>
               </div>
-              <div className="bg-gray-800 p-3 sm:p-4 rounded-lg border border-orange-500 text-center">
-                <div className="text-xl sm:text-2xl font-bold text-orange-400 mb-1">{spotsLeft}</div>
-                <p className="text-white text-xs sm:text-sm break-words">Vagas restantes</p>
+              <div className="bg-gray-800 p-2 sm:p-3 md:p-4 rounded-lg border border-orange-500 text-center">
+                <ResponsiveText variant="h3" className="text-orange-400 mb-1">{spotsLeft}</ResponsiveText>
+                <ResponsiveText variant="small" className="text-white">Vagas restantes</ResponsiveText>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 5: VSL INTEGRADO (REPOSICIONADO) */}
-        <div className="px-4 py-6 sm:py-8 w-full">
+        {/* ✅ SEÇÃO 5: VSL INTEGRADO OTIMIZADO */}
+        <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
-            <div className="text-center mb-6">
-                            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 max-w-full break-words">
+            <div className="text-center mb-4 sm:mb-6">
+              <ResponsiveText variant="h2" className="text-white mb-3 sm:mb-4">
                 <span className="text-orange-400">O MÉTODO</span> QUE TORNA SEU RESULTADO POSSÍVEL
-              </h2>
+              </ResponsiveText>
               
-              <div className="max-w-2xl mx-auto mb-6 w-full">
-                <p className="text-base sm:text-lg text-gray-300 mb-4 break-words">
+              <div className="max-w-2xl mx-auto mb-4 sm:mb-6 w-full">
+                <ResponsiveText variant="body" className="text-gray-300 mb-3 sm:mb-4">
                   Assista este vídeo onde revelo:
-                </p>
+                </ResponsiveText>
                 <div className="text-left bg-black/30 rounded-lg p-3 sm:p-4 space-y-2 w-full">
-                  <div className="flex items-start text-white text-sm sm:text-base">
+                  <div className="flex items-start text-white">
                     <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">Por que seu perfil tem <strong className="text-orange-400">alto potencial de sucesso</strong></span>
+                    <ResponsiveText variant="body">
+                      Por que seu perfil tem <strong className="text-orange-400">alto potencial de sucesso</strong>
+                    </ResponsiveText>
                   </div>
-                  <div className="flex items-start text-white text-sm sm:text-base">
+                  <div className="flex items-start text-white">
                     <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">As <strong className="text-orange-400">técnicas exatas</strong> para seu perfil específico</span>
+                    <ResponsiveText variant="body">
+                      As <strong className="text-orange-400">técnicas exatas</strong> para seu perfil específico
+                    </ResponsiveText>
                   </div>
-                  <div className="flex items-start text-white text-sm sm:text-base">
+                  <div className="flex items-start text-white">
                     <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="break-words">Como aplicar <strong className="text-orange-400">passo a passo</strong> e ter resultados em 30 dias</span>
+                    <ResponsiveText variant="body">
+                      Como aplicar <strong className="text-orange-400">passo a passo</strong> e ter resultados em 30 dias
+                    </ResponsiveText>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-center mb-6 sm:mb-8 w-full">
+            <div className="flex justify-center mb-4 sm:mb-6 md:mb-8 w-full">
               <div className="w-full max-w-3xl">
-                <div className="relative bg-black rounded-xl sm:rounded-2xl p-2 sm:p-4 border-2 sm:border-4 border-orange-500 shadow-2xl w-full">
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 rounded-xl sm:rounded-2xl animate-pulse"></div>
+                <div className="relative bg-black rounded-lg sm:rounded-xl md:rounded-2xl p-2 sm:p-4 border border-orange-500 sm:border-2 md:border-4 shadow-2xl w-full">
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-600/20 to-red-600/20 rounded-lg sm:rounded-xl md:rounded-2xl animate-pulse"></div>
                   <div className="relative z-10 w-full">
                     <vturb-smartplayer 
                       id="vid-68cb1686a02866a5da663d62" 
@@ -922,60 +1044,66 @@ export default function ResultPageOptimized() {
             </div>
 
             <div className="text-center w-full">
-              <div className="bg-orange-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-full inline-block font-bold text-base sm:text-lg mb-4 sm:mb-6 animate-bounce max-w-full">
-                👆 APLIQUE ISSO E VEJA RESULTADOS EM 30 DIAS
+              <div className="bg-orange-600 text-white py-2 sm:py-3 px-3 sm:px-4 md:px-6 rounded-full inline-block font-bold animate-bounce max-w-full">
+                <ResponsiveText variant="body" className="text-white">
+                  👆 APLIQUE ISSO E VEJA RESULTADOS EM 30 DIAS
+                </ResponsiveText>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 6: TRANSFORMAÇÃO EM 90 DIAS */}
-        <TransformationSection profileData={profileData} />
+        {/* ✅ SEÇÃO 6: TRANSFORMAÇÃO EM 90 DIAS OTIMIZADA */}
+        <OptimizedTransformationSection profileData={profileData} />
 
-        {/* ✅ SEÇÃO 7: QUEBRA DE OBJEÇÕES */}
-        <ObjectionBreakingSection profileData={profileData} />
+        {/* ✅ SEÇÃO 7: QUEBRA DE OBJEÇÕES OTIMIZADA */}
+        <OptimizedObjectionSection profileData={profileData} />
 
-        {/* ✅ SEÇÃO 8: OFERTA IRRESISTÍVEL */}
-        <div className="px-4 py-6 sm:py-8 w-full">
+        {/* ✅ SEÇÃO 8: OFERTA IRRESISTÍVEL OTIMIZADA */}
+        <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
             
-            {/* ✅ URGÊNCIA REAL INTENSIFICADA */}
-            <RealUrgencySection />
+            {/* ✅ URGÊNCIA REAL OTIMIZADA */}
+            <OptimizedUrgencySection />
 
-            <Card className={`bg-gradient-to-r ${profileData.color} text-white shadow-2xl border-2 sm:border-4 border-yellow-400 w-full`}>
-              <CardContent className="p-4 sm:p-6 md:p-8 text-center w-full">
+            <Card className={`bg-gradient-to-r ${profileData.color} text-white shadow-2xl border border-yellow-400 sm:border-2 md:border-4 w-full`}>
+              <CardContent className="p-3 sm:p-4 md:p-6 lg:p-8 text-center w-full">
                 
-                <div className="bg-yellow-400 text-black font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-full inline-block mb-4 sm:mb-6 text-base sm:text-lg max-w-full">
-                  🎁 BÔNUS EXCLUSIVO: R\$ {profileData.offer.discount} DE DESCONTO
+                <div className="bg-yellow-400 text-black font-bold py-2 sm:py-3 px-3 sm:px-4 md:px-6 rounded-full inline-block mb-3 sm:mb-4 md:mb-6 max-w-full">
+                  <ResponsiveText variant="body">
+                    🎁 BÔNUS EXCLUSIVO: R\$ {profileData.offer.discount} DE DESCONTO
+                  </ResponsiveText>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-4 sm:mb-6 break-words">
+                <ResponsiveText variant="h2" className="mb-3 sm:mb-4 md:mb-6">
                   {profileData.solution}
-                </h2>
+                </ResponsiveText>
 
-                {/* ✅ PREÇO UNIFICADO R\$ 19 */}
-                <div className="bg-black/20 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 w-full">
-                  <div className="text-center mb-4">
-                    <div className="text-4xl sm:text-6xl font-black text-yellow-300 mb-2">
+                {/* ✅ PREÇO UNIFICADO R\$ 19 OTIMIZADO */}
+                <div className="bg-black/20 rounded-lg p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 w-full">
+                  <div className="text-center mb-3 sm:mb-4">
+                    <div className="text-3xl sm:text-4xl md:text-6xl font-black text-yellow-300 mb-2">
                       R\$ 19
                     </div>
-                    <div className="text-lg sm:text-xl">
-                      <span className="line-through text-gray-400 mr-3">R\$ {profileData.offer.originalPrice}</span>
-                      <span className="text-green-400 font-bold">ECONOMIZA R\$ {profileData.offer.discount}</span>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
+                      <span className="line-through text-gray-400 text-base sm:text-lg md:text-xl">R\$ {profileData.offer.originalPrice}</span>
+                      <span className="text-green-400 font-bold text-sm sm:text-base md:text-lg">ECONOMIZA R\$ {profileData.offer.discount}</span>
                     </div>
                   </div>
 
-                  <div className="text-left space-y-2 sm:space-y-3 max-w-md mx-auto w-full">
+                  <div className="text-left space-y-1 sm:space-y-2 md:space-y-3 max-w-md mx-auto w-full">
                     {profileData.offer.includes.map((item, index) => (
-                      <div key={index} className="flex items-start text-white text-sm sm:text-base">
-                        <Check className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
-                        <span className="break-words">{item}</span>
+                      <div key={index} className="flex items-start text-white">
+                        <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0 mt-0.5" />
+                        <ResponsiveText variant="small" className="sm:text-base">
+                          {item}
+                        </ResponsiveText>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* ✅ CTA OTIMIZADO COM COPY EMOCIONAL */}
+                {/* ✅ CTA OTIMIZADO COM COPY EMOCIONAL RESPONSIVO */}
                 <motion.div
                   animate={{
                     scale: [1, 1.05, 1],
@@ -985,30 +1113,35 @@ export default function ResultPageOptimized() {
                     repeat: Number.POSITIVE_INFINITY,
                     repeatType: "reverse",
                   }}
-                  className="mb-4 sm:mb-6 w-full"
+                  className="mb-3 sm:mb-4 md:mb-6 w-full"
                 >
-                  <Button
+                  <ResponsiveCTA
                     onClick={handlePurchase}
+                    variant="primary"
                     size="lg"
-                    className="w-full max-w-lg mx-auto bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black py-4 sm:py-6 px-4 sm:px-8 rounded-full text-lg sm:text-xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-2 sm:border-4 border-yellow-400 min-h-[60px] sm:min-h-[72px] flex items-center justify-center box-border"
-                    onTouchStart={handleTouchFeedback}
+                    fullWidth
+                    className="border border-yellow-400 sm:border-2 md:border-4"
                   >
-                    <Zap className="w-5 h-5 sm:w-6 sm:h-6 mr-2 flex-shrink-0 animate-pulse" />
-                    <span className="text-center leading-tight break-words">
-                      QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R\$ 19
+                    <Zap className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 animate-pulse" />
+                    <span className="text-center leading-tight">
+                      {isMobile ? "QUERO AGORA - R\$ 19" : "QUERO MINHA INDEPENDÊNCIA FINANCEIRA - R\$ 19"}
                     </span>
-                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
-                  </Button>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
+                  </ResponsiveCTA>
                 </motion.div>
 
-                <div className="flex justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-white mb-4 flex-wrap">
+                <div className="flex justify-center gap-2 sm:gap-4 text-white mb-3 sm:mb-4 flex-wrap">
                   <div className="flex items-center">
-                    <Users className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400 mr-1" />
-                    <span><strong>{recentBuyers}</strong> compraram hoje</span>
+                    <Users className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400 mr-1 flex-shrink-0" />
+                    <ResponsiveText variant="small">
+                      <strong>{recentBuyers}</strong> compraram hoje
+                    </ResponsiveText>
                   </div>
                   <div className="flex items-center">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-red-400 mr-1" />
-                    <span>Últimas {spotsLeft} vagas</span>
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-red-400 mr-1 flex-shrink-0" />
+                    <ResponsiveText variant="small">
+                      Últimas {spotsLeft} vagas
+                    </ResponsiveText>
                   </div>
                 </div>
               </CardContent>
@@ -1016,137 +1149,139 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 9: GARANTIA */}
-        <div className="px-4 py-6 sm:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
+        {/* ✅ SEÇÃO 9: GARANTIA OTIMIZADA */}
+        <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r from-green-900/30 to-emerald-900/30 w-full">
           <div className="max-w-4xl mx-auto w-full">
-            <Card className="bg-green-50 border-2 sm:border-4 border-green-400 shadow-2xl w-full">
-              <CardContent className="p-4 sm:p-6 text-center w-full">
-                <Shield className="w-12 h-12 sm:w-16 sm:h-16 text-green-600 mx-auto mb-4" />
-                <h2 className="text-xl sm:text-2xl font-bold text-green-800 mb-4 break-words">
+            <Card className="bg-green-50 border border-green-400 sm:border-2 md:border-4 shadow-2xl w-full">
+              <CardContent className="p-3 sm:p-4 md:p-6 text-center w-full">
+                <Shield className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 text-green-600 mx-auto mb-3 sm:mb-4" />
+                <ResponsiveText variant="h2" className="text-green-800 mb-3 sm:mb-4">
                   GARANTIA TOTAL DE 30 DIAS
-                </h2>
-                <p className="text-green-700 text-base sm:text-lg font-semibold mb-4 break-words">
+                </ResponsiveText>
+                <ResponsiveText variant="body" className="text-green-700 font-semibold mb-3 sm:mb-4">
                   Se não conseguir seus primeiros clientes, devolvemos 100% do seu dinheiro
-                </p>
-                <p className="text-green-600 max-w-2xl mx-auto text-sm sm:text-base break-words">
+                </ResponsiveText>
+                <ResponsiveText variant="body" className="text-green-600 max-w-2xl mx-auto">
                   Teste o método durante 30 dias. Se não funcionar para seu perfil, devolvemos tudo sem fazer perguntas.
-                </p>
+                </ResponsiveText>
                 
-                {/* ✅ GARANTIA EXTRA */}
-                <div className="bg-green-100 border-2 border-green-500 rounded-lg p-4 mt-4">
-                  <h3 className="text-green-800 font-bold mb-2">
+                {/* ✅ GARANTIA EXTRA OTIMIZADA */}
+                <div className="bg-green-100 border border-green-500 sm:border-2 rounded-lg p-3 sm:p-4 mt-3 sm:mt-4">
+                  <ResponsiveText variant="body" className="text-green-800 font-bold mb-2">
                     🎁 GARANTIA EXTRA:
-                  </h3>
-                  <p className="text-green-700 text-sm">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-green-700">
                     Se seguir o método e não faturar R\$ 1.000 em 30 dias, além do reembolso total, 
                     você ganha <span className="font-bold">R\$ 100 pelo tempo investido!</span>
-                  </p>
+                  </ResponsiveText>
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 10: FAQ PERSONALIZADO */}
-        <div className="px-4 py-6 sm:py-8 w-full">
+        {/* ✅ SEÇÃO 10: FAQ PERSONALIZADO OTIMIZADO */}
+        <div className="px-3 sm:px-4 py-4 sm:py-6 md:py-8 w-full">
           <div className="max-w-4xl mx-auto w-full">
-            <h2 className="text-xl sm:text-2xl font-bold text-white text-center mb-6 sm:mb-8 break-words">
+            <ResponsiveText variant="h2" className="text-white text-center mb-4 sm:mb-6 md:mb-8">
               PERGUNTAS FREQUENTES - {profileData.title}
-            </h2>
+            </ResponsiveText>
 
-            <div className="space-y-4 max-w-2xl mx-auto w-full">
+            <div className="space-y-3 sm:space-y-4 max-w-2xl mx-auto w-full">
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                  <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
                     Este método funciona para meu perfil ({profileData.title})?
-                  </h3>
-                  <p className="text-gray-300 text-sm break-words">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-gray-300">
                     Sim! O método foi especialmente adaptado para seu perfil. {profileData.characteristics[0]}
-                  </p>
+                  </ResponsiveText>
                 </CardContent>
               </Card>
 
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                  <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
                     Por que apenas R\$ 19? Não é muito barato?
-                  </h3>
-                  <p className="text-gray-300 text-sm break-words">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-gray-300">
                     É uma oferta especial de lançamento para seu perfil específico. O valor normal é R\$ {profileData.offer.originalPrice}. 
                     Estou testando esta estratégia por tempo limitado para validar a eficácia do método personalizado.
-                  </p>
+                  </ResponsiveText>
                 </CardContent>
               </Card>
 
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                  <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
                     Quanto tempo para ver resultados?
-                  </h3>
-                  <p className="text-gray-300 text-sm break-words">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-gray-300">
                     Para seu perfil específico, 89% das alunas veem os primeiros resultados em 30 dias. 
                     Muitas conseguem os primeiros clientes em apenas 2 semanas seguindo o cronograma personalizado.
-                  </p>
+                  </ResponsiveText>
                 </CardContent>
               </Card>
 
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                  <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
                     Como recebo o acesso?
-                  </h3>
-                  <p className="text-gray-300 text-sm break-words">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-gray-300">
                     Imediatamente após o pagamento você recebe um email com suas credenciais. 
                     Todo conteúdo fica disponível na hora, incluindo os bônus exclusivos para seu perfil.
-                  </p>
+                  </ResponsiveText>
                 </CardContent>
               </Card>
 
               <Card className="bg-gray-800 border border-gray-700 w-full">
                 <CardContent className="p-3 sm:p-4 w-full">
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 break-words">
+                  <ResponsiveText variant="body" className="text-orange-400 font-bold mb-2">
                     Preciso de experiência prévia?
-                  </h3>
-                  <p className="text-gray-300 text-sm break-words">
+                  </ResponsiveText>
+                  <ResponsiveText variant="small" className="text-gray-300">
                     Não! O método foi desenvolvido especialmente para iniciantes. Começamos do zero absoluto 
                     e te levamos até o nível profissional em 90 dias, respeitando seu ritmo e perfil.
-                  </p>
+                  </ResponsiveText>
                 </CardContent>
               </Card>
             </div>
           </div>
         </div>
 
-        {/* ✅ SEÇÃO 11: CTA FINAL COM URGÊNCIA MÁXIMA */}
-        <div className={`px-4 py-6 sm:py-8 bg-gradient-to-r ${profileData.color} w-full`}>
+        {/* ✅ SEÇÃO 11: CTA FINAL COM URGÊNCIA MÁXIMA OTIMIZADO */}
+        <div className={`px-3 sm:px-4 py-4 sm:py-6 md:py-8 bg-gradient-to-r ${profileData.color} w-full`}>
           <div className="max-w-4xl mx-auto text-center w-full">
-            <div className="bg-black/20 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 sm:border-4 border-yellow-400 w-full">
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-4 break-words">
+            <div className="bg-black/20 backdrop-blur-sm rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 border border-yellow-400 sm:border-2 md:border-4 w-full">
+              <ResponsiveText variant="h2" className="text-white mb-3 sm:mb-4">
                 ⏰ ÚLTIMAS {spotsLeft} VAGAS POR R\$ 19
-              </h2>
-              <p className="text-lg sm:text-xl text-white mb-4 sm:mb-6 font-semibold break-words">
+              </ResponsiveText>
+              <ResponsiveText variant="body" className="text-white mb-3 sm:mb-4 md:mb-6 font-semibold">
                 Depois volta para R\$ {profileData.offer.originalPrice}. Esta oferta NUNCA mais será repetida para seu perfil.
-              </p>
+              </ResponsiveText>
 
-              <div className="bg-red-900 border-2 border-red-500 rounded-lg p-4 mb-6 w-full">
-                <div className="flex items-center justify-center mb-3">
-                  <Clock className="w-5 h-5 text-yellow-300 mr-2 animate-pulse" />
-                  <span className="text-yellow-300 font-bold text-lg">OFERTA EXPIRA EM:</span>
+              <div className="bg-red-900 border border-red-500 sm:border-2 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 w-full">
+                <div className="flex items-center justify-center mb-2 sm:mb-3">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-300 mr-2 animate-pulse flex-shrink-0" />
+                  <ResponsiveText variant="body" className="text-yellow-300 font-bold">
+                    OFERTA EXPIRA EM:
+                  </ResponsiveText>
                 </div>
                 
-                <div className="text-center mb-4">
-                  <div className="text-4xl font-black text-white mb-2">
+                <div className="text-center mb-3 sm:mb-4">
+                  <div className="text-3xl sm:text-4xl font-black text-white mb-2">
                     <CountdownTimer minutes={15} seconds={0} />
                   </div>
-                  <p className="text-red-300 text-sm font-bold">
+                  <ResponsiveText variant="small" className="text-red-300 font-bold">
                     ⚠️ Após este horário, volta para R\$ {profileData.offer.originalPrice}
-                  </p>
+                  </ResponsiveText>
                 </div>
 
                 <div className="text-center">
-                  <p className="text-red-300 text-xs animate-pulse font-bold">
+                  <ResponsiveText variant="small" className="text-red-300 animate-pulse font-bold">
                     • Esta oferta NUNCA mais será repetida •
-                  </p>
+                  </ResponsiveText>
                 </div>
               </div>
 
@@ -1159,39 +1294,42 @@ export default function ResultPageOptimized() {
                   repeat: Number.POSITIVE_INFINITY,
                   repeatType: "reverse",
                 }}
-                className="w-full"
+                className="w-full mb-4 sm:mb-6"
               >
-                <Button
+                <ResponsiveCTA
                   onClick={handlePurchase}
+                  variant="accent"
                   size="lg"
-                  className="w-full max-w-md mx-auto bg-yellow-500 hover:bg-yellow-600 text-black font-black py-4 sm:py-6 px-4 sm:px-8 rounded-full text-lg sm:text-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-2 sm:border-4 border-white min-h-[60px] sm:min-h-[72px] flex items-center justify-center box-border"
-                  onTouchStart={handleTouchFeedback}
+                  fullWidth
+                  className="border border-white sm:border-2 md:border-4"
                 >
-                  <span className="text-center leading-tight break-words">
-                    GARANTIR ÚLTIMA VAGA - R\$ 19
+                  <span className="text-center leading-tight">
+                    {isMobile ? "GARANTIR VAGA - R\$ 19" : "GARANTIR ÚLTIMA VAGA - R\$ 19"}
                   </span>
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 ml-2 flex-shrink-0" />
-                </Button>
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ml-2 flex-shrink-0" />
+                </ResponsiveCTA>
               </motion.div>
 
-              <p className="text-yellow-300 text-xs sm:text-sm mt-4 font-semibold break-words">
+              <ResponsiveText variant="small" className="text-yellow-300 font-semibold">
                 ⚠️ Esta oferta nunca mais será repetida para seu perfil específico
-              </p>
+              </ResponsiveText>
 
-              {/* ✅ PROVA SOCIAL FINAL */}
-              <div className="mt-6 bg-black/30 rounded-lg p-4">
-                <div className="flex items-center justify-center gap-4 text-white text-sm">
+              {/* ✅ PROVA SOCIAL FINAL OTIMIZADA */}
+              <div className="mt-4 sm:mt-6 bg-black/30 rounded-lg p-3 sm:p-4">
+                <div className="flex items-center justify-center gap-2 sm:gap-4 text-white flex-wrap">
                   <div className="flex items-center">
-                    <Users className="w-4 h-4 text-green-400 mr-1" />
-                    <span><strong>{recentBuyers}</strong> compraram hoje</span>
+                    <Users className="w-3 h-3 sm:w-4 sm:h-4 text-green-400 mr-1 flex-shrink-0" />
+                    <ResponsiveText variant="small">
+                      <strong>{recentBuyers}</strong> compraram hoje
+                    </ResponsiveText>
                   </div>
                   <div className="flex items-center">
-                    <Award className="w-4 h-4 text-yellow-400 mr-1" />
-                    <span>94% de aprovação</span>
+                    <Award className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-1 flex-shrink-0" />
+                    <ResponsiveText variant="small">94% de aprovação</ResponsiveText>
                   </div>
                   <div className="flex items-center">
-                    <Star className="w-4 h-4 text-orange-400 mr-1" />
-                    <span>4.9/5 estrelas</span>
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400 mr-1 flex-shrink-0" />
+                    <ResponsiveText variant="small">4.9/5 estrelas</ResponsiveText>
                   </div>
                 </div>
               </div>
@@ -1199,15 +1337,9 @@ export default function ResultPageOptimized() {
           </div>
         </div>
 
-        {/* Estilos CSS Otimizados */}
+        {/* ✅ ESTILOS CSS OTIMIZADOS PARA MOBILE */}
         <style jsx global>{`
-          @viewport {
-            width: device-width;
-            initial-scale: 1.0;
-            maximum-scale: 1.0;
-            user-scalable: no;
-          }
-
+          /* ===== RESET E BASE ===== */
           * {
             box-sizing: border-box !important;
             margin: 0;
@@ -1221,6 +1353,7 @@ export default function ResultPageOptimized() {
             -webkit-text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
           }
 
           body {
@@ -1228,6 +1361,7 @@ export default function ResultPageOptimized() {
             max-width: 100vw !important;
             position: relative;
             width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           }
 
           .min-h-screen {
@@ -1237,6 +1371,7 @@ export default function ResultPageOptimized() {
             position: relative;
           }
 
+          /* ===== COMPONENTES ESPECÍFICOS ===== */
           vturb-smartplayer {
             border-radius: 8px !important;
             overflow: hidden !important;
@@ -1248,9 +1383,10 @@ export default function ResultPageOptimized() {
             contain: layout style paint;
           }
 
-          button {
-            min-height: 48px !important;
-            min-width: 48px !important;
+          /* ===== ELEMENTOS INTERATIVOS ===== */
+          button, .button, [role="button"] {
+            min-height: 44px !important;
+            min-width: 44px !important;
             touch-action: manipulation !important;
             -webkit-tap-highlight-color: transparent !important;
             user-select: none !important;
@@ -1258,8 +1394,15 @@ export default function ResultPageOptimized() {
             max-width: 100% !important;
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
           }
 
+          button:active, .button:active {
+            transform: scale(0.98);
+          }
+
+          /* ===== TIPOGRAFIA RESPONSIVA ===== */
           p, span, div, h1, h2, h3, h4, h5, h6 {
             word-wrap: break-word !important;
             overflow-wrap: break-word !important;
@@ -1268,6 +1411,7 @@ export default function ResultPageOptimized() {
             box-sizing: border-box !important;
           }
 
+          /* ===== MÍDIA RESPONSIVA ===== */
           img, video {
             max-width: 100% !important;
             height: auto !important;
@@ -1275,21 +1419,14 @@ export default function ResultPageOptimized() {
             box-sizing: border-box;
           }
 
+          /* ===== FORMULÁRIOS MOBILE ===== */
           input, select, textarea {
             font-size: 16px !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
           }
 
-          a, button, [role="button"] {
-            min-height: 44px !important;
-            min-width: 44px !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            box-sizing: border-box !important;
-          }
-
+          /* ===== LAYOUT RESPONSIVO ===== */
           .grid {
             gap: 0.5rem !important;
             width: 100% !important;
@@ -1301,17 +1438,26 @@ export default function ResultPageOptimized() {
             box-sizing: border-box !important;
           }
 
-          /* Estilos específicos do carrossel */
+          /* ===== CARROSSEL OTIMIZADO ===== */
           .carousel-container {
             touch-action: pan-y pinch-zoom;
+            -webkit-overflow-scrolling: touch;
           }
 
           .carousel-slide {
             will-change: transform;
             backface-visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           }
 
+          .carousel-container img {
+            will-change: transform;
+            transform: translateZ(0);
+          }
+
+          /* ===== BREAKPOINTS MOBILE ===== */
           @media (max-width: 768px) {
+            /* Typography Scale */
             .text-xs { font-size: 0.75rem !important; line-height: 1rem !important; }
             .text-sm { font-size: 0.875rem !important; line-height: 1.25rem !important; }
             .text-base { font-size: 1rem !important; line-height: 1.5rem !important; }
@@ -1320,16 +1466,21 @@ export default function ResultPageOptimized() {
             .text-2xl { font-size: 1.5rem !important; line-height: 2rem !important; }
             .text-3xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }
             .text-4xl { font-size: 2.25rem !important; line-height: 2.5rem !important; }
-            .text-5xl { font-size: 3rem !important; line-height: 1 !important; }
-            .text-6xl { font-size: 3.75rem !important; line-height: 1 !important; }
 
+            /* Spacing */
+            .px-3 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
             .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+            .py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
             .py-6 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
             .py-8 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+
+            /* Margins */
+            .mb-3 { margin-bottom: 0.75rem !important; }
             .mb-4 { margin-bottom: 1rem !important; }
             .mb-6 { margin-bottom: 1.5rem !important; }
             .mb-8 { margin-bottom: 2rem !important; }
 
+            /* Grid */
             .grid-cols-3 {
               grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
               gap: 0.5rem !important;
@@ -1340,22 +1491,26 @@ export default function ResultPageOptimized() {
               gap: 0.5rem !important;
             }
 
+            /* Video Player */
             vturb-smartplayer {
               height: auto !important;
               aspect-ratio: 16/9 !important;
               min-height: 200px !important;
             }
 
+            /* Borders & Radius */
             .rounded-2xl { border-radius: 1rem !important; }
             .rounded-xl { border-radius: 0.75rem !important; }
             .border-4 { border-width: 2px !important; }
             .border-2 { border-width: 1px !important; }
 
-            .min-h-\[72px\] { min-height: 60px !important; }
-            .min-h-\[64px\] { min-height: 56px !important; }
-            .min-h-\[60px\] { min-height: 56px !important; }
-            .min-h-\[56px\] { min-height: 52px !important; }
+            /* Button Heights */
+            .min-h-\[72px\] { min-height: 56px !important; }
+            .min-h-\[64px\] { min-height: 52px !important; }
+            .min-h-\[60px\] { min-height: 48px !important; }
+            .min-h-\[56px\] { min-height: 48px !important; }
 
+            /* Text Utilities */
             .truncate {
               overflow: hidden !important;
               text-overflow: ellipsis !important;
@@ -1368,7 +1523,7 @@ export default function ResultPageOptimized() {
               word-break: break-word !important;
             }
 
-            /* Mobile carousel adjustments */
+            /* Carrossel Mobile */
             .carousel-container {
               padding: 0.5rem !important;
             }
@@ -1379,8 +1534,9 @@ export default function ResultPageOptimized() {
             }
           }
 
+          /* ===== MOBILE SMALL (iPhone SE, etc.) ===== */
           @media (max-width: 375px) {
-            .px-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+            .px-3 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
             .text-2xl { font-size: 1.25rem !important; line-height: 1.75rem !important; }
             .text-3xl { font-size: 1.5rem !important; line-height: 2rem !important; }
             .text-4xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }
@@ -1403,44 +1559,27 @@ export default function ResultPageOptimized() {
             }
           }
 
+          /* ===== PERFORMANCE OPTIMIZATIONS ===== */
           .bg-gradient-to-r, .bg-gradient-to-br {
             will-change: transform;
             backface-visibility: hidden;
             transform: translateZ(0);
           }
 
-          html {
-            scroll-behavior: smooth;
-          }
-
+          /* ===== SAFARI FIXES ===== */
           @supports (-webkit-touch-callout: none) {
             input, select, textarea {
               font-size: 16px !important;
             }
           }
 
-          * {
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-          }
-
+          /* ===== CONTAINER QUERIES ===== */
           @container (max-width: 768px) {
             .text-3xl { font-size: 1.5rem !important; }
             .text-4xl { font-size: 1.875rem !important; }
           }
 
-          /* Animações suaves para o carrossel */
-          .carousel-slide {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-          }
-
-          /* Otimizações de performance */
-          .carousel-container img {
-            will-change: transform;
-            transform: translateZ(0);
-          }
-
-          /* Touch gestures para mobile */
+          /* ===== TOUCH GESTURES ===== */
           @media (hover: none) and (pointer: coarse) {
             .carousel-container {
               -webkit-overflow-scrolling: touch;
@@ -1449,6 +1588,48 @@ export default function ResultPageOptimized() {
             
             .carousel-slide {
               scroll-snap-align: center;
+            }
+
+            button:hover {
+              transform: none;
+            }
+
+            button:active {
+              transform: scale(0.95);
+            }
+          }
+
+          /* ===== ACCESSIBILITY ===== */
+          .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+          }
+
+          /* ===== FOCUS STATES ===== */
+          button:focus-visible {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
+          }
+
+          /* ===== LOADING STATES ===== */
+          .loading {
+            opacity: 0.7;
+            pointer-events: none;
+          }
+
+          /* ===== ANIMATION PERFORMANCE ===== */
+          @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+              animation-duration: 0.01ms !important;
+              animation-iteration-count: 1 !important;
+              transition-duration: 0.01ms !important;
             }
           }
         `}</style>
